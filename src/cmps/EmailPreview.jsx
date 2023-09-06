@@ -1,19 +1,27 @@
 import { Link } from 'react-router-dom'
 
-export function EmailPreview({ email }) {
-    function getStarImg() {
-        return 'imgs/' + (email.isStarred ? 'starred.svg' : 'unstarred.svg')
+export function EmailPreview({ email, onUpdateEmail }) {
+    function onStarClick(email) {
+        const emailAfterUpdate = {
+            ...email,
+            isStarred: !email.isStarred,
+        }
+        onUpdateEmail(emailAfterUpdate)
     }
 
     return (
-        <Link to={`/email/${email.id}`}>
-            <article className="email-preview">
-                <img
-                    className="email-preview-star-img"
-                    src={getStarImg(email.isStarred)}
-                />
-                <span class="email-preview-subject">{email.subject}</span>
-            </article>
-        </Link>
+        <article className="email-preview">
+            <img
+                className="email-preview-star-img"
+                src={
+                    'imgs/' +
+                    (email.isStarred ? 'starred.svg' : 'unstarred.svg')
+                }
+                onClick={() => onStarClick(email)}
+            />
+            <Link to={`/email/${email.id}`}>
+                <span className="email-preview-subject">{email.subject}</span>
+            </Link>
+        </article>
     )
 }

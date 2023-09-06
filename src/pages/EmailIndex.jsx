@@ -15,6 +15,17 @@ export function EmailIndex() {
         loadEmails()
     }, [])
 
+    async function onUpdateEmail(email) {
+        try {
+            await emailService.save(email)
+            setEmails((prevEmails) =>
+                prevEmails.map((e) => (e.id === email.id ? email : e))
+            )
+        } catch (err) {
+            console.log('Failed to star/unstar email', err)
+        }
+    }
+
     async function loadEmails() {
         try {
             const emails = await emailService.query()
@@ -31,7 +42,7 @@ export function EmailIndex() {
             <EmailSidebar />
             <section className="email-main">
                 <EmailFilter />
-                <EmailList emails={emails} />
+                <EmailList emails={emails} onUpdateEmail={onUpdateEmail} />
             </section>
         </section>
     )
