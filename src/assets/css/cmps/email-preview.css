@@ -1,6 +1,14 @@
 .email-preview {
+    background-color: #dee1e8;
+    font-weight: bold;
+    padding: 10px 0px;
     display: flex;
     align-items: center;
+}
+
+.email-preview.read {
+    background-color: #cacdd3;
+    font-weight: 100;
 }
 
 .email-preview-star-img {

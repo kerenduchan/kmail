@@ -10,7 +10,7 @@ export function EmailPreview({ email, onUpdateEmail }) {
     }
 
     return (
-        <article className="email-preview">
+        <article className={'email-preview' + (email.isRead ? ' read' : '')}>
             <img
                 className="email-preview-star-img"
                 src={
