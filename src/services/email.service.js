@@ -10,6 +10,11 @@ export const emailService = {
     getDefaultFilter,
 }
 
+const loggedinUser = {
+    email: 'keren.duchan@gmail.com',
+    fullname: 'Keren Duchan',
+}
+
 const STORAGE_KEY = 'emails'
 
 _createEmails()
