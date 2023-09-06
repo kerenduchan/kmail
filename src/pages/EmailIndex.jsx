@@ -1,10 +1,14 @@
+import { EmailFilter } from '../cmps/EmailFilter'
+import { EmailList } from '../cmps/EmailList'
+import { EmailSidebar } from '../cmps/EmailSidebar'
+
 export function EmailIndex() {
     return (
         <section className="email-index">
-            <section className="email-sidebar">sidebar</section>
+            <EmailSidebar />
             <section className="email-main">
-                <section className="email-filter">filter</section>
-                <section className="email-list">list</section>
+                <EmailFilter />
+                <EmailList />
             </section>
         </section>
     )
