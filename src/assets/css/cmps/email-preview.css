@@ -1,5 +1,10 @@
-.email-star-img {
+.email-preview {
+    display: flex;
+    align-items: center;
+}
+
+.email-preview-star-img {
     max-width: 15px;
     max-height: 15px;
-    padding-right: 20px;
+    padding: 0px 20px;
 }

@@ -6,14 +6,14 @@ export function EmailPreview({ email }) {
     }
 
     return (
-        <article className="email-preview">
-            <Link to={`/email/${email.id}`}>
+        <Link to={`/email/${email.id}`}>
+            <article className="email-preview">
                 <img
-                    className="email-star-img"
+                    className="email-preview-star-img"
                     src={getStarImg(email.isStarred)}
                 />
                 <span class="email-preview-subject">{email.subject}</span>
-            </Link>
-        </article>
+            </article>
+        </Link>
     )
 }
