@@ -30,8 +30,8 @@ export function EmailPreview({ email, onUpdateEmail }) {
                 }
                 onClick={() => onStarClick(email)}
             />
-            <Link to={`/email/${email.id}`}>
-                <span className="email-preview-subject">{email.subject}</span>
+            <Link className="email-preview-link" to={`/email/${email.id}`}>
+                <span>{email.subject}</span>
             </Link>
         </article>
     )
