@@ -7,6 +7,7 @@ import { EmailIndex } from './pages/EmailIndex'
 
 // components
 import { AppHeader } from './cmps/AppHeader'
+import { EmailDetails } from './cmps/EmailDetails'
 
 function App() {
     return (
@@ -18,6 +19,10 @@ function App() {
                         <Route path="/" element={<Home />} />
                         <Route path="/about" element={<About />} />
                         <Route path="/email" element={<EmailIndex />} />
+                        <Route
+                            path="/email/:emailId"
+                            element={<EmailDetails />}
+                        />
                     </Routes>
                 </main>
             </section>
