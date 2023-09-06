@@ -4,10 +4,10 @@ import { Route, HashRouter as Router, Routes } from 'react-router-dom'
 import { Home } from './pages/Home'
 import { About } from './pages/About'
 import { EmailIndex } from './pages/EmailIndex'
+import { EmailDetails } from './pages/EmailDetails'
 
 // components
 import { AppHeader } from './cmps/AppHeader'
-import { EmailDetails } from './cmps/EmailDetails'
 
 function App() {
     return (
