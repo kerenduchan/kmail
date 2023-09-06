@@ -23,12 +23,22 @@ export function EmailDetails() {
         }
     }
 
+    async function onMarkEmailAsUnread() {
+        try {
+            let updatedEmail = { ...email, isRead: false }
+            await emailService.save(updatedEmail)
+            navigate('/email')
+        } catch (err) {
+            console.log('Had issues marking email as unread', err)
+        }
+    }
+
     async function loadEmailAndMarkAsRead() {
         try {
-            let email = await emailService.getById(params.emailId)
-            email = { ...email, isRead: true }
-            await emailService.save(email)
-            setEmail(email)
+            let tmpEmail = await emailService.getById(params.emailId)
+            tmpEmail = { ...tmpEmail, isRead: true }
+            await emailService.save(tmpEmail)
+            setEmail(tmpEmail)
         } catch (err) {
             navigate('/email')
             console.error('Had issues loading email or marking it as read', err)
@@ -42,6 +52,7 @@ export function EmailDetails() {
                 Back
             </Link>
             <button onClick={onDeleteEmail}>Delete</button>
+            <button onClick={onMarkEmailAsUnread}>Mark as Unread</button>
             <header className="email-details-subject">
                 Subject: {email.subject}
             </header>
