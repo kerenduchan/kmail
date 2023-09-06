@@ -11,16 +11,18 @@ export function EmailDetails() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        loadEmail()
+        loadEmailAndMarkAsRead()
     }, [params.emailId])
 
-    async function loadEmail() {
+    async function loadEmailAndMarkAsRead() {
         try {
-            const email = await emailService.getById(params.emailId)
+            let email = await emailService.getById(params.emailId)
+            email = { ...email, isRead: true }
+            await emailService.save(email)
             setEmail(email)
         } catch (err) {
             navigate('/email')
-            console.error('Had issues loading email', err)
+            console.error('Had issues loading email or marking it as read', err)
         }
     }
 
