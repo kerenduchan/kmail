@@ -83,7 +83,8 @@ function _createEmails() {
             },
             {
                 id: 'e3',
-                subject: 'Test 3',
+                subject:
+                    'This is a very long subject that should probably be shorter but for some reason it is just so long',
                 body: 'This is the body of test 3',
                 isRead: true,
                 isStarred: false,

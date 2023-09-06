@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
+const MAX_SUBJECT_LEN = 80
+
 export function EmailPreview({ email, onUpdateEmail }) {
     const [isActive, setIsActive] = useState(false)
 
@@ -10,6 +12,12 @@ export function EmailPreview({ email, onUpdateEmail }) {
             isStarred: !email.isStarred,
         }
         onUpdateEmail(emailAfterUpdate)
+    }
+
+    function getTruncatedSubject() {
+        return email.subject.length <= MAX_SUBJECT_LEN
+            ? email.subject
+            : email.subject.substring(0, MAX_SUBJECT_LEN).trimEnd() + '...'
     }
 
     return (
@@ -31,7 +39,7 @@ export function EmailPreview({ email, onUpdateEmail }) {
                 onClick={() => onStarClick(email)}
             />
             <Link className="email-preview-link" to={`/email/${email.id}`}>
-                <span>{email.subject}</span>
+                <span>{getTruncatedSubject()}</span>
             </Link>
         </article>
     )
