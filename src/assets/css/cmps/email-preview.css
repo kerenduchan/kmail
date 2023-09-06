@@ -1,13 +1,20 @@
 .email-preview {
-    background-color: #dee1e8;
+    background-color: #fdfdfd;
     font-weight: bold;
     padding: 10px 0px;
     display: flex;
     align-items: center;
+    border-bottom: 1px solid #ebeff8;
+    border: 1px solid transparent;
+}
+
+.email-preview.hover {
+    background-color: #f6f6f6;
+    border: 1px solid grey;
 }
 
 .email-preview.read {
-    background-color: #cacdd3;
+    background-color: #ebeff8;
     font-weight: 100;
 }
 

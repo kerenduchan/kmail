@@ -1,6 +1,9 @@
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 export function EmailPreview({ email, onUpdateEmail }) {
+    const [isActive, setIsActive] = useState(false)
+
     function onStarClick(email) {
         const emailAfterUpdate = {
             ...email,
@@ -10,7 +13,15 @@ export function EmailPreview({ email, onUpdateEmail }) {
     }
 
     return (
-        <article className={'email-preview' + (email.isRead ? ' read' : '')}>
+        <article
+            className={
+                'email-preview' +
+                (email.isRead ? ' read' : '') +
+                (isActive ? ' hover' : '')
+            }
+            onMouseOver={() => setIsActive(true)}
+            onMouseOut={() => setIsActive(false)}
+        >
             <img
                 className="email-preview-star-img"
                 src={
