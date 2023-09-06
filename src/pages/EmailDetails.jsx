@@ -14,6 +14,15 @@ export function EmailDetails() {
         loadEmailAndMarkAsRead()
     }, [params.emailId])
 
+    async function onDeleteEmail() {
+        try {
+            await emailService.remove(params.emailId)
+            navigate('/email')
+        } catch (err) {
+            console.log('Had issues deleting email', err)
+        }
+    }
+
     async function loadEmailAndMarkAsRead() {
         try {
             let email = await emailService.getById(params.emailId)
@@ -32,6 +41,7 @@ export function EmailDetails() {
             <Link className="email-details-back" to="/email">
                 Back
             </Link>
+            <button onClick={onDeleteEmail}>Delete</button>
             <header className="email-details-subject">
                 Subject: {email.subject}
             </header>
