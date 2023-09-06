@@ -77,7 +77,7 @@ function _createEmails() {
                 removedAt: null,
             },
             {
-                id: 'e1',
+                id: 'e3',
                 subject: 'Test 3',
                 body: 'This is the body of test 3',
                 isRead: true,

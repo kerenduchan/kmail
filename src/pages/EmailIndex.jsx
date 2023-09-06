@@ -18,7 +18,6 @@ export function EmailIndex() {
     async function loadEmails() {
         try {
             const emails = await emailService.query()
-            console.log(emails)
             setEmails(emails)
         } catch (err) {
             console.log('Had issues loading emails', err)
