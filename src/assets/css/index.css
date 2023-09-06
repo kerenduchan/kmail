@@ -1,5 +1,8 @@
 /* Basics */
 @import 'basics/base.css';
 
+/* Pages */
+@import 'pages/email-index.css';
+
 /* Components */
 @import 'cmps/app-header.css';

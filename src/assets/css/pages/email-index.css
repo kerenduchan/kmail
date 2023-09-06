@@ -1,0 +1,13 @@
+.email-index {
+    display: flex;
+}
+
+.email-sidebar {
+    width: 200px;
+}
+
+.email-main {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
