@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom'
 
+import { formatDate } from '../util'
+
 const MAX_SUBJECT_LEN = 80
 
 export function EmailPreview({ email, onUpdateEmail, onDeleteEmail }) {
@@ -32,6 +34,10 @@ export function EmailPreview({ email, onUpdateEmail, onDeleteEmail }) {
                 <div className="email-preview-from">{email.from}</div>
                 {/* Subject */}
                 <div className="email-preview-subject">{email.subject}</div>
+                {/* Sent at */}
+                <div className="email-preview-sent-at">
+                    {formatDate(email.sentAt)}
+                </div>
             </Link>
             {/* Actions */}
             <div className="email-preview-actions">

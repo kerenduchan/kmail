@@ -42,6 +42,7 @@
     text-decoration: none;
     color: unset;
     display: flex;
+    align-items: center;
     gap: 5px;
 }
 
@@ -51,6 +52,11 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow-x: hidden;
+}
+
+.email-preview-sent-at {
+    color: grey;
+    font-size: 85%;
 }
 
 /* Styling for small screens */
