@@ -42,6 +42,7 @@
     text-decoration: none;
     color: unset;
     display: flex;
+    gap: 5px;
 }
 
 .email-preview-subject {
