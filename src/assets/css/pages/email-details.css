@@ -26,3 +26,13 @@
     font-size: 20px;
     padding: 20px 0;
 }
+
+.email-details-metadata {
+    font-size: 14px;
+    padding-bottom: 20px;
+}
+
+.email-details-metadata-label {
+    text-align: right;
+    color: grey;
+}

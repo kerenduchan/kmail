@@ -70,6 +70,18 @@ export function EmailDetails() {
                 <header className="email-details-subject">
                     {email.subject}
                 </header>
+                <table className="email-details-metadata">
+                    <tbody>
+                        <tr className="email-details-from">
+                            <td class="email-details-metadata-label">From:</td>
+                            <td>{email.from}</td>
+                        </tr>
+                        <tr className="email-details-to">
+                            <td class="email-details-metadata-label">To:</td>
+                            <td>{email.to}</td>
+                        </tr>
+                    </tbody>
+                </table>
                 {/* Email Body */}
                 <article className="email-details-body">{email.body}</article>
             </section>
