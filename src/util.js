@@ -2,7 +2,6 @@ export { formatDate }
 
 function formatDate(timestamp) {
     const delta = Math.floor((new Date().getTime() - timestamp) / 1000)
-    console.log(delta)
     const minute = 60
     const hour = minute * 60
     const day = hour * 24
