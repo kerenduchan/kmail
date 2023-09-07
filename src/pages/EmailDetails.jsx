@@ -51,16 +51,18 @@ export function EmailDetails() {
             {/* Actions */}
             <section className="email-details-actions">
                 {/* Back */}
-                <Link className="email-details-action-back" to="/email">
-                    <img src="imgs/left-arrow.svg" alt="Back" />
+                <Link to="/email">
+                    <button className="email-details-action-back small-action-btn">
+                        <img src="imgs/left-arrow.svg" alt="Back" />
+                    </button>
                 </Link>
                 {/* Delete */}
-                <img
-                    className="email-details-action-delete"
-                    src="imgs/garbage-bin.svg"
-                    alt="Delete"
+                <button
+                    className="email-details-action-delete small-action-btn"
                     onClick={onDeleteEmail}
-                />
+                >
+                    <img src="imgs/garbage-bin.svg" alt="Delete" />
+                </button>
                 {/* Mark as unread */}
                 <button onClick={onMarkEmailAsUnread}>Mark as unread</button>
             </section>
