@@ -48,15 +48,31 @@ export function EmailDetails() {
     if (!email) return <div>Loading..</div>
     return (
         <section className="email-details">
-            <Link className="email-details-back" to="/email">
-                Back
-            </Link>
-            <button onClick={onDeleteEmail}>Delete</button>
-            <button onClick={onMarkEmailAsUnread}>Mark as Unread</button>
-            <header className="email-details-subject">
-                Subject: {email.subject}
-            </header>
-            <article className="email-details-body">{email.body}</article>
+            {/* Actions */}
+            <section className="email-details-actions">
+                {/* Back */}
+                <Link className="email-details-action-back" to="/email">
+                    <img src="imgs/left-arrow.svg" alt="Back" />
+                </Link>
+                {/* Delete */}
+                <img
+                    className="email-details-action-delete"
+                    src="imgs/garbage-bin.svg"
+                    alt="Delete"
+                    onClick={onDeleteEmail}
+                />
+                {/* Mark as unread */}
+                <button onClick={onMarkEmailAsUnread}>Mark as unread</button>
+            </section>
+            {/* Email Contents */}
+            <section className="email-details-content">
+                {/* Email Subject */}
+                <header className="email-details-subject">
+                    {email.subject}
+                </header>
+                {/* Email Body */}
+                <article className="email-details-body">{email.body}</article>
+            </section>
         </section>
     )
 }
