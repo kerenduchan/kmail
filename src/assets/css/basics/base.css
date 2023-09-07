@@ -9,6 +9,7 @@ body {
 }
 
 .small-action-btn {
+    flex-shrink: 0;
     background-color: unset;
     border-radius: 50%;
     border: none;
