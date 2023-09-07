@@ -58,6 +58,18 @@ export function EmailFilter({ filter, onSetFilter }) {
                     <option value="false">Unstarred</option>
                 </select>
             </div>
+            {/* Text search */}
+            <div className="email-filter-field">
+                <label htmlFor="searchString">Search:</label>
+                <input
+                    type="text"
+                    id="searchString"
+                    placeholder="Search by text"
+                    name="searchString"
+                    onChange={handleChange}
+                    value={filterDraft.searchString}
+                />
+            </div>
         </form>
     )
 }
