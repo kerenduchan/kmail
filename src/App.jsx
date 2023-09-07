@@ -18,11 +18,12 @@ function App() {
                     <Routes>
                         <Route path="/" element={<Home />} />
                         <Route path="/about" element={<About />} />
-                        <Route path="/email" element={<EmailIndex />} />
-                        <Route
-                            path="/email/:emailId"
-                            element={<EmailDetails />}
-                        />
+                        <Route path="/email" element={<EmailIndex />}>
+                            <Route
+                                path="/email/:emailId"
+                                element={<EmailDetails />}
+                            />
+                        </Route>
                     </Routes>
                 </main>
             </section>

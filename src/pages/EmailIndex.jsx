@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useParams, Outlet } from 'react-router'
 
 // components
 import { EmailFilter } from '../cmps/EmailFilter'
@@ -11,6 +12,7 @@ import { emailService } from '../services/email.service'
 export function EmailIndex() {
     const [emails, setEmails] = useState(null)
     const [filter, setFilter] = useState(emailService.getDefaultFilter())
+    const params = useParams()
 
     useEffect(() => {
         loadEmails()
@@ -51,17 +53,23 @@ export function EmailIndex() {
 
     if (!emails) return <div>Loading..</div>
 
+    const inner = params.emailId ? (
+        <Outlet />
+    ) : (
+        <section className="email-index-main">
+            <EmailFilter filter={filter} onSetFilter={onSetFilter} />
+            <EmailList
+                emails={emails}
+                onUpdateEmail={onUpdateEmail}
+                onDeleteEmail={onDeleteEmail}
+            />
+        </section>
+    )
+
     return (
         <section className="email-index">
             <EmailSidebar />
-            <section className="email-index-main">
-                <EmailFilter filter={filter} onSetFilter={onSetFilter} />
-                <EmailList
-                    emails={emails}
-                    onUpdateEmail={onUpdateEmail}
-                    onDeleteEmail={onDeleteEmail}
-                />
-            </section>
+            {inner}
         </section>
     )
 }
