@@ -26,8 +26,6 @@ async function query(filter) {
             (email) => filter.isRead === null || email.isRead == filter.isRead
         )
     }
-    console.log(filter)
-    console.log(emails)
     return emails
 }
 
