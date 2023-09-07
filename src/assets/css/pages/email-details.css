@@ -1,11 +1,5 @@
-.email-details {
-    flex-grow: 1;
-    margin: 10px;
-}
-
 .email-details-actions {
     padding: 10px;
-    background-color: #f3f6fa;
     display: flex;
     gap: 10px;
     align-items: center;

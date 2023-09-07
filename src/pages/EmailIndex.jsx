@@ -56,20 +56,20 @@ export function EmailIndex() {
     const inner = params.emailId ? (
         <Outlet />
     ) : (
-        <section className="email-index-main">
+        <>
             <EmailFilter filter={filter} onSetFilter={onSetFilter} />
             <EmailList
                 emails={emails}
                 onUpdateEmail={onUpdateEmail}
                 onDeleteEmail={onDeleteEmail}
             />
-        </section>
+        </>
     )
 
     return (
         <section className="email-index">
             <EmailSidebar />
-            {inner}
+            <section className="email-index-main">{inner}</section>
         </section>
     )
 }
