@@ -5,11 +5,25 @@
     display: flex;
     align-items: center;
     gap: 10px;
+    padding: 0 10px;
 }
 
 .email-preview:hover {
     background-color: #f6f6f6;
     border: 1px solid grey;
+}
+
+.email-preview-hover-actions {
+    display: none;
+}
+
+.email-preview:hover .email-preview-hover-actions {
+    display: block;
+}
+
+.email-preview-hover-action-delete {
+    width: 15px;
+    height: 15px;
 }
 
 .email-preview.read {
@@ -20,7 +34,6 @@
 .email-preview-star-img {
     max-width: 15px;
     max-height: 15px;
-    margin-left: 10px;
 }
 
 .email-preview-link {

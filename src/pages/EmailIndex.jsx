@@ -26,6 +26,17 @@ export function EmailIndex() {
         }
     }
 
+    async function onDeleteEmail(emailId) {
+        try {
+            await emailService.remove(emailId)
+            setEmails((prevEmails) =>
+                prevEmails.filter((e) => e.id !== emailId)
+            )
+        } catch (err) {
+            console.log('Had issues deleting email', err)
+        }
+    }
+
     async function loadEmails() {
         try {
             const emails = await emailService.query()
@@ -42,7 +53,11 @@ export function EmailIndex() {
             <EmailSidebar />
             <section className="email-main">
                 <EmailFilter />
-                <EmailList emails={emails} onUpdateEmail={onUpdateEmail} />
+                <EmailList
+                    emails={emails}
+                    onUpdateEmail={onUpdateEmail}
+                    onDeleteEmail={onDeleteEmail}
+                />
             </section>
         </section>
     )
