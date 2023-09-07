@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
 
-import { formatDate } from '../util'
+import { formatDateVerbose } from '../util'
 
 // services
 import { emailService } from '../services/email.service'
@@ -75,7 +75,7 @@ export function EmailDetails() {
                 <header className="email-details-header">
                     <div className="email-details-subject">{email.subject}</div>
                     <div className="email-details-sent-at">
-                        {formatDate(email.sentAt)}
+                        {formatDateVerbose(email.sentAt)}
                     </div>
                 </header>
                 <table className="email-details-metadata">

@@ -1,6 +1,6 @@
-export { formatDate }
+export { formatDateConcise, formatDateVerbose }
 
-function formatDate(timestamp, isVerbose = false) {
+function formatDateConcise(timestamp) {
     const now = new Date()
     const tsDate = new Date(timestamp)
 
@@ -25,4 +25,32 @@ function formatDate(timestamp, isVerbose = false) {
         month: '2-digit',
         year: 'numeric',
     })
+}
+
+function formatDateVerbose(timestamp) {
+    const delta = Math.floor((new Date().getTime() - timestamp) / 1000)
+    const minute = 60
+    const hour = minute * 60
+    const day = hour * 24
+
+    let verbose = ''
+    if (delta < minute) {
+        verbose = 'now'
+    } else if (delta < 2 * minute) {
+        verbose = '1 minute ago'
+    } else if (delta < hour) {
+        verbose = Math.floor(delta / minute) + ' minutes ago'
+    } else if (Math.floor(delta / hour) == 1) {
+        verbose = '1 hour ago'
+    } else if (delta < day) {
+        verbose = Math.floor(delta / hour) + ' hours ago'
+    } else if (delta < day * 2) {
+        verbose = '1 day ago'
+    }
+
+    let res = formatDateConcise(timestamp)
+    if (verbose) {
+        res += ' (' + verbose + ')'
+    }
+    return res
 }

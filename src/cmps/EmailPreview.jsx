@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 
-import { formatDate } from '../util'
+import { formatDateConcise } from '../util'
 
 const MAX_SUBJECT_LEN = 80
 
@@ -36,7 +36,7 @@ export function EmailPreview({ email, onUpdateEmail, onDeleteEmail }) {
                 <div className="email-preview-subject">{email.subject}</div>
                 {/* Sent at */}
                 <div className="email-preview-sent-at">
-                    {formatDate(email.sentAt)}
+                    {formatDateConcise(email.sentAt)}
                 </div>
             </Link>
             {/* Actions */}
