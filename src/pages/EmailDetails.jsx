@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
 
@@ -9,12 +9,34 @@ import { emailService } from '../services/email.service'
 
 export function EmailDetails() {
     const [email, setEmail] = useState(null)
+    const [sentAtStr, setSentAtStr] = useState('')
+    const intervalId = useRef(null)
+
     const params = useParams()
     const navigate = useNavigate()
 
     useEffect(() => {
         loadEmailAndMarkAsRead()
     }, [params.emailId])
+
+    useEffect(() => {
+        if (!email) {
+            return
+        }
+        if (intervalId.current) {
+            clearInterval(intervalId.current)
+        }
+        setSentAtStr(formatDateVerbose(email.sentAt))
+        // refresh sentAtStr every minute
+        const id = setInterval(() => {
+            setSentAtStr(formatDateVerbose(email.sentAt))
+        }, 60000)
+        intervalId.current = id
+
+        return () => {
+            clearInterval(intervalId.current)
+        }
+    }, [email])
 
     async function onDeleteEmail() {
         try {
@@ -74,9 +96,7 @@ export function EmailDetails() {
                 {/* Email Subject */}
                 <header className="email-details-header">
                     <div className="email-details-subject">{email.subject}</div>
-                    <div className="email-details-sent-at">
-                        {formatDateVerbose(email.sentAt)}
-                    </div>
+                    <div className="email-details-sent-at">{sentAtStr}</div>
                 </header>
                 <table className="email-details-metadata">
                     <tbody>
