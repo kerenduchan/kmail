@@ -19,11 +19,15 @@ const STORAGE_KEY = 'emails'
 
 _createEmails()
 
-async function query(filterBy) {
+async function query(filter) {
     let emails = await storageService.query(STORAGE_KEY)
-    if (filterBy) {
-        // TODO
+    if (filter) {
+        emails = emails.filter(
+            (email) => filter.isRead === null || email.isRead == filter.isRead
+        )
     }
+    console.log(filter)
+    console.log(emails)
     return emails
 }
 

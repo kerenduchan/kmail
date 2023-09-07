@@ -14,7 +14,7 @@ export function EmailIndex() {
 
     useEffect(() => {
         loadEmails()
-    }, [])
+    }, [filter])
 
     function onSetFilter(fieldsToUpdate) {
         setFilter((prevFilter) => ({ ...prevFilter, ...fieldsToUpdate }))
@@ -44,7 +44,7 @@ export function EmailIndex() {
 
     async function loadEmails() {
         try {
-            const emails = await emailService.query()
+            const emails = await emailService.query(filter)
             setEmails(emails)
         } catch (err) {
             console.log('Had issues loading emails', err)

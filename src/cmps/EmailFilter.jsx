@@ -26,7 +26,12 @@ export function EmailFilter({ filter, onSetFilter }) {
     return (
         <form className="email-filter" onSubmit={onSubmitFilter}>
             <label htmlFor="isRead">Read:</label>
-            <select name="isRead" id="isRead" onChange={handleChange}>
+            <select
+                name="isRead"
+                id="isRead"
+                onChange={handleChange}
+                value={'' + filterDraft.isRead}
+            >
                 <option value="true">Read</option>
                 <option value="false">Unread</option>
                 <option value="null">All</option>
