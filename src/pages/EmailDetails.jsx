@@ -75,11 +75,15 @@ export function EmailDetails() {
                 <table className="email-details-metadata">
                     <tbody>
                         <tr className="email-details-from">
-                            <td class="email-details-metadata-label">From:</td>
+                            <td className="email-details-metadata-label">
+                                From:
+                            </td>
                             <td>{email.from}</td>
                         </tr>
                         <tr className="email-details-to">
-                            <td class="email-details-metadata-label">To:</td>
+                            <td className="email-details-metadata-label">
+                                To:
+                            </td>
                             <td>{email.to}</td>
                         </tr>
                     </tbody>
