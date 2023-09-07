@@ -10,7 +10,10 @@ function formatDateConcise(timestamp) {
             now.getDay() == tsDate.getDay()
         ) {
             // timestamp is today.
-            return tsDate.getHours() + ':' + tsDate.getMinutes()
+            return tsDate.toLocaleTimeString(navigator.language, {
+                hour: '2-digit',
+                minute: '2-digit',
+            })
         }
         // timestamp is this year, but before today.
         return tsDate.toLocaleDateString(navigator.language, {
@@ -32,21 +35,21 @@ function formatDateVerbose(timestamp) {
     const minute = 60
     const hour = minute * 60
     const day = hour * 24
+    const month = day * 31
 
     let verbose = ''
-    if (delta < minute) {
-        verbose = 'now'
-    } else if (delta < 2 * minute) {
-        verbose = '1 minute ago'
-    } else if (delta < hour) {
-        verbose = Math.floor(delta / minute) + ' minutes ago'
-    } else if (Math.floor(delta / hour) == 1) {
-        verbose = '1 hour ago'
+    if (delta < hour) {
+        const minutesCount = Math.floor(delta / minute)
+        verbose =
+            minutesCount + ' minute' + (minutesCount === 1 ? '' : 's') + ' ago'
     } else if (delta < day) {
-        verbose = Math.floor(delta / hour) + ' hours ago'
-    } else if (delta < day * 2) {
-        verbose = '1 day ago'
+        const hoursCount = Math.floor(delta / hour)
+        verbose = hoursCount + ' hour' + (hoursCount === 1 ? '' : 's') + ' ago'
+    } else if (delta < month) {
+        const daysCount = Math.floor(delta / day)
+        verbose = daysCount + ' day' + (daysCount === 1 ? '' : 's') + ' ago'
     }
+    // TODO: mimic gmail for older than a month ago
 
     let res = formatDateConcise(timestamp)
     if (verbose) {
