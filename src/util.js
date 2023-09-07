@@ -7,8 +7,6 @@ function getHourAndMinuteStr(date) {
     })
 }
 
-console.log(formatDateVerbose(1663114494000))
-
 function formatDateConcise(timestamp) {
     const now = new Date()
     const tsDate = new Date(timestamp)
