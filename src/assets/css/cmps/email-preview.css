@@ -26,12 +26,6 @@
     font-weight: unset;
 }
 
-.email-preview-star-img {
-    max-width: 15px;
-    max-height: 15px;
-    cursor: pointer;
-}
-
 .email-preview-from {
     flex-basis: 20%;
     min-width: 0;
