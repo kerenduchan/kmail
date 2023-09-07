@@ -10,10 +10,15 @@ import { emailService } from '../services/email.service'
 
 export function EmailIndex() {
     const [emails, setEmails] = useState(null)
+    const [filter, setFilter] = useState(emailService.getDefaultFilter())
 
     useEffect(() => {
         loadEmails()
     }, [])
+
+    function onSetFilter(fieldsToUpdate) {
+        setFilter((prevFilter) => ({ ...prevFilter, ...fieldsToUpdate }))
+    }
 
     async function onUpdateEmail(email) {
         try {
@@ -51,8 +56,8 @@ export function EmailIndex() {
     return (
         <section className="email-index">
             <EmailSidebar />
-            <section className="email-main">
-                <EmailFilter />
+            <section className="email-index-main">
+                <EmailFilter filter={filter} onSetFilter={onSetFilter} />
                 <EmailList
                     emails={emails}
                     onUpdateEmail={onUpdateEmail}

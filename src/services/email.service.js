@@ -56,7 +56,9 @@ function createEmail() {
 }
 
 function getDefaultFilter() {
-    return {}
+    return {
+        isRead: null,
+    }
 }
 
 function _createEmails() {
