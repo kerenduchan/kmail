@@ -7,3 +7,26 @@ body {
     flex-direction: column;
     gap: 20px;
 }
+
+.small-action-btn {
+    background-color: unset;
+    border-radius: 50%;
+    border: none;
+    text-align: center;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.small-action-btn:hover {
+    background-color: #0000000e;
+}
+
+.small-action-btn img {
+    width: 15px;
+    height: 15px;
+}

@@ -14,14 +14,18 @@ export function EmailPreview({ email, onUpdateEmail, onDeleteEmail }) {
     return (
         <article className={'email-preview' + (email.isRead ? ' read' : '')}>
             {/* Star */}
-            <img
-                className="email-preview-star-img"
-                src={
-                    'imgs/' +
-                    (email.isStarred ? 'starred.svg' : 'unstarred.svg')
-                }
+            <button
+                class="email-preview-action-star small-action-btn"
                 onClick={onStarClick}
-            />
+            >
+                <img
+                    src={
+                        'imgs/' +
+                        (email.isStarred ? 'starred.svg' : 'unstarred.svg')
+                    }
+                    alt="Star"
+                />
+            </button>
             {/* Link to email details */}
             <Link className="email-preview-link" to={`/email/${email.id}`}>
                 {/* From */}
@@ -32,12 +36,12 @@ export function EmailPreview({ email, onUpdateEmail, onDeleteEmail }) {
             {/* Actions */}
             <div className="email-preview-actions">
                 {/* Delete */}
-                <img
-                    className="email-preview-action-delete"
-                    src="imgs/garbage-bin.svg"
-                    alt="Delete"
+                <button
+                    class="email-preview-action-delete small-action-btn"
                     onClick={() => onDeleteEmail(email.id)}
-                />
+                >
+                    <img src="imgs/garbage-bin.svg" alt="Delete" />
+                </button>
             </div>
         </article>
     )

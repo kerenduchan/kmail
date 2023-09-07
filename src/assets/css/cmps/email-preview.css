@@ -21,11 +21,6 @@
     opacity: 1;
 }
 
-.email-preview-action-delete {
-    width: 15px;
-    height: 15px;
-}
-
 .email-preview.read {
     background-color: #ebeff8;
     font-weight: unset;
@@ -34,6 +29,7 @@
 .email-preview-star-img {
     max-width: 15px;
     max-height: 15px;
+    cursor: pointer;
 }
 
 .email-preview-from {
