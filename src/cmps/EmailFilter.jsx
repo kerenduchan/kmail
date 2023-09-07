@@ -38,9 +38,9 @@ export function EmailFilter({ filter, onSetFilter }) {
                 onChange={handleChange}
                 value={'' + filterDraft.isRead}
             >
+                <option value="null">All</option>
                 <option value="true">Read</option>
                 <option value="false">Unread</option>
-                <option value="null">All</option>
             </select>
 
             {/* Starred */}
@@ -51,9 +51,9 @@ export function EmailFilter({ filter, onSetFilter }) {
                 onChange={handleChange}
                 value={'' + filterDraft.isStarred}
             >
+                <option value="null">All</option>
                 <option value="true">Starred</option>
                 <option value="false">Unstarred</option>
-                <option value="null">All</option>
             </select>
         </form>
     )
