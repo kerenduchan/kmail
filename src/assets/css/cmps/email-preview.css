@@ -36,6 +36,14 @@
     max-height: 15px;
 }
 
+.email-preview-from {
+    flex-basis: 20%;
+    min-width: 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow-x: hidden;
+}
+
 .email-preview-link {
     flex-grow: 1;
     min-width: 0;

@@ -79,6 +79,8 @@ function _createEmails() {
                 isStarred: false,
                 sentAt: null,
                 removedAt: null,
+                from: 'moshe@gmail.com',
+                to: 'keren.duchan@gmail.com',
             },
             {
                 id: 'e2',
@@ -88,6 +90,8 @@ function _createEmails() {
                 isStarred: true,
                 sentAt: null,
                 removedAt: null,
+                from: 'shoshana@gmail.com',
+                to: 'keren.duchan@gmail.com',
             },
             {
                 id: 'e3',
@@ -98,6 +102,8 @@ function _createEmails() {
                 isStarred: false,
                 sentAt: null,
                 removedAt: null,
+                from: 'keren.duchan@gmail.com',
+                to: 'shoshana@gmail.com',
             },
         ]
         utilService.saveToStorage(STORAGE_KEY, emails)

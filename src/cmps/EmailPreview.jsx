@@ -24,6 +24,8 @@ export function EmailPreview({ email, onUpdateEmail, onDeleteEmail }) {
             />
             {/* Link to email details */}
             <Link className="email-preview-link" to={`/email/${email.id}`}>
+                {/* From */}
+                <div className="email-preview-from">{email.from}</div>
                 {/* Subject */}
                 <div className="email-preview-subject">{email.subject}</div>
             </Link>
