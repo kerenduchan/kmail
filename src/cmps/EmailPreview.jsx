@@ -27,11 +27,11 @@ export function EmailPreview({ email, onUpdateEmail, onDeleteEmail }) {
                 {/* Subject */}
                 <div className="email-preview-subject">{email.subject}</div>
             </Link>
-            {/* Hover Actions */}
-            <div className="email-preview-hover-actions">
+            {/* Actions */}
+            <div className="email-preview-actions">
                 {/* Delete */}
                 <img
-                    className="email-preview-hover-action-delete"
+                    className="email-preview-action-delete"
                     src="imgs/garbage-bin.svg"
                     alt="Delete"
                     onClick={() => onDeleteEmail(email.id)}

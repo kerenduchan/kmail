@@ -13,15 +13,15 @@
     border: 1px solid grey;
 }
 
-.email-preview-hover-actions {
+.email-preview-actions {
     display: none;
 }
 
-.email-preview:hover .email-preview-hover-actions {
+.email-preview:hover .email-preview-actions {
     display: block;
 }
 
-.email-preview-hover-action-delete {
+.email-preview-action-delete {
     width: 15px;
     height: 15px;
 }
@@ -52,4 +52,11 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow-x: hidden;
+}
+
+/* If the screen size is 600px wide or less, always show email preview actions */
+@media only screen and (max-width: 600px) {
+    .email-preview-actions {
+        display: unset;
+    }
 }
