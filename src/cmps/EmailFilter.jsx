@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react'
 
+const translateNullableBool = {
+    true: true,
+    false: false,
+    null: null,
+}
+
 export function EmailFilter({ filter, onSetFilter }) {
     const [filterDraft, setFilterDraft] = useState(filter)
 
@@ -11,10 +17,9 @@ export function EmailFilter({ filter, onSetFilter }) {
         let { value, name: field, type } = ev.target
         if (type === 'number') {
             value = +value
-        } else if (field === 'isRead') {
-            if (value == 'true') value = true
-            if (value == 'false') value = false
-            if (value == 'null') value = null
+        } else if (['isRead', 'isStarred'].includes(field)) {
+            value = translateNullableBool[value]
+            console.log(value)
         }
         setFilterDraft((prevFilter) => ({ ...prevFilter, [field]: value }))
     }
@@ -25,6 +30,7 @@ export function EmailFilter({ filter, onSetFilter }) {
 
     return (
         <form className="email-filter" onSubmit={onSubmitFilter}>
+            {/* Read */}
             <label htmlFor="isRead">Read:</label>
             <select
                 name="isRead"
@@ -34,6 +40,19 @@ export function EmailFilter({ filter, onSetFilter }) {
             >
                 <option value="true">Read</option>
                 <option value="false">Unread</option>
+                <option value="null">All</option>
+            </select>
+
+            {/* Starred */}
+            <label htmlFor="isStarred">Starred:</label>
+            <select
+                name="isStarred"
+                id="isStarred"
+                onChange={handleChange}
+                value={'' + filterDraft.isStarred}
+            >
+                <option value="true">Starred</option>
+                <option value="false">Unstarred</option>
                 <option value="null">All</option>
             </select>
         </form>

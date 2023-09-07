@@ -23,7 +23,10 @@ async function query(filter) {
     let emails = await storageService.query(STORAGE_KEY)
     if (filter) {
         emails = emails.filter(
-            (email) => filter.isRead === null || email.isRead == filter.isRead
+            (email) =>
+                (filter.isRead === null || email.isRead === filter.isRead) &&
+                (filter.isStarred === null ||
+                    email.isStarred === filter.isStarred)
         )
     }
     return emails
@@ -60,6 +63,7 @@ function createEmail() {
 function getDefaultFilter() {
     return {
         isRead: null,
+        isStarred: null,
     }
 }
 
