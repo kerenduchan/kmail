@@ -15,7 +15,7 @@ export function EmailPreview({ email, onUpdateEmail, onDeleteEmail }) {
         <article className={'email-preview' + (email.isRead ? ' read' : '')}>
             {/* Star */}
             <button
-                class="email-preview-action-star small-action-btn"
+                className="email-preview-action-star small-action-btn"
                 onClick={onStarClick}
             >
                 <img
@@ -37,7 +37,7 @@ export function EmailPreview({ email, onUpdateEmail, onDeleteEmail }) {
             <div className="email-preview-actions">
                 {/* Delete */}
                 <button
-                    class="email-preview-action-delete small-action-btn"
+                    className="email-preview-action-delete small-action-btn"
                     onClick={() => onDeleteEmail(email.id)}
                 >
                     <img src="imgs/garbage-bin.svg" alt="Delete" />
