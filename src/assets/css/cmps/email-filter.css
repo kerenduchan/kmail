@@ -8,6 +8,5 @@
 @media only screen and (max-width: 600px) {
     .email-filter {
         flex-direction: column;
-        opacity: 1;
     }
 }
