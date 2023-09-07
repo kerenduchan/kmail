@@ -23,9 +23,7 @@ export function EmailIndex() {
     async function onUpdateEmail(email) {
         try {
             await emailService.save(email)
-            setEmails((prevEmails) =>
-                prevEmails.map((e) => (e.id === email.id ? email : e))
-            )
+            await loadEmails()
         } catch (err) {
             console.log('Failed to star/unstar email', err)
         }
