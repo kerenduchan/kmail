@@ -14,11 +14,11 @@
 }
 
 .email-preview-actions {
-    display: none;
+    opacity: 0;
 }
 
 .email-preview:hover .email-preview-actions {
-    display: block;
+    opacity: 1;
 }
 
 .email-preview-action-delete {
