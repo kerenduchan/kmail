@@ -31,30 +31,33 @@ export function EmailFilter({ filter, onSetFilter }) {
     return (
         <form className="email-filter" onSubmit={onSubmitFilter}>
             {/* Read */}
-            <label htmlFor="isRead">Read:</label>
-            <select
-                name="isRead"
-                id="isRead"
-                onChange={handleChange}
-                value={'' + filterDraft.isRead}
-            >
-                <option value="null">All</option>
-                <option value="true">Read</option>
-                <option value="false">Unread</option>
-            </select>
-
+            <div className="email-filter-field">
+                <label htmlFor="isRead">Read:</label>
+                <select
+                    name="isRead"
+                    id="isRead"
+                    onChange={handleChange}
+                    value={'' + filterDraft.isRead}
+                >
+                    <option value="null">All</option>
+                    <option value="true">Read</option>
+                    <option value="false">Unread</option>
+                </select>
+            </div>
             {/* Starred */}
-            <label htmlFor="isStarred">Starred:</label>
-            <select
-                name="isStarred"
-                id="isStarred"
-                onChange={handleChange}
-                value={'' + filterDraft.isStarred}
-            >
-                <option value="null">All</option>
-                <option value="true">Starred</option>
-                <option value="false">Unstarred</option>
-            </select>
+            <div className="email-filter-field">
+                <label htmlFor="isStarred">Starred:</label>
+                <select
+                    name="isStarred"
+                    id="isStarred"
+                    onChange={handleChange}
+                    value={'' + filterDraft.isStarred}
+                >
+                    <option value="null">All</option>
+                    <option value="true">Starred</option>
+                    <option value="false">Unstarred</option>
+                </select>
+            </div>
         </form>
     )
 }

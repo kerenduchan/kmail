@@ -1,10 +1,15 @@
 .email-filter {
     padding: 10px;
     display: flex;
-    gap: 10px;
+    gap: 15px;
 }
 
-/* For small screens, change flex direction */
+.email-filter-field {
+    display: flex;
+    gap: 7px;
+}
+
+/* Styling for small screens */
 @media only screen and (max-width: 600px) {
     .email-filter {
         flex-direction: column;

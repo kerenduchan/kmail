@@ -52,9 +52,17 @@
     overflow-x: hidden;
 }
 
-/* If the screen size is 600px wide or less, always show email preview actions */
+/* Styling for small screens */
 @media only screen and (max-width: 600px) {
+    .email-preview-link {
+        flex-direction: column;
+    }
+
     .email-preview-actions {
         opacity: 1;
+    }
+
+    .email-preview-subject {
+        font-size: 90%;
     }
 }
