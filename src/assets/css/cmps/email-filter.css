@@ -3,3 +3,11 @@
     display: flex;
     gap: 10px;
 }
+
+/* If the screen size is 600px wide or less, always show email preview actions */
+@media only screen and (max-width: 600px) {
+    .email-filter {
+        flex-direction: column;
+        opacity: 1;
+    }
+}
