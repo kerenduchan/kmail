@@ -1,5 +1,5 @@
 .email-details-actions {
-    padding: 10px 0;
+    padding: 10px;
     background-color: #f3f6fa;
     display: flex;
     gap: 10px;
@@ -15,6 +15,10 @@
 .email-details-action-back img {
     width: 15px;
     height: 15px;
+}
+
+.email-details-content {
+    padding: 10px;
 }
 
 .email-details-subject {
