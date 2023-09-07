@@ -5,6 +5,7 @@
 
 .email-main {
     flex-grow: 1;
+    min-width: 0;
     display: flex;
     flex-direction: column;
     gap: 20px;

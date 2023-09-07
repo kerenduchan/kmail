@@ -4,9 +4,10 @@
     border: 1px solid transparent;
     display: flex;
     align-items: center;
+    gap: 10px;
 }
 
-.email-preview.hover {
+.email-preview:hover {
     background-color: #f6f6f6;
     border: 1px solid grey;
 }
@@ -19,13 +20,23 @@
 .email-preview-star-img {
     max-width: 15px;
     max-height: 15px;
-    margin: 10px;
+    margin-left: 10px;
 }
 
 .email-preview-link {
     flex-grow: 1;
+    min-width: 0;
     padding-top: 10px;
     padding-bottom: 10px;
     text-decoration: none;
     color: unset;
+    display: flex;
+}
+
+.email-preview-subject {
+    flex-grow: 1;
+    min-width: 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow-x: hidden;
 }

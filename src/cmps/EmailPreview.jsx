@@ -4,8 +4,6 @@ import { Link } from 'react-router-dom'
 const MAX_SUBJECT_LEN = 80
 
 export function EmailPreview({ email, onUpdateEmail }) {
-    const [isActive, setIsActive] = useState(false)
-
     function onStarClick(email) {
         const emailAfterUpdate = {
             ...email,
@@ -14,19 +12,9 @@ export function EmailPreview({ email, onUpdateEmail }) {
         onUpdateEmail(emailAfterUpdate)
     }
 
-    function getTruncatedSubject() {
-        return email.subject.length <= MAX_SUBJECT_LEN
-            ? email.subject
-            : email.subject.substring(0, MAX_SUBJECT_LEN).trimEnd() + '...'
-    }
-
     return (
         <article
-            className={
-                'email-preview' +
-                (email.isRead ? ' read' : '') +
-                (isActive ? ' hover' : '')
-            }
+            className={'email-preview' + (email.isRead ? ' read' : '')}
             onMouseOver={() => setIsActive(true)}
             onMouseOut={() => setIsActive(false)}
         >
@@ -39,7 +27,7 @@ export function EmailPreview({ email, onUpdateEmail }) {
                 onClick={() => onStarClick(email)}
             />
             <Link className="email-preview-link" to={`/email/${email.id}`}>
-                <span>{getTruncatedSubject()}</span>
+                <div className="email-preview-subject">{email.subject}</div>
             </Link>
         </article>
     )
