@@ -4,7 +4,7 @@
     gap: 10px;
 }
 
-/* If the screen size is 600px wide or less, always show email preview actions */
+/* For small screens, change flex direction */
 @media only screen and (max-width: 600px) {
     .email-filter {
         flex-direction: column;
