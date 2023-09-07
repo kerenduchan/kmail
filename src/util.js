@@ -1,24 +1,28 @@
 export { formatDate }
 
-function formatDate(timestamp) {
-    const delta = Math.floor((new Date().getTime() - timestamp) / 1000)
-    const minute = 60
-    const hour = minute * 60
-    const day = hour * 24
+function formatDate(timestamp, isVerbose = false) {
+    const now = new Date()
+    const tsDate = new Date(timestamp)
 
-    if (delta < minute) {
-        return 'now'
-    } else if (delta < 2 * minute) {
-        return 'a minute ago'
-    } else if (delta < hour) {
-        return Math.floor(delta / minute) + ' minutes ago'
-    } else if (Math.floor(delta / hour) == 1) {
-        return '1 hour ago'
-    } else if (delta < day) {
-        return Math.floor(delta / hour) + ' hours ago'
-    } else if (delta < day * 2) {
-        return 'yesterday'
+    if (now.getFullYear() == tsDate.getFullYear()) {
+        if (
+            now.getMonth() == tsDate.getMonth() &&
+            now.getDay() == tsDate.getDay()
+        ) {
+            // timestamp is today.
+            return tsDate.getHours() + ':' + tsDate.getMinutes()
+        }
+        // timestamp is this year, but before today.
+        return tsDate.toLocaleDateString(navigator.language, {
+            day: 'numeric',
+            month: 'short',
+        })
     }
 
-    return new Date(timestamp).toLocaleDateString('en-GB')
+    // timestamp is in the previous year or older
+    return tsDate.toLocaleDateString(navigator.language, {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+    })
 }
