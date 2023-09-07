@@ -21,9 +21,20 @@
     padding: 10px;
 }
 
+.email-details-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .email-details-subject {
     font-size: 20px;
     padding: 20px 0;
+}
+
+.email-details-sent-at {
+    font-size: 90%;
+    color: grey;
 }
 
 .email-details-metadata {

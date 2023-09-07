@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
 
+import { formatDate } from '../util'
+
 // services
 import { emailService } from '../services/email.service'
 
@@ -66,11 +68,15 @@ export function EmailDetails() {
                 {/* Mark as unread */}
                 <button onClick={onMarkEmailAsUnread}>Mark as unread</button>
             </section>
+
             {/* Email Contents */}
             <section className="email-details-content">
                 {/* Email Subject */}
-                <header className="email-details-subject">
-                    {email.subject}
+                <header className="email-details-header">
+                    <div className="email-details-subject">{email.subject}</div>
+                    <div className="email-details-sent-at">
+                        {formatDate(email.sentAt)}
+                    </div>
                 </header>
                 <table className="email-details-metadata">
                     <tbody>
