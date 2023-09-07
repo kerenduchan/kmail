@@ -1,4 +1,13 @@
-export { formatDateConcise, formatDateVerbose }
+export { getHourAndMinuteStr, formatDateConcise, formatDateVerbose }
+
+function getHourAndMinuteStr(date) {
+    return date.toLocaleTimeString(navigator.language, {
+        hour: '2-digit',
+        minute: '2-digit',
+    })
+}
+
+console.log(formatDateVerbose(1663114494000))
 
 function formatDateConcise(timestamp) {
     const now = new Date()
@@ -10,10 +19,7 @@ function formatDateConcise(timestamp) {
             now.getDay() == tsDate.getDay()
         ) {
             // timestamp is today.
-            return tsDate.toLocaleTimeString(navigator.language, {
-                hour: '2-digit',
-                minute: '2-digit',
-            })
+            return getHourAndMinuteStr(tsDate)
         }
         // timestamp is this year, but before today.
         return tsDate.toLocaleDateString(navigator.language, {
@@ -31,29 +37,49 @@ function formatDateConcise(timestamp) {
 }
 
 function formatDateVerbose(timestamp) {
+    const tsDate = new Date(timestamp)
+
     const delta = Math.floor((new Date().getTime() - timestamp) / 1000)
     const minute = 60
     const hour = minute * 60
     const day = hour * 24
     const month = day * 31
 
-    let verbose = ''
+    let res = ''
+    let relative = ''
     if (delta < hour) {
         const minutesCount = Math.floor(delta / minute)
-        verbose =
+        return getHourAndMinuteStr(tsDate)
+        relative =
             minutesCount + ' minute' + (minutesCount === 1 ? '' : 's') + ' ago'
     } else if (delta < day) {
+        res = getHourAndMinuteStr(tsDate)
         const hoursCount = Math.floor(delta / hour)
-        verbose = hoursCount + ' hour' + (hoursCount === 1 ? '' : 's') + ' ago'
+        relative = hoursCount + ' hour' + (hoursCount === 1 ? '' : 's') + ' ago'
     } else if (delta < month) {
+        res = tsDate.toLocaleDateString(navigator.language, {
+            weekday: 'short',
+            day: 'numeric',
+            month: 'short',
+            hour: '2-digit',
+            minute: '2-digit',
+        })
         const daysCount = Math.floor(delta / day)
-        verbose = daysCount + ' day' + (daysCount === 1 ? '' : 's') + ' ago'
+        relative = daysCount + ' day' + (daysCount === 1 ? '' : 's') + ' ago'
+    } else {
+        res = tsDate.toLocaleDateString(navigator.language, {
+            weekday: 'short',
+            day: 'numeric',
+            month: 'short',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+        })
     }
-    // TODO: mimic gmail for older than a month ago
+    // TODO: mimic gmail for several months ago
 
-    let res = formatDateConcise(timestamp)
-    if (verbose) {
-        res += ' (' + verbose + ')'
+    if (relative) {
+        res += ' (' + relative + ')'
     }
     return res
 }
