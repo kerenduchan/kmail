@@ -59,6 +59,8 @@ function createEmail() {
         id: null,
         subject: '',
         body: '',
+        to: '',
+        from: loggedinUser.email,
         isRead: false,
         isStarred: false,
         sentAt: null,
