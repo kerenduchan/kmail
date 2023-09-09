@@ -1,6 +1,6 @@
-import { Link, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 
-export function EmailSidebar() {
+export function EmailSidebar({ onFolderClick }) {
     const location = useLocation()
 
     function getClassName(folder) {
@@ -10,30 +10,40 @@ export function EmailSidebar() {
         )
     }
 
+    const folders = [
+        {
+            id: 'inbox',
+            name: 'Inbox',
+        },
+        {
+            id: 'sent',
+            name: 'Sent',
+        },
+        {
+            id: 'all',
+            name: 'All Mail',
+        },
+    ]
+
     return (
         <section className="email-sidebar">
-            <Link
-                className="email-sidebar-compose-button"
-                to={'/email/compose'}
-            >
+            <a className="email-sidebar-compose-button" to={'/email/compose'}>
                 <button>Compose</button>
-            </Link>
+            </a>
 
             <section className="email-sidebar-folders">
-                {/* Inbox */}
-                <Link to={'/email/inbox'} className={getClassName('inbox')}>
-                    Inbox
-                </Link>
-
-                {/* Sent */}
-                <Link to={'/email/sent'} className={getClassName('sent')}>
-                    Sent
-                </Link>
-
-                {/* All Mail */}
-                <Link to={'/email/all'} className={getClassName('all')}>
-                    All Mail
-                </Link>
+                {folders.map((folder) => {
+                    return (
+                        <a
+                            key={folder.id}
+                            to={`/email/${folder.id}`}
+                            className={getClassName(folder.id)}
+                            onClick={() => onFolderClick(folder.id)}
+                        >
+                            {folder.name}
+                        </a>
+                    )
+                })}
             </section>
         </section>
     )

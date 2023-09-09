@@ -17,10 +17,14 @@ export function EmailIndex() {
     const navigate = useNavigate()
 
     useEffect(() => {
+        if (filter.folder === null) {
+            return
+        }
         loadEmails()
     }, [filter])
 
     useEffect(() => {
+        // redirect /email => /email/inbox
         const pathnameArr = location.pathname.split('/').filter((p) => p.length)
         if (pathnameArr.length == 1) {
             navigate('/email/inbox')
@@ -28,12 +32,13 @@ export function EmailIndex() {
             pathnameArr.length == 2 &&
             ['inbox', 'sent', 'all'].includes(pathnameArr[1])
         ) {
-            setFilter((prev) => ({
-                ...prev,
-                folder: pathnameArr[1],
-            }))
+            onSetFilter({ folder: pathnameArr[1] })
         }
     }, [location])
+
+    function onFolderClick(folder) {
+        navigate(`/email/${folder}`)
+    }
 
     function onSetFilter(fieldsToUpdate) {
         setFilter((prevFilter) => ({ ...prevFilter, ...fieldsToUpdate }))
@@ -51,9 +56,7 @@ export function EmailIndex() {
     async function onDeleteEmail(emailId) {
         try {
             await emailService.remove(emailId)
-            setEmails((prevEmails) =>
-                prevEmails.filter((e) => e.id !== emailId)
-            )
+            await loadEmails()
         } catch (err) {
             console.log('Had issues deleting email', err)
         }
@@ -62,16 +65,15 @@ export function EmailIndex() {
     async function loadEmails() {
         try {
             const emails = await emailService.query(filter)
-            setEmails(emails)
+            setEmails({
+                data: emails,
+                folder: filter.folder,
+            })
         } catch (err) {
             console.log('Had issues loading emails', err)
         }
     }
 
-    function isSentFolder() {
-        const pathnameArr = location.pathname.split('/').filter((p) => p.length)
-        return pathnameArr.length == 2 && pathnameArr[1] == 'sent'
-    }
     if (!emails) return <div>Loading..</div>
 
     const inner =
@@ -82,7 +84,6 @@ export function EmailIndex() {
                 <EmailFilter filter={filter} onSetFilter={onSetFilter} />
                 <EmailList
                     emails={emails}
-                    showSentView={isSentFolder()}
                     onUpdateEmail={onUpdateEmail}
                     onDeleteEmail={onDeleteEmail}
                 />
@@ -91,7 +92,7 @@ export function EmailIndex() {
 
     return (
         <section className="email-index">
-            <EmailSidebar />
+            <EmailSidebar onFolderClick={onFolderClick} />
             <section className="email-index-main">{inner}</section>
         </section>
     )

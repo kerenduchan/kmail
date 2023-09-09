@@ -105,7 +105,7 @@ function getDefaultFilter() {
         isRead: null,
         isStarred: null,
         searchString: '',
-        folder: 'inbox',
+        folder: null,
     }
 }
 

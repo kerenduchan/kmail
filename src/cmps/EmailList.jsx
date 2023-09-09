@@ -1,17 +1,12 @@
 import { EmailPreview } from './EmailPreview'
 
-export function EmailList({
-    emails,
-    showSentView,
-    onUpdateEmail,
-    onDeleteEmail,
-}) {
+export function EmailList({ emails, onUpdateEmail, onDeleteEmail }) {
     return (
         <ul className="email-list">
-            {emails.map((email) => (
+            {emails.data.map((email) => (
                 <li key={email.id}>
                     <EmailPreview
-                        showSentView={showSentView}
+                        showSentView={emails.folder == 'sent'}
                         email={email}
                         onUpdateEmail={onUpdateEmail}
                         onDeleteEmail={onDeleteEmail}
