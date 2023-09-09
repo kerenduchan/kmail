@@ -8,7 +8,7 @@ import { EmailSidebar } from '../cmps/EmailSidebar'
 
 // services
 import { emailService } from '../services/email.service'
-import { strToNullableBool } from '../util'
+import { nullableBoolToStr, strToNullableBool } from '../util'
 
 export function EmailIndex() {
     const [emails, setEmails] = useState(null)
@@ -38,7 +38,11 @@ export function EmailIndex() {
             ['inbox', 'sent', 'all'].includes(pathnameArr[1])
         ) {
             // filter by folder
-            onSetFilter({ folder: pathnameArr[1], ...qs })
+            setFilter((prevFilter) => ({
+                ...prevFilter,
+                folder: pathnameArr[1],
+                ...qs,
+            }))
         }
     }, [location])
 
@@ -46,8 +50,23 @@ export function EmailIndex() {
         navigate(`/email/${folder}`)
     }
 
-    function onSetFilter(fieldsToUpdate) {
-        setFilter((prevFilter) => ({ ...prevFilter, ...fieldsToUpdate }))
+    function onFilterChange(fieldsToUpdate) {
+        const newFilter = { ...filter, ...fieldsToUpdate }
+        const queryString = new URLSearchParams()
+
+        if (newFilter.isRead !== null) {
+            queryString.set('read', nullableBoolToStr(newFilter.isRead))
+        }
+        if (newFilter.isStarred !== null) {
+            queryString.set('starred', nullableBoolToStr(newFilter.isStarred))
+        }
+        if (newFilter.searchString) {
+            queryString.set('search', newFilter.searchString)
+        }
+
+        navigate({
+            search: queryString.toString(),
+        })
     }
 
     async function onUpdateEmail(email) {
@@ -82,14 +101,12 @@ export function EmailIndex() {
 
     function parseQueryString() {
         const queryString = new URLSearchParams(location.search)
-        const isRead = queryString.get('read')
-        const isStarred = queryString.get('starred')
-        const searchStr = queryString.get('search')
+        const searchString = queryString.get('search')
 
         return {
-            isStarred: strToNullableBool(isStarred),
-            isRead: strToNullableBool(isRead),
-            searchStr: searchStr ? searchStr : '',
+            isRead: strToNullableBool(queryString.get('read')),
+            isStarred: strToNullableBool(queryString.get('starred')),
+            searchString: searchString ? searchString : '',
         }
     }
 
@@ -100,7 +117,7 @@ export function EmailIndex() {
             <Outlet />
         ) : (
             <>
-                <EmailFilter filter={filter} onChange={onSetFilter} />
+                <EmailFilter filter={filter} onChange={onFilterChange} />
                 <EmailList
                     emails={emails}
                     onUpdateEmail={onUpdateEmail}
