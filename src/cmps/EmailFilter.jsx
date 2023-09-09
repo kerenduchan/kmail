@@ -19,7 +19,6 @@ export function EmailFilter({ filter, onSetFilter }) {
             value = +value
         } else if (['isRead', 'isStarred'].includes(field)) {
             value = translateNullableBool[value]
-            console.log(value)
         }
         setFilterDraft((prevFilter) => ({ ...prevFilter, [field]: value }))
     }

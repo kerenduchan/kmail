@@ -26,11 +26,11 @@ _createEmails()
 
 function _doesEmailMatchFilter(email, filter) {
     // isRead
-    if (filter.isRead && email.isRead !== filter.isRead) {
+    if (filter.isRead !== null && email.isRead !== filter.isRead) {
         return false
     }
     // isStarred
-    if (filter.isStarred && email.isStarred !== filter.isStarred) {
+    if (filter.isStarred !== null && email.isStarred !== filter.isStarred) {
         return false
     }
     // searchString
