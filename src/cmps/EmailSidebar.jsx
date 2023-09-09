@@ -1,3 +1,7 @@
-export function EmailSidebar() {
-    return <section className="email-sidebar">sidebar</section>
+export function EmailSidebar({ onComposeClick }) {
+    return (
+        <section className="email-sidebar">
+            <button onClick={onComposeClick}>Compose</button>
+        </section>
+    )
 }

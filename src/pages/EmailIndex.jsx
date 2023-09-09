@@ -6,12 +6,17 @@ import { EmailFilter } from '../cmps/EmailFilter'
 import { EmailList } from '../cmps/EmailList'
 import { EmailSidebar } from '../cmps/EmailSidebar'
 
+// pages
+import { EmailCompose } from './EmailCompose'
+
 // services
 import { emailService } from '../services/email.service'
+import { Modal } from '../cmps/Modal'
 
 export function EmailIndex() {
     const [emails, setEmails] = useState(null)
     const [filter, setFilter] = useState(emailService.getDefaultFilter())
+    const [showCompose, setShowCompose] = useState(false)
     const params = useParams()
 
     useEffect(() => {
@@ -68,8 +73,15 @@ export function EmailIndex() {
 
     return (
         <section className="email-index">
-            <EmailSidebar />
+            <EmailSidebar onComposeClick={() => setShowCompose(true)} />
             <section className="email-index-main">{inner}</section>
+
+            {/* Email Compose Modal */}
+            <Modal
+                show={showCompose}
+                onClose={() => setShowCompose(false)}
+                renderComponent={<EmailCompose />}
+            />
         </section>
     )
 }

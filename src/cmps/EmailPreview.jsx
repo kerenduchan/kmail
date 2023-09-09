@@ -29,7 +29,7 @@ export function EmailPreview({ email, onUpdateEmail, onDeleteEmail }) {
                 />
             </button>
             {/* Link to email details */}
-            <Link className="email-preview-link" to={`/email/${email.id}`}>
+            <Link className="email-preview-link" to={`/email/e/${email.id}`}>
                 {/* From */}
                 <div className="email-preview-from">{email.from}</div>
                 {/* Subject */}
