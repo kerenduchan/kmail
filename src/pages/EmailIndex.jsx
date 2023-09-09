@@ -82,15 +82,15 @@ export function EmailIndex() {
 
     function parseQueryString() {
         const queryString = new URLSearchParams(location.search)
-        let res = {
-            isRead: strToNullableBool(queryString.get('read')),
-            isStarred: strToNullableBool(queryString.get('starred')),
-            searchStr: queryString.get('search'),
-        }
+        const isRead = queryString.get('read')
+        const isStarred = queryString.get('starred')
+        const searchStr = queryString.get('search')
 
-        return Object.keys(res).forEach((key) =>
-            res[key] === undefined ? delete res[key] : {}
-        )
+        return {
+            isStarred: strToNullableBool(isStarred),
+            isRead: strToNullableBool(isRead),
+            searchStr: searchStr ? searchStr : '',
+        }
     }
 
     if (!emails) return <div>Loading..</div>

@@ -100,12 +100,12 @@ function nullableBoolToStr(nb) {
             return key
         }
     }
-    return null
+    return nullableBool[null]
 }
 
 function strToNullableBool(str) {
     if (nullableBool[str] !== undefined) {
         return nullableBool[str]
     }
-    return nullableBool[null]
+    return null
 }
