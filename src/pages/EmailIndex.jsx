@@ -68,6 +68,10 @@ export function EmailIndex() {
         }
     }
 
+    function isSentFolder() {
+        const pathnameArr = location.pathname.split('/').filter((p) => p.length)
+        return pathnameArr.length == 2 && pathnameArr[1] == 'sent'
+    }
     if (!emails) return <div>Loading..</div>
 
     const inner =
@@ -78,6 +82,7 @@ export function EmailIndex() {
                 <EmailFilter filter={filter} onSetFilter={onSetFilter} />
                 <EmailList
                     emails={emails}
+                    showSentView={isSentFolder()}
                     onUpdateEmail={onUpdateEmail}
                     onDeleteEmail={onDeleteEmail}
                 />

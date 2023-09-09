@@ -4,7 +4,12 @@ import { formatDateConcise } from '../util'
 
 const MAX_SUBJECT_LEN = 80
 
-export function EmailPreview({ email, onUpdateEmail, onDeleteEmail }) {
+export function EmailPreview({
+    email,
+    showSentView,
+    onUpdateEmail,
+    onDeleteEmail,
+}) {
     function onStarClick() {
         const emailAfterUpdate = {
             ...email,
@@ -30,8 +35,10 @@ export function EmailPreview({ email, onUpdateEmail, onDeleteEmail }) {
             </button>
             {/* Link to email details */}
             <Link className="email-preview-link" to={`/email/e/${email.id}`}>
-                {/* From */}
-                <div className="email-preview-from">{email.from}</div>
+                {/* From (or To in Sent view */}
+                <div className="email-preview-from">
+                    {showSentView ? 'To: ' + email.to : email.from}
+                </div>
                 {/* Subject */}
                 <div className="email-preview-subject">{email.subject}</div>
                 {/* Sent at */}
