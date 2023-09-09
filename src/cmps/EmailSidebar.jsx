@@ -1,6 +1,15 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 export function EmailSidebar() {
+    const location = useLocation()
+
+    function getClassName(folder) {
+        return (
+            'email-sidebar-folder' +
+            (location.pathname.split('/')[2] == folder ? ' active' : '')
+        )
+    }
+
     return (
         <section className="email-sidebar">
             <Link
@@ -12,13 +21,19 @@ export function EmailSidebar() {
 
             <section className="email-sidebar-folders">
                 {/* Inbox */}
-                <Link to={'/email/inbox'}>Inbox</Link>
+                <Link to={'/email/inbox'} className={getClassName('inbox')}>
+                    Inbox
+                </Link>
 
                 {/* Sent */}
-                <Link to={'/email/sent'}>Sent</Link>
+                <Link to={'/email/sent'} className={getClassName('sent')}>
+                    Sent
+                </Link>
 
                 {/* All Mail */}
-                <Link to={'/email/all'}>All Mail</Link>
+                <Link to={'/email/all'} className={getClassName('all')}>
+                    All Mail
+                </Link>
             </section>
         </section>
     )

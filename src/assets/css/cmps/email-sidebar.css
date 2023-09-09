@@ -10,3 +10,7 @@
     flex-direction: column;
     gap: 10px;
 }
+
+.email-sidebar-folder.active {
+    font-weight: bold;
+}
