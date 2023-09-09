@@ -1,7 +1,14 @@
-export function EmailSidebar({ onComposeClick }) {
+import { Link } from 'react-router-dom'
+
+export function EmailSidebar() {
     return (
         <section className="email-sidebar">
-            <button onClick={onComposeClick}>Compose</button>
+            <Link
+                className="email-sidebar-compose-button"
+                to={'/email/compose'}
+            >
+                <button>Compose</button>
+            </Link>
         </section>
     )
 }

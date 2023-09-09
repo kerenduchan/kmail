@@ -1,13 +1,10 @@
 import { useState, useEffect } from 'react'
-import { useParams, Outlet } from 'react-router'
+import { useParams, useLocation, useNavigate, Outlet } from 'react-router'
 
 // components
 import { EmailFilter } from '../cmps/EmailFilter'
 import { EmailList } from '../cmps/EmailList'
 import { EmailSidebar } from '../cmps/EmailSidebar'
-
-// pages
-import { EmailCompose } from './EmailCompose'
 
 // services
 import { emailService } from '../services/email.service'
@@ -18,13 +15,26 @@ export function EmailIndex() {
     const [filter, setFilter] = useState(emailService.getDefaultFilter())
     const [showCompose, setShowCompose] = useState(false)
     const params = useParams()
+    const location = useLocation()
+    const navigate = useNavigate()
 
     useEffect(() => {
         loadEmails()
     }, [filter])
 
+    useEffect(() => {
+        if (location.pathname == '/email/compose') {
+            setShowCompose(true)
+        }
+    }, [location])
+
     function onSetFilter(fieldsToUpdate) {
         setFilter((prevFilter) => ({ ...prevFilter, ...fieldsToUpdate }))
+    }
+
+    function onCloseCompose() {
+        setShowCompose(false)
+        navigate('/email')
     }
 
     async function onUpdateEmail(email) {
@@ -73,14 +83,14 @@ export function EmailIndex() {
 
     return (
         <section className="email-index">
-            <EmailSidebar onComposeClick={() => setShowCompose(true)} />
+            <EmailSidebar />
             <section className="email-index-main">{inner}</section>
 
             {/* Email Compose Modal */}
             <Modal
                 show={showCompose}
-                onClose={() => setShowCompose(false)}
-                renderComponent={<EmailCompose />}
+                onClose={onCloseCompose}
+                renderComponent={<Outlet />}
             />
         </section>
     )
