@@ -28,6 +28,7 @@ function App() {
                                 path="/email/compose"
                                 element={<EmailCompose />}
                             />
+                            <Route path="/email/inbox" element={null} />
                         </Route>
                     </Routes>
                 </main>

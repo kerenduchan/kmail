@@ -8,6 +8,7 @@ export const emailService = {
     getById,
     createEmail,
     getDefaultFilter,
+    getLoggedInUser,
 }
 
 const loggedinUser = {
@@ -16,6 +17,10 @@ const loggedinUser = {
 }
 
 const STORAGE_KEY = 'emails'
+
+function getLoggedInUser() {
+    return loggedinUser
+}
 
 _createEmails()
 
@@ -32,7 +37,8 @@ async function query(filter) {
                     email.subject
                         .toLowerCase()
                         .includes(lowercaseSearchString) ||
-                    email.body.toLowerCase().includes(lowercaseSearchString))
+                    email.body.toLowerCase().includes(lowercaseSearchString)) &&
+                (!filter.to || filter.to == email.to)
         )
     }
     return emails

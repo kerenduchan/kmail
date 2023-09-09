@@ -9,6 +9,15 @@ export function EmailSidebar() {
             >
                 <button>Compose</button>
             </Link>
+
+            <section className="email-sidebar-folders">
+                <Link
+                    className="email-sidebar-folder-inbox"
+                    to={'/email/inbox'}
+                >
+                    Inbox
+                </Link>
+            </section>
         </section>
     )
 }

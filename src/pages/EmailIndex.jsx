@@ -19,6 +19,15 @@ export function EmailIndex() {
         loadEmails()
     }, [filter])
 
+    useEffect(() => {
+        if (location.pathname == '/email/inbox') {
+            setFilter((prev) => ({
+                ...prev,
+                to: emailService.getLoggedInUser().email,
+            }))
+        }
+    }, [location])
+
     function onSetFilter(fieldsToUpdate) {
         setFilter((prevFilter) => ({ ...prevFilter, ...fieldsToUpdate }))
     }
