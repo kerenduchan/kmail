@@ -8,7 +8,15 @@
     padding: 10px 0;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+}
+
+.email-sidebar-folder {
+    padding: 5px;
+    cursor: pointer;
+}
+
+.email-sidebar-folder:hover {
+    background-color: rgba(0, 0, 0, 0.052);
 }
 
 .email-sidebar-folder.active {

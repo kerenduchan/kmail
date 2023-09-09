@@ -1,30 +1,36 @@
 import React, { useEffect, useState } from 'react'
 
-const translateNullableBool = {
+const strToNullableBool = {
     true: true,
     false: false,
     null: null,
 }
 
-export function EmailFilter({ filter, onSetFilter }) {
-    const [filterDraft, setFilterDraft] = useState(filter)
-
-    useEffect(() => {
-        onSetFilter(filterDraft)
-    }, [filterDraft])
-
+export function EmailFilter({ filter, onChange }) {
     function handleChange(ev) {
         let { value, name: field, type } = ev.target
         if (type === 'number') {
             value = +value
         } else if (['isRead', 'isStarred'].includes(field)) {
-            value = translateNullableBool[value]
+            value = strToNullableBool[value]
         }
-        setFilterDraft((prevFilter) => ({ ...prevFilter, [field]: value }))
+        onChange({ [field]: value })
     }
 
     function onSubmitFilter(ev) {
         ev.preventDefault()
+    }
+
+    function nullableBoolToStr(nb) {
+        switch (nb) {
+            case true:
+                return 'true'
+            case false:
+                return 'false'
+            case null:
+            default:
+                return 'null'
+        }
     }
 
     return (
@@ -36,7 +42,7 @@ export function EmailFilter({ filter, onSetFilter }) {
                     name="isRead"
                     id="isRead"
                     onChange={handleChange}
-                    value={'' + filterDraft.isRead}
+                    value={nullableBoolToStr(filter.isRead)}
                 >
                     <option value="null">All</option>
                     <option value="true">Read</option>
@@ -50,7 +56,7 @@ export function EmailFilter({ filter, onSetFilter }) {
                     name="isStarred"
                     id="isStarred"
                     onChange={handleChange}
-                    value={'' + filterDraft.isStarred}
+                    value={nullableBoolToStr(filter.isStarred)}
                 >
                     <option value="null">All</option>
                     <option value="true">Starred</option>
@@ -66,7 +72,7 @@ export function EmailFilter({ filter, onSetFilter }) {
                     placeholder="Search by text"
                     name="searchString"
                     onChange={handleChange}
-                    value={filterDraft.searchString}
+                    value={filter.searchString}
                 />
             </div>
         </form>

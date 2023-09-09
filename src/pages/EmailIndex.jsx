@@ -28,11 +28,16 @@ export function EmailIndex() {
         const pathnameArr = location.pathname.split('/').filter((p) => p.length)
         if (pathnameArr.length == 1) {
             navigate('/email/inbox')
-        } else if (
+            return
+        }
+
+        const qs = parseQueryString()
+        if (
             pathnameArr.length == 2 &&
             ['inbox', 'sent', 'all'].includes(pathnameArr[1])
         ) {
-            onSetFilter({ folder: pathnameArr[1] })
+            // filter by folder
+            onSetFilter({ folder: pathnameArr[1], ...qs })
         }
     }, [location])
 
@@ -74,6 +79,27 @@ export function EmailIndex() {
         }
     }
 
+    function translateNullableBoolQs(val) {
+        switch (val) {
+            case 'yes':
+                return true
+            case 'no':
+                return false
+            case 'all':
+            default:
+                return null
+        }
+    }
+
+    function parseQueryString() {
+        const queryString = new URLSearchParams(location.search)
+        return {
+            isRead: translateNullableBoolQs(queryString.get('read')),
+            isStarred: translateNullableBoolQs(queryString.get('starred')),
+            searchStr: queryString.get('search'),
+        }
+    }
+
     if (!emails) return <div>Loading..</div>
 
     const inner =
@@ -81,7 +107,7 @@ export function EmailIndex() {
             <Outlet />
         ) : (
             <>
-                <EmailFilter filter={filter} onSetFilter={onSetFilter} />
+                <EmailFilter filter={filter} onChange={onSetFilter} />
                 <EmailList
                     emails={emails}
                     onUpdateEmail={onUpdateEmail}
