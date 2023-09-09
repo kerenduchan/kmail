@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useParams, useLocation, Outlet } from 'react-router'
+import { useParams, useLocation, useNavigate, Outlet } from 'react-router'
 
 // components
 import { EmailFilter } from '../cmps/EmailFilter'
@@ -14,20 +14,24 @@ export function EmailIndex() {
     const [filter, setFilter] = useState(emailService.getDefaultFilter())
     const params = useParams()
     const location = useLocation()
+    const navigate = useNavigate()
 
     useEffect(() => {
         loadEmails()
     }, [filter])
 
     useEffect(() => {
-        if (
-            ['/email/inbox', '/email/sent', '/email/all'].includes(
-                location.pathname
-            )
+        const pathnameArr = location.pathname.split('/').filter((p) => p.length)
+        console.log(pathnameArr)
+        if (pathnameArr.length == 1) {
+            navigate('/email/inbox')
+        } else if (
+            pathnameArr.length == 2 &&
+            ['inbox', 'sent', 'all'].includes(pathnameArr[1])
         ) {
             setFilter((prev) => ({
                 ...prev,
-                folder: location.pathname.split('/')[2],
+                folder: pathnameArr[1],
             }))
         }
     }, [location])
