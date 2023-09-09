@@ -24,22 +24,48 @@ function getLoggedInUser() {
 
 _createEmails()
 
+function _doesEmailMatchFilter(email, filter) {
+    // isRead
+    if (filter.isRead && email.isRead !== filter.isRead) {
+        return false
+    }
+    // isStarred
+    if (filter.isStarred && email.isStarred !== filter.isStarred) {
+        return false
+    }
+    // searchString
+    if (filter.searchString) {
+        const lowercaseSearchString = filter.searchString.toLowerCase()
+        if (
+            !email.subject.toLowerCase().includes(lowercaseSearchString) &&
+            !email.body.toLowerCase().includes(lowercaseSearchString)
+        ) {
+            return false
+        }
+    }
+
+    // folder
+    if (filter.folder) {
+        if (
+            filter.folder == 'inbox' &&
+            email.to != emailService.getLoggedInUser().email
+        ) {
+            return false
+        }
+        if (
+            filter.folder == 'sent' &&
+            email.from != emailService.getLoggedInUser().email
+        ) {
+            return false
+        }
+    }
+    return true
+}
+
 async function query(filter) {
-    const lowercaseSearchString = filter.searchString.toLowerCase()
     let emails = await storageService.query(STORAGE_KEY)
     if (filter) {
-        emails = emails.filter(
-            (email) =>
-                (filter.isRead === null || email.isRead === filter.isRead) &&
-                (filter.isStarred === null ||
-                    email.isStarred === filter.isStarred) &&
-                (filter.searchString === '' ||
-                    email.subject
-                        .toLowerCase()
-                        .includes(lowercaseSearchString) ||
-                    email.body.toLowerCase().includes(lowercaseSearchString)) &&
-                (!filter.to || filter.to == email.to)
-        )
+        emails = emails.filter((email) => _doesEmailMatchFilter(email, filter))
     }
     return emails
 }
@@ -79,6 +105,7 @@ function getDefaultFilter() {
         isRead: null,
         isStarred: null,
         searchString: '',
+        folder: 'inbox',
     }
 }
 

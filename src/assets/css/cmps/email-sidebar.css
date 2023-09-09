@@ -3,3 +3,10 @@
     padding: 10px;
     flex-basis: 20%;
 }
+
+.email-sidebar-folders {
+    padding: 10px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}

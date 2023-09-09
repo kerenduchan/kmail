@@ -11,12 +11,14 @@ export function EmailSidebar() {
             </Link>
 
             <section className="email-sidebar-folders">
-                <Link
-                    className="email-sidebar-folder-inbox"
-                    to={'/email/inbox'}
-                >
-                    Inbox
-                </Link>
+                {/* Inbox */}
+                <Link to={'/email/inbox'}>Inbox</Link>
+
+                {/* Sent */}
+                <Link to={'/email/sent'}>Sent</Link>
+
+                {/* All Mail */}
+                <Link to={'/email/all'}>All Mail</Link>
             </section>
         </section>
     )

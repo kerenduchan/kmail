@@ -20,10 +20,14 @@ export function EmailIndex() {
     }, [filter])
 
     useEffect(() => {
-        if (location.pathname == '/email/inbox') {
+        if (
+            ['/email/inbox', '/email/sent', '/email/all'].includes(
+                location.pathname
+            )
+        ) {
             setFilter((prev) => ({
                 ...prev,
-                to: emailService.getLoggedInUser().email,
+                folder: location.pathname.split('/')[2],
             }))
         }
     }, [location])
