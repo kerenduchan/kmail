@@ -22,7 +22,6 @@ export function EmailIndex() {
 
     useEffect(() => {
         const pathnameArr = location.pathname.split('/').filter((p) => p.length)
-        console.log(pathnameArr)
         if (pathnameArr.length == 1) {
             navigate('/email/inbox')
         } else if (
