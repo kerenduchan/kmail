@@ -8,6 +8,7 @@ import { EmailSidebar } from '../cmps/EmailSidebar'
 
 // services
 import { emailService } from '../services/email.service'
+import { strToNullableBool } from '../util'
 
 export function EmailIndex() {
     const [emails, setEmails] = useState(null)
@@ -79,25 +80,17 @@ export function EmailIndex() {
         }
     }
 
-    function translateNullableBoolQs(val) {
-        switch (val) {
-            case 'yes':
-                return true
-            case 'no':
-                return false
-            case 'all':
-            default:
-                return null
-        }
-    }
-
     function parseQueryString() {
         const queryString = new URLSearchParams(location.search)
-        return {
-            isRead: translateNullableBoolQs(queryString.get('read')),
-            isStarred: translateNullableBoolQs(queryString.get('starred')),
+        let res = {
+            isRead: strToNullableBool(queryString.get('read')),
+            isStarred: strToNullableBool(queryString.get('starred')),
             searchStr: queryString.get('search'),
         }
+
+        return Object.keys(res).forEach((key) =>
+            res[key] === undefined ? delete res[key] : {}
+        )
     }
 
     if (!emails) return <div>Loading..</div>

@@ -1,4 +1,10 @@
-export { getHourAndMinuteStr, formatDateConcise, formatDateVerbose }
+export {
+    getHourAndMinuteStr,
+    formatDateConcise,
+    formatDateVerbose,
+    nullableBoolToStr,
+    strToNullableBool,
+}
 
 function getHourAndMinuteStr(date) {
     return date.toLocaleTimeString(navigator.language, {
@@ -80,4 +86,26 @@ function formatDateVerbose(timestamp) {
         res += ' (' + relative + ')'
     }
     return res
+}
+
+const nullableBool = {
+    yes: true,
+    no: false,
+    all: null,
+}
+
+function nullableBoolToStr(nb) {
+    for (const [key, value] of Object.entries(nullableBool)) {
+        if (value === nb) {
+            return key
+        }
+    }
+    return null
+}
+
+function strToNullableBool(str) {
+    if (nullableBool[str] !== undefined) {
+        return nullableBool[str]
+    }
+    return nullableBool[null]
 }

@@ -1,10 +1,4 @@
-import React, { useEffect, useState } from 'react'
-
-const strToNullableBool = {
-    true: true,
-    false: false,
-    null: null,
-}
+import { nullableBoolToStr, strToNullableBool } from '../util'
 
 export function EmailFilter({ filter, onChange }) {
     function handleChange(ev) {
@@ -12,25 +6,13 @@ export function EmailFilter({ filter, onChange }) {
         if (type === 'number') {
             value = +value
         } else if (['isRead', 'isStarred'].includes(field)) {
-            value = strToNullableBool[value]
+            value = strToNullableBool(value)
         }
         onChange({ [field]: value })
     }
 
     function onSubmitFilter(ev) {
         ev.preventDefault()
-    }
-
-    function nullableBoolToStr(nb) {
-        switch (nb) {
-            case true:
-                return 'true'
-            case false:
-                return 'false'
-            case null:
-            default:
-                return 'null'
-        }
     }
 
     return (
@@ -44,9 +26,9 @@ export function EmailFilter({ filter, onChange }) {
                     onChange={handleChange}
                     value={nullableBoolToStr(filter.isRead)}
                 >
-                    <option value="null">All</option>
-                    <option value="true">Read</option>
-                    <option value="false">Unread</option>
+                    <option value={nullableBoolToStr(null)}>All</option>
+                    <option value={nullableBoolToStr(true)}>Read</option>
+                    <option value={nullableBoolToStr(false)}>Unread</option>
                 </select>
             </div>
             {/* Starred */}
@@ -58,9 +40,9 @@ export function EmailFilter({ filter, onChange }) {
                     onChange={handleChange}
                     value={nullableBoolToStr(filter.isStarred)}
                 >
-                    <option value="null">All</option>
-                    <option value="true">Starred</option>
-                    <option value="false">Unstarred</option>
+                    <option value={nullableBoolToStr(null)}>All</option>
+                    <option value={nullableBoolToStr(true)}>Starred</option>
+                    <option value={nullableBoolToStr(false)}>Unstarred</option>
                 </select>
             </div>
             {/* Text search */}
