@@ -127,6 +127,10 @@ const folders = [
         name: 'Drafts',
     },
     {
+        id: 'starred',
+        name: 'Starred',
+    },
+    {
         id: 'all',
         name: 'All Mail',
     },

@@ -45,25 +45,17 @@ function _doesEmailMatchFilter(email, filter) {
     }
 
     // folder
-    if (filter.folder) {
-        if (
-            filter.folder == 'inbox' &&
-            email.to != emailService.getLoggedInUser().email
-        ) {
-            return false
-        }
-        if (
-            filter.folder == 'sent' &&
-            email.from != emailService.getLoggedInUser().email
-        ) {
-            return false
-        }
-        if (filter.folder == 'drafts' && email.sentAt != null) {
-            return false
-        }
-        if (filter.folder == 'all' && email.sentAt == null) {
-            return false
-        }
+    switch (filter.folder) {
+        case 'inbox':
+            return email.to == emailService.getLoggedInUser().email
+        case 'sent':
+            return email.from == emailService.getLoggedInUser().email
+        case 'drafts':
+            return email.sentAt == null
+        case 'starred':
+            return email.isStarred
+        case 'all':
+            return email.sentAt != null
     }
     return true
 }
