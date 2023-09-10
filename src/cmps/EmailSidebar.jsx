@@ -15,6 +15,10 @@ export function EmailSidebar({ activeFolder, onFolderClick, onComposeClick }) {
             name: 'Sent',
         },
         {
+            id: 'drafts',
+            name: 'Drafts',
+        },
+        {
             id: 'all',
             name: 'All Mail',
         },

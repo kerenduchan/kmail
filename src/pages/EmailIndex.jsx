@@ -28,7 +28,7 @@ export function EmailIndex() {
         // redirect to inbox if no folder given or incorrect folder given
         if (
             !params.folderId ||
-            !['inbox', 'sent', 'all'].includes(params.folderId)
+            !['inbox', 'sent', 'all', 'drafts'].includes(params.folderId)
         ) {
             navigate('/email/inbox')
             return

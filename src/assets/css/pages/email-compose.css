@@ -1,0 +1,11 @@
+.email-compose {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.email-compose-actions {
+    padding: 10px 0;
+    display: flex;
+    gap: 10px;
+}

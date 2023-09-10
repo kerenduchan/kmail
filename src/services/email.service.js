@@ -58,6 +58,9 @@ function _doesEmailMatchFilter(email, filter) {
         ) {
             return false
         }
+        if (filter.folder == 'drafts' && email.sentAt != null) {
+            return false
+        }
     }
     return true
 }

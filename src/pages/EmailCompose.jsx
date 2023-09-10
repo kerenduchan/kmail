@@ -12,10 +12,22 @@ export function EmailCompose() {
         setDraft((prev) => ({ ...prev, [field]: value }))
     }
 
-    async function onSubmit(ev) {
+    function onSubmit(ev) {
         ev.preventDefault()
+    }
+
+    async function onSend() {
         draft.sentAt = Date.now()
         await emailService.save(draft)
+        navigateToContainingFolder()
+    }
+
+    async function onSaveDraft() {
+        await emailService.save(draft)
+        navigateToContainingFolder()
+    }
+
+    function navigateToContainingFolder() {
         navigate(location.pathname.split('/').slice(0, 3).join('/'))
     }
 
@@ -56,11 +68,15 @@ export function EmailCompose() {
             </div>
 
             <div className="email-compose-actions">
-                <input
-                    type="submit"
-                    value="Send"
-                    className="email-compose-action-send"
-                />
+                <button className="email-compose-action-send" onClick={onSend}>
+                    Send
+                </button>
+                <button
+                    className="email-compose-action-save-draft"
+                    onClick={onSaveDraft}
+                >
+                    Save Draft
+                </button>
             </div>
         </form>
     )
