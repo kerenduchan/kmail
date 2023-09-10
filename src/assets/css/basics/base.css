@@ -11,6 +11,7 @@ body {
 .small-action-btn {
     flex-shrink: 0;
     background-color: unset;
+    cursor: pointer;
     border-radius: 50%;
     border: none;
     text-align: center;
