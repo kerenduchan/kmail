@@ -33,7 +33,10 @@ export function EmailPreview({
                 />
             </button>
             {/* Link to email details */}
-            <div onClick={() => onEmailClick(email.id)}>
+            <div
+                className="email-preview-link"
+                onClick={() => onEmailClick(email.id)}
+            >
                 {/* From (or To in Sent view */}
                 <div className="email-preview-from">
                     {showSentView ? 'To: ' + email.to : email.from}
