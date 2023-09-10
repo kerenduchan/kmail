@@ -37,6 +37,7 @@
 .email-preview-link {
     flex-grow: 1;
     min-width: 0;
+    cursor: pointer;
     padding-top: 10px;
     padding-bottom: 10px;
     text-decoration: none;
