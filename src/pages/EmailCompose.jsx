@@ -1,10 +1,11 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router'
+import { useLocation, useNavigate } from 'react-router'
 import { emailService } from '../services/email.service'
 
 export function EmailCompose() {
     const [draft, setDraft] = useState(emailService.createEmail())
     const navigate = useNavigate()
+    const location = useLocation()
 
     function handleChange(ev) {
         let { value, name: field } = ev.target
@@ -15,7 +16,7 @@ export function EmailCompose() {
         ev.preventDefault()
         draft.sentAt = Date.now()
         await emailService.save(draft)
-        navigate('/email')
+        navigate(location.pathname.split('/').slice(0, 3).join('/'))
     }
 
     return (

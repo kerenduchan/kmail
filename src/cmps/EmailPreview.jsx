@@ -1,5 +1,3 @@
-import { Link } from 'react-router-dom'
-
 import { formatDateConcise } from '../util'
 
 const MAX_SUBJECT_LEN = 80
@@ -7,6 +5,7 @@ const MAX_SUBJECT_LEN = 80
 export function EmailPreview({
     email,
     showSentView,
+    onEmailClick,
     onUpdateEmail,
     onDeleteEmail,
 }) {
@@ -34,7 +33,7 @@ export function EmailPreview({
                 />
             </button>
             {/* Link to email details */}
-            <Link className="email-preview-link" to={`/email/e/${email.id}`}>
+            <div onClick={() => onEmailClick(email.id)}>
                 {/* From (or To in Sent view */}
                 <div className="email-preview-from">
                     {showSentView ? 'To: ' + email.to : email.from}
@@ -45,7 +44,7 @@ export function EmailPreview({
                 <div className="email-preview-sent-at">
                     {formatDateConcise(email.sentAt)}
                 </div>
-            </Link>
+            </div>
             {/* Actions */}
             <div className="email-preview-actions">
                 {/* Delete */}

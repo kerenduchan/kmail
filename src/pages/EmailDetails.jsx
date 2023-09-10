@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { useParams, useNavigate } from 'react-router'
+import { useParams, useNavigate, useLocation } from 'react-router'
 import { Link } from 'react-router-dom'
 
 import { formatDateVerbose } from '../util'
@@ -14,6 +14,7 @@ export function EmailDetails() {
 
     const params = useParams()
     const navigate = useNavigate()
+    const location = useLocation()
 
     useEffect(() => {
         loadEmailAndMarkAsRead()
@@ -75,7 +76,7 @@ export function EmailDetails() {
             {/* Actions */}
             <section className="email-details-actions">
                 {/* Back */}
-                <Link to="/email">
+                <Link to={location.pathname.split('/').slice(0, 3).join('/')}>
                     <button className="email-details-action-back small-action-btn">
                         <img src="imgs/left-arrow.svg" alt="Back" />
                     </button>

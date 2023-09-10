@@ -25,29 +25,30 @@ export function EmailIndex() {
     }, [filter])
 
     useEffect(() => {
-        // redirect /email => /email/inbox
-        const pathnameArr = location.pathname.split('/').filter((p) => p.length)
-        if (pathnameArr.length == 1) {
+        // redirect to inbox if no folder given or incorrect folder given
+        if (
+            !params.folderId ||
+            !['inbox', 'sent', 'all'].includes(params.folderId)
+        ) {
             navigate('/email/inbox')
             return
         }
-
         const qs = parseQueryString()
-        if (
-            pathnameArr.length == 2 &&
-            ['inbox', 'sent', 'all'].includes(pathnameArr[1])
-        ) {
-            // filter by folder
-            setFilter((prevFilter) => ({
-                ...prevFilter,
-                folder: pathnameArr[1],
-                ...qs,
-            }))
-        }
+
+        // filter by folder
+        setFilter((prevFilter) => ({
+            ...prevFilter,
+            folder: params.folderId,
+            ...qs,
+        }))
     }, [location])
 
     function onFolderClick(folder) {
         navigate(`/email/${folder}`)
+    }
+
+    function onComposeClick() {
+        navigate(`/email/${params.folderId}/compose`)
     }
 
     function onFilterChange(fieldsToUpdate) {
@@ -110,10 +111,14 @@ export function EmailIndex() {
         }
     }
 
+    function onEmailClick(emailId) {
+        navigate(`/email/${params.folderId}/e/${emailId}`)
+    }
+
     if (!emails) return <div>Loading..</div>
 
     const inner =
-        location.pathname == '/email/compose' || params.emailId ? (
+        location.pathname.includes('compose') || params.emailId ? (
             <Outlet />
         ) : (
             <>
@@ -122,13 +127,18 @@ export function EmailIndex() {
                     emails={emails}
                     onUpdateEmail={onUpdateEmail}
                     onDeleteEmail={onDeleteEmail}
+                    onEmailClick={onEmailClick}
                 />
             </>
         )
 
     return (
         <section className="email-index">
-            <EmailSidebar onFolderClick={onFolderClick} />
+            <EmailSidebar
+                activeFolder={params.folderId}
+                onFolderClick={onFolderClick}
+                onComposeClick={onComposeClick}
+            />
             <section className="email-index-main">{inner}</section>
         </section>
     )

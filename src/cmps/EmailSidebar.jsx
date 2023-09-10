@@ -1,12 +1,7 @@
-import { useLocation } from 'react-router-dom'
-
-export function EmailSidebar({ onFolderClick }) {
-    const location = useLocation()
-
+export function EmailSidebar({ activeFolder, onFolderClick, onComposeClick }) {
     function getClassName(folder) {
         return (
-            'email-sidebar-folder' +
-            (location.pathname.split('/')[2] == folder ? ' active' : '')
+            'email-sidebar-folder' + (activeFolder == folder ? ' active' : '')
         )
     }
 
@@ -27,7 +22,10 @@ export function EmailSidebar({ onFolderClick }) {
 
     return (
         <section className="email-sidebar">
-            <a className="email-sidebar-compose-button" to={'/email/compose'}>
+            <a
+                className="email-sidebar-compose-button"
+                onClick={onComposeClick}
+            >
                 <button>Compose</button>
             </a>
 
