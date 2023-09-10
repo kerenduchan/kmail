@@ -9,6 +9,7 @@ export function EmailPreview({
     onEmailClick,
     onUpdateEmail,
     onDeleteEmail,
+    onMarkEmailAsReadOrUnread,
 }) {
     const [firstColumn, setFirstColumn] = useState(undefined)
 
@@ -83,6 +84,21 @@ export function EmailPreview({
                     onClick={() => onDeleteEmail(email.id)}
                 >
                     <img src="imgs/garbage-bin.svg" alt="Delete" />
+                </button>
+                {/* Mark as read/unread */}
+                <button
+                    className="small-action-btn"
+                    onClick={() =>
+                        onMarkEmailAsReadOrUnread(email.id, !email.isRead)
+                    }
+                >
+                    <img
+                        src={
+                            'imgs/mail-' +
+                            (email.isRead ? 'unread.svg' : 'read.svg')
+                        }
+                        alt={'Mark as ' + email.isRead ? 'unread' : 'read'}
+                    />
                 </button>
             </div>
         </article>

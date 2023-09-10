@@ -85,6 +85,25 @@ export function EmailIndex() {
         }
     }
 
+    async function onMarkEmailAsReadOrUnread(emailId, isRead) {
+        try {
+            let email = emails.data.filter((e) => e.id == emailId)
+            if (email.length != 1) {
+                console.error(
+                    'Email cannot be marked as unread - not found. Email ID: ' +
+                        emailId
+                )
+                return
+            }
+            email = email[0]
+            email.isRead = isRead
+            await emailService.save(email)
+            await loadEmails()
+        } catch (err) {
+            console.log('Had issues marking email as unread', err)
+        }
+    }
+
     async function loadEmails() {
         try {
             const emails = await emailService.query(filter)
@@ -129,6 +148,7 @@ export function EmailIndex() {
                     onUpdateEmail={onUpdateEmail}
                     onDeleteEmail={onDeleteEmail}
                     onEmailClick={onEmailClick}
+                    onMarkEmailAsReadOrUnread={onMarkEmailAsReadOrUnread}
                 />
             </>
         )

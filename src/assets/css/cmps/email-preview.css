@@ -14,11 +14,15 @@
 }
 
 .email-preview-actions {
-    opacity: 0;
+    display: none;
 }
 
 .email-preview:hover .email-preview-actions {
-    opacity: 1;
+    display: flex;
+}
+
+.email-preview:hover .email-preview-sent-at {
+    display: none;
 }
 
 .email-preview.read {
@@ -72,7 +76,11 @@
     }
 
     .email-preview-actions {
-        opacity: 1;
+        display: flex;
+    }
+
+    .email-preview:hover .email-preview-sent-at {
+        display: unset;
     }
 
     .email-preview-subject {
