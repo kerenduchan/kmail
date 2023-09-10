@@ -72,7 +72,7 @@ export function EmailPreview({
                 <div className="email-preview-subject">{email.subject}</div>
                 {/* Sent at */}
                 <div className="email-preview-sent-at">
-                    {formatDateConcise(email.sentAt)}
+                    {folder == 'drafts' ? '' : formatDateConcise(email.sentAt)}
                 </div>
             </div>
             {/* Actions */}
