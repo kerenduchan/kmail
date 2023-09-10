@@ -11,7 +11,7 @@ export function EmailList({
             {emails.data.map((email) => (
                 <li key={email.id}>
                     <EmailPreview
-                        showSentView={emails.folder == 'sent'}
+                        folder={emails.folder}
                         email={email}
                         onUpdateEmail={onUpdateEmail}
                         onDeleteEmail={onDeleteEmail}

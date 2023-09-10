@@ -1,14 +1,43 @@
+import { useEffect, useState } from 'react'
 import { formatDateConcise } from '../util'
 
 const MAX_SUBJECT_LEN = 80
 
 export function EmailPreview({
     email,
-    showSentView,
+    folder,
     onEmailClick,
     onUpdateEmail,
     onDeleteEmail,
 }) {
+    const [firstColumn, setFirstColumn] = useState(undefined)
+
+    useEffect(() => {
+        switch (folder) {
+            case 'sent':
+                setFirstColumn(
+                    <div className="email-preview-first-column email-preview-to">
+                        To: {email.to}
+                    </div>
+                )
+                break
+            case 'drafts':
+                setFirstColumn(
+                    <div className="email-preview-first-column email-preview-draft">
+                        Draft
+                    </div>
+                )
+                break
+            default:
+                setFirstColumn(
+                    <div className="email-preview-first-column email-preview-from">
+                        {email.from}
+                    </div>
+                )
+                break
+        }
+    }, [folder])
+
     function onStarClick() {
         const emailAfterUpdate = {
             ...email,
@@ -37,10 +66,8 @@ export function EmailPreview({
                 className="email-preview-link"
                 onClick={() => onEmailClick(email.id)}
             >
-                {/* From (or To in Sent view */}
-                <div className="email-preview-from">
-                    {showSentView ? 'To: ' + email.to : email.from}
-                </div>
+                {/* First Column (From/To/Draft) */}
+                {firstColumn}
                 {/* Subject */}
                 <div className="email-preview-subject">{email.subject}</div>
                 {/* Sent at */}
