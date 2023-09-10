@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router'
 import { emailService } from '../services/email.service'
+import { getContainingFolder } from '../util'
 
 export function EmailCompose() {
     const [draft, setDraft] = useState(emailService.createEmail())
@@ -19,16 +20,12 @@ export function EmailCompose() {
     async function onSend() {
         draft.sentAt = Date.now()
         await emailService.save(draft)
-        navigateToContainingFolder()
+        navigate(getContainingFolder(location.pathname))
     }
 
     async function onSaveDraft() {
         await emailService.save(draft)
-        navigateToContainingFolder()
-    }
-
-    function navigateToContainingFolder() {
-        navigate(location.pathname.split('/').slice(0, 3).join('/'))
+        navigate(getContainingFolder(location.pathname))
     }
 
     return (

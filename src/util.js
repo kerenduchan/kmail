@@ -6,6 +6,7 @@ export {
     strToNullableBool,
     getAllFolders,
     getAllFolderIds,
+    getContainingFolder,
 }
 
 function getHourAndMinuteStr(date) {
@@ -137,4 +138,8 @@ function getAllFolders() {
 
 function getAllFolderIds() {
     return folders.map((f) => f.id)
+}
+
+function getContainingFolder(path) {
+    return path.split('/').slice(0, 3).join('/')
 }

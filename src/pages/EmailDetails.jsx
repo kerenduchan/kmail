@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useParams, useNavigate, useLocation } from 'react-router'
 import { Link } from 'react-router-dom'
 
-import { formatDateVerbose } from '../util'
+import { formatDateVerbose, getContainingFolder } from '../util'
 
 // services
 import { emailService } from '../services/email.service'
@@ -52,7 +52,7 @@ export function EmailDetails() {
         try {
             let updatedEmail = { ...email, isRead: false }
             await emailService.save(updatedEmail)
-            navigate('/email')
+            navigate(getContainingFolder(location.pathname))
         } catch (err) {
             console.log('Had issues marking email as unread', err)
         }
@@ -76,7 +76,7 @@ export function EmailDetails() {
             {/* Actions */}
             <section className="email-details-actions">
                 {/* Back */}
-                <Link to={location.pathname.split('/').slice(0, 3).join('/')}>
+                <Link to={getContainingFolder(location.pathname)}>
                     <button className="email-details-action-back small-action-btn">
                         <img src="imgs/left-arrow.svg" alt="Back" />
                     </button>
