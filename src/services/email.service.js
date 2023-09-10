@@ -73,7 +73,7 @@ async function query(filter) {
     return emails
 }
 
-function getById(id) {
+async function getById(id) {
     return storageService.get(STORAGE_KEY, id)
 }
 

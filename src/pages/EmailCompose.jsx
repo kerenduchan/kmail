@@ -1,14 +1,29 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router'
-import { emailService } from '../services/email.service'
 import { getContainingFolder } from '../util'
+import { emailService } from '../services/email.service'
 
 export function EmailCompose() {
     const [draft, setDraft] = useState(emailService.createEmail())
     const navigate = useNavigate()
     const location = useLocation()
 
-    function handleChange(ev) {
+    useEffect(() => {
+        const queryString = new URLSearchParams(location.search)
+        const emailId = queryString.get('eid')
+
+        if (emailId) {
+            // this is an attempt to edit a draft
+            loadEmail(emailId)
+        }
+    }, [])
+
+    async function loadEmail(emailId) {
+        const email = await emailService.getById(emailId)
+        setDraft(email)
+    }
+
+    function onChange(ev) {
         let { value, name: field } = ev.target
         setDraft((prev) => ({ ...prev, [field]: value }))
     }
@@ -37,7 +52,7 @@ export function EmailCompose() {
                     type="text"
                     id="email-compose-to"
                     name="to"
-                    onChange={handleChange}
+                    onChange={onChange}
                     value={draft.to}
                 />
             </div>
@@ -49,7 +64,7 @@ export function EmailCompose() {
                     type="text"
                     id="email-compose-subject"
                     name="subject"
-                    onChange={handleChange}
+                    onChange={onChange}
                     value={draft.subject}
                 />
             </div>
@@ -59,7 +74,7 @@ export function EmailCompose() {
                 <textarea
                     id="email-compose-body"
                     name="body"
-                    onChange={handleChange}
+                    onChange={onChange}
                     value={draft.body}
                 />
             </div>

@@ -26,10 +26,7 @@ export function EmailIndex() {
 
     useEffect(() => {
         // redirect to inbox if no folder given or incorrect folder given
-        if (
-            !params.folderId ||
-            !getAllFolderIds().includes(params.folderId)
-        ) {
+        if (!params.folderId || !getAllFolderIds().includes(params.folderId)) {
             navigate('/email/inbox')
             return
         }
@@ -112,7 +109,11 @@ export function EmailIndex() {
     }
 
     function onEmailClick(emailId) {
-        navigate(`/email/${params.folderId}/e/${emailId}`)
+        if (params.folderId == 'drafts') {
+            navigate(`/email/${params.folderId}/compose/?eid=${emailId}`)
+        } else {
+            navigate(`/email/${params.folderId}/e/${emailId}`)
+        }
     }
 
     if (!emails) return <div>Loading..</div>
