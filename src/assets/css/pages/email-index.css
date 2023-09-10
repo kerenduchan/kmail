@@ -1,9 +1,10 @@
 .email-index {
-    background-color: #f3f6fa;
+    background-color: #f6f8fc;
     display: flex;
 }
 
 .email-index-main {
+    background-color: white;
     flex-grow: 1;
     min-width: 0;
     margin: 10px;
