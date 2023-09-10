@@ -61,6 +61,9 @@ function _doesEmailMatchFilter(email, filter) {
         if (filter.folder == 'drafts' && email.sentAt != null) {
             return false
         }
+        if (filter.folder == 'all' && email.sentAt == null) {
+            return false
+        }
     }
     return true
 }
@@ -69,6 +72,9 @@ async function query(filter) {
     let emails = await storageService.query(STORAGE_KEY)
     if (filter) {
         emails = emails.filter((email) => _doesEmailMatchFilter(email, filter))
+        if (filter.folder != 'drafts') {
+            emails = emails.sort((e1, e2) => (e1.sentAt < e2.sentAt ? 1 : -1))
+        }
     }
     return emails
 }
