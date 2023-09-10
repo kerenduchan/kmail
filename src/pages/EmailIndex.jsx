@@ -8,7 +8,7 @@ import { EmailSidebar } from '../cmps/EmailSidebar'
 
 // services
 import { emailService } from '../services/email.service'
-import { nullableBoolToStr, strToNullableBool } from '../util'
+import { getAllFolderIds, nullableBoolToStr, strToNullableBool } from '../util'
 
 export function EmailIndex() {
     const [emails, setEmails] = useState(null)
@@ -28,7 +28,7 @@ export function EmailIndex() {
         // redirect to inbox if no folder given or incorrect folder given
         if (
             !params.folderId ||
-            !['inbox', 'sent', 'all', 'drafts'].includes(params.folderId)
+            !getAllFolderIds().includes(params.folderId)
         ) {
             navigate('/email/inbox')
             return

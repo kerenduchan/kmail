@@ -4,6 +4,8 @@ export {
     formatDateVerbose,
     nullableBoolToStr,
     strToNullableBool,
+    getAllFolders,
+    getAllFolderIds,
 }
 
 function getHourAndMinuteStr(date) {
@@ -108,4 +110,31 @@ function strToNullableBool(str) {
         return nullableBool[str]
     }
     return null
+}
+
+const folders = [
+    {
+        id: 'inbox',
+        name: 'Inbox',
+    },
+    {
+        id: 'sent',
+        name: 'Sent',
+    },
+    {
+        id: 'drafts',
+        name: 'Drafts',
+    },
+    {
+        id: 'all',
+        name: 'All Mail',
+    },
+]
+
+function getAllFolders() {
+    return folders
+}
+
+function getAllFolderIds() {
+    return folders.map((f) => f.id)
 }

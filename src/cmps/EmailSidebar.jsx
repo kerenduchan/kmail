@@ -1,3 +1,5 @@
+import { getAllFolders } from '../util'
+
 export function EmailSidebar({ activeFolder, onFolderClick, onComposeClick }) {
     function getClassName(folder) {
         return (
@@ -5,24 +7,7 @@ export function EmailSidebar({ activeFolder, onFolderClick, onComposeClick }) {
         )
     }
 
-    const folders = [
-        {
-            id: 'inbox',
-            name: 'Inbox',
-        },
-        {
-            id: 'sent',
-            name: 'Sent',
-        },
-        {
-            id: 'drafts',
-            name: 'Drafts',
-        },
-        {
-            id: 'all',
-            name: 'All Mail',
-        },
-    ]
+    const folders = getAllFolders()
 
     return (
         <section className="email-sidebar">
