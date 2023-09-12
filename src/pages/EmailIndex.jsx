@@ -131,21 +131,7 @@ export function EmailIndex() {
 
     if (!emails) return <div>Loading..</div>
 
-    const inner =
-        location.pathname.includes('compose') || params.emailId ? (
-            <Outlet />
-        ) : (
-            <>
-                <EmailFilter filter={filter} onChange={onFilterChange} />
-                <EmailList
-                    emails={emails}
-                    onUpdateEmail={onUpdateEmail}
-                    onDeleteEmail={onDeleteEmail}
-                    onEmailClick={onEmailClick}
-                    onMarkEmailAsReadOrUnread={onMarkEmailAsReadOrUnread}
-                />
-            </>
-        )
+    const showOutlet = location.pathname.includes('compose') || params.emailId
 
     return (
         <section className="email-index">
@@ -154,7 +140,27 @@ export function EmailIndex() {
                 onFolderClick={onFolderClick}
                 onComposeClick={onComposeClick}
             />
-            <section className="email-index-main">{inner}</section>
+            <section className="email-index-main">
+                {showOutlet ? (
+                    <Outlet />
+                ) : (
+                    <>
+                        <EmailFilter
+                            filter={filter}
+                            onChange={onFilterChange}
+                        />
+                        <EmailList
+                            emails={emails}
+                            onUpdateEmail={onUpdateEmail}
+                            onDeleteEmail={onDeleteEmail}
+                            onEmailClick={onEmailClick}
+                            onMarkEmailAsReadOrUnread={
+                                onMarkEmailAsReadOrUnread
+                            }
+                        />
+                    </>
+                )}
+            </section>
         </section>
     )
 }
