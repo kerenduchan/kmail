@@ -29,7 +29,7 @@
 }
 
 .email-preview-first-column {
-    flex-basis: 20%;
+    width: 200px;
     min-width: 0;
     text-overflow: ellipsis;
     white-space: nowrap;
