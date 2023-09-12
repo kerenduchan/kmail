@@ -8,7 +8,7 @@ import { EmailSidebar } from '../cmps/EmailSidebar'
 
 // services
 import { emailService } from '../services/email.service'
-import { getAllFolderIds, nullableBoolToStr, strToNullableBool } from '../util'
+import { strToNullableBool } from '../util'
 
 export function EmailIndex() {
     const [emails, setEmails] = useState(null)
@@ -18,18 +18,12 @@ export function EmailIndex() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (filter.folder === null) {
-            return
+        if (filter.folder !== null) {
+            loadEmails()
         }
-        loadEmails()
     }, [filter])
 
     useEffect(() => {
-        // redirect to inbox if no folder given or incorrect folder given
-        if (!params.folderId || !getAllFolderIds().includes(params.folderId)) {
-            navigate('/email/inbox')
-            return
-        }
         const qs = parseQueryString()
 
         // filter by folder
@@ -38,7 +32,7 @@ export function EmailIndex() {
             folder: params.folderId,
             ...qs,
         }))
-    }, [location])
+    }, [params])
 
     function onFolderClick(folder) {
         navigate(`/email/${folder}`)
@@ -53,10 +47,10 @@ export function EmailIndex() {
         const queryString = new URLSearchParams()
 
         if (newFilter.isRead !== null) {
-            queryString.set('read', nullableBoolToStr(newFilter.isRead))
+            queryString.set('read', '' + newFilter.isRead)
         }
         if (newFilter.isStarred !== null) {
-            queryString.set('starred', nullableBoolToStr(newFilter.isStarred))
+            queryString.set('starred', '' + newFilter.isStarred)
         }
         if (newFilter.searchString) {
             queryString.set('search', newFilter.searchString)

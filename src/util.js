@@ -2,7 +2,6 @@ export {
     getHourAndMinuteStr,
     formatDateConcise,
     formatDateVerbose,
-    nullableBoolToStr,
     strToNullableBool,
     getAllFolders,
     getAllFolderIds,
@@ -92,18 +91,9 @@ function formatDateVerbose(timestamp) {
 }
 
 const nullableBool = {
-    yes: true,
-    no: false,
-    all: null,
-}
-
-function nullableBoolToStr(nb) {
-    for (const [key, value] of Object.entries(nullableBool)) {
-        if (value === nb) {
-            return key
-        }
-    }
-    return nullableBool[null]
+    true: true,
+    false: false,
+    null: null,
 }
 
 function strToNullableBool(str) {

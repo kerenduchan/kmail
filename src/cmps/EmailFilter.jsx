@@ -1,5 +1,4 @@
-import { nullableBoolToStr, strToNullableBool } from '../util'
-
+import { strToNullableBool } from '../util'
 export function EmailFilter({ filter, onChange }) {
     function handleChange(ev) {
         let { value, name: field, type } = ev.target
@@ -11,12 +10,8 @@ export function EmailFilter({ filter, onChange }) {
         onChange({ [field]: value })
     }
 
-    function onSubmitFilter(ev) {
-        ev.preventDefault()
-    }
-
     return (
-        <form className="email-filter" onSubmit={onSubmitFilter}>
+        <form className="email-filter" onSubmit={(ev) => ev.preventDefault()}>
             {/* Read */}
             <div className="email-filter-field">
                 <label htmlFor="isRead">Read:</label>
@@ -24,11 +19,11 @@ export function EmailFilter({ filter, onChange }) {
                     name="isRead"
                     id="isRead"
                     onChange={handleChange}
-                    value={nullableBoolToStr(filter.isRead)}
+                    value={'' + filter.isRead}
                 >
-                    <option value={nullableBoolToStr(null)}>All</option>
-                    <option value={nullableBoolToStr(true)}>Read</option>
-                    <option value={nullableBoolToStr(false)}>Unread</option>
+                    <option value={'null'}>All</option>
+                    <option value={'true'}>Read</option>
+                    <option value={'false'}>Unread</option>
                 </select>
             </div>
             {/* Starred */}
@@ -38,11 +33,11 @@ export function EmailFilter({ filter, onChange }) {
                     name="isStarred"
                     id="isStarred"
                     onChange={handleChange}
-                    value={nullableBoolToStr(filter.isStarred)}
+                    value={'' + filter.isStarred}
                 >
-                    <option value={nullableBoolToStr(null)}>All</option>
-                    <option value={nullableBoolToStr(true)}>Starred</option>
-                    <option value={nullableBoolToStr(false)}>Unstarred</option>
+                    <option value={'null'}>All</option>
+                    <option value={'true'}>Starred</option>
+                    <option value={'false'}>Unstarred</option>
                 </select>
             </div>
             {/* Text search */}
@@ -54,7 +49,7 @@ export function EmailFilter({ filter, onChange }) {
                     placeholder="Search by text"
                     name="searchString"
                     onChange={handleChange}
-                    value={filter.searchString}
+                    value={filter.searchString ? filter.searchString : ''}
                 />
             </div>
         </form>
