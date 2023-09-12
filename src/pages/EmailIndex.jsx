@@ -129,9 +129,9 @@ export function EmailIndex() {
 
     function onEmailClick(emailId) {
         if (params.folderId == 'drafts') {
-            navigate(`/email/${params.folderId}/compose/?eid=${emailId}`)
+            navigate(`/email/${params.folderId}/compose/${emailId}`)
         } else {
-            navigate(`/email/${params.folderId}/e/${emailId}`)
+            navigate(`/email/${params.folderId}/${emailId}`)
         }
     }
 

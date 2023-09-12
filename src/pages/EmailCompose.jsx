@@ -1,20 +1,18 @@
 import { useState, useEffect } from 'react'
-import { useLocation, useNavigate } from 'react-router'
+import { useLocation, useNavigate, useParams } from 'react-router'
 import { getContainingFolder } from '../util'
 import { emailService } from '../services/email.service'
 
 export function EmailCompose() {
     const [draft, setDraft] = useState(emailService.createEmail())
     const navigate = useNavigate()
+    const params = useParams()
     const location = useLocation()
 
     useEffect(() => {
-        const queryString = new URLSearchParams(location.search)
-        const emailId = queryString.get('eid')
-
-        if (emailId) {
+        if (params.emailId) {
             // this is an attempt to edit a draft
-            loadEmail(emailId)
+            loadEmail(params.emailId)
         }
     }, [])
 

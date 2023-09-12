@@ -19,17 +19,18 @@ function App() {
                     <Routes>
                         <Route path="/" element={<Home />} />
                         <Route path="/about" element={<About />} />
-                        <Route path="/email" element={<EmailIndex />}>
-                            <Route path="/email/:folderId" element={null}>
-                                <Route
-                                    path="/email/:folderId/compose"
-                                    element={<EmailCompose />}
-                                />
-                                <Route
-                                    path="/email/:folderId/e/:emailId"
-                                    element={<EmailDetails />}
-                                />
-                            </Route>
+                        <Route
+                            path="/email/:folderId?"
+                            element={<EmailIndex />}
+                        >
+                            <Route
+                                path="/email/:folderId/compose/:emailId?"
+                                element={<EmailCompose />}
+                            />
+                            <Route
+                                path="/email/:folderId/:emailId"
+                                element={<EmailDetails />}
+                            />
                         </Route>
                     </Routes>
                 </main>
