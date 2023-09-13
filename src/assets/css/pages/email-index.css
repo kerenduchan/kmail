@@ -7,6 +7,8 @@
 
 .email-index-main {
     background-color: white;
+    margin-bottom: 16px;
+    margin-inline-end: 16px;
     flex-grow: 1;
     min-width: 0;
     border-radius: 16px;
