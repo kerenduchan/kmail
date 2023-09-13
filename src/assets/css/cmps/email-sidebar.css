@@ -1,10 +1,9 @@
 .email-sidebar {
     width: 256px;
-    margin-inline-start: 8px;
 }
 
 .email-sidebar-compose-button {
-    margin: 8px 0;
+    margin: 8px;
     padding-inline-end: 20px;
     height: 40px;
     border-radius: 16px;
@@ -28,14 +27,24 @@
 }
 
 .email-sidebar-folders {
-    padding: 10px 0;
+    margin-inline-end: 10px;
     display: flex;
     flex-direction: column;
 }
 
+/* Folder (Inbox, Sent, etc) */
+
 .email-sidebar-folder {
-    padding: 5px;
+    line-height: 20px;
     cursor: pointer;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-inline-start: 24px;
+    border-start-end-radius: 24px;
+    border-end-end-radius: 24px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
 }
 
 .email-sidebar-folder:hover {
@@ -44,4 +53,59 @@
 
 .email-sidebar-folder.active {
     font-weight: bold;
+    background-color: #d3e3fd;
+}
+
+.email-sidebar-folder::before {
+    height: 20px;
+}
+
+/* Inbox */
+
+.email-sidebar-folder.inbox::before {
+    content: url(https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/inbox_baseline_nv700_20dp.png);
+}
+
+.email-sidebar-folder.inbox.active::before {
+    content: url(https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/inbox_fill_baseline_p900_20dp.png);
+}
+
+/* Sent */
+
+.email-sidebar-folder.sent::before {
+    content: url(https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/send_baseline_nv700_20dp.png);
+}
+
+.email-sidebar-folder.sent.active::before {
+    content: url(https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/send_fill_baseline_p900_20dp.png);
+}
+
+/* Drafts */
+
+.email-sidebar-folder.drafts::before {
+    content: url(https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/draft_baseline_nv700_20dp.png);
+}
+
+.email-sidebar-folder.drafts.active::before {
+    content: url(https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/draft_fill_baseline_p900_20dp.png);
+}
+
+/* Starred */
+
+.email-sidebar-folder.starred::before {
+    content: url(https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/star_baseline_nv700_20dp.png);
+}
+
+.email-sidebar-folder.starred.active::before {
+    content: url(https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/star_fill_baseline_p900_20dp.png);
+}
+
+/* All Mail */
+
+.email-sidebar-folder.all::before {
+    content: url(https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/stacked_email_baseline_nv700_20dp.png);
+}
+
+.email-sidebar-folder.all.active::before {
+    content: url(https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/stacked_email_fill_baseline_p900_20dp.png);
 }

@@ -24,6 +24,10 @@ button {
     grid-template-rows: auto 1fr;
 }
 
+.app-main {
+    display: grid;
+}
+
 .small-action-btn {
     flex-shrink: 0;
     background-color: unset;

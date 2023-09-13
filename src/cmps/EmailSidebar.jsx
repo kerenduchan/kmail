@@ -3,7 +3,8 @@ import { getAllFolders } from '../util'
 export function EmailSidebar({ activeFolder, onFolderClick, onComposeClick }) {
     function getClassName(folder) {
         return (
-            'email-sidebar-folder' + (activeFolder == folder ? ' active' : '')
+            `email-sidebar-folder ${folder}` +
+            (activeFolder == folder ? ' active' : '')
         )
     }
 
@@ -23,7 +24,6 @@ export function EmailSidebar({ activeFolder, onFolderClick, onComposeClick }) {
                     return (
                         <a
                             key={folder.id}
-                            to={`/email/${folder.id}`}
                             className={getClassName(folder.id)}
                             onClick={() => onFolderClick(folder.id)}
                         >

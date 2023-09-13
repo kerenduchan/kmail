@@ -1,6 +1,8 @@
 .email-index {
     background-color: #f6f8fc;
-    display: flex;
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 256px 1fr;
 }
 
 .email-index-main {
@@ -8,7 +10,5 @@
     flex-grow: 1;
     min-width: 0;
     border-radius: 16px;
-    display: flex;
-    flex-direction: column;
     gap: 10px;
 }
