@@ -1,27 +1,38 @@
+@import url('https://fonts.googleapis.com/css?family=Google+Sans');
+/* " Sans",Roboto,RobotoDraft,Helvetica,Arial,sans-serif; */
 body {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Google Sans', Arial, Helvetica, sans-serif;
+    background-color: #f6f8fc;
+    font-size: 0.875rem;
+    color: rgb(32, 33, 36);
+    margin: 0;
+}
+
+button {
+    cursor: pointer;
+    font-family: unset;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 }
 
 .app {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr;
 }
 
 .small-action-btn {
     flex-shrink: 0;
     background-color: unset;
-    cursor: pointer;
     border-radius: 50%;
-    border: none;
     text-align: center;
     width: 30px;
     height: 30px;
     padding: 0;
     margin: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .small-action-btn:hover {

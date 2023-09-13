@@ -11,12 +11,12 @@ export function EmailSidebar({ activeFolder, onFolderClick, onComposeClick }) {
 
     return (
         <section className="email-sidebar">
-            <a
+            <button
                 className="email-sidebar-compose-button"
                 onClick={onComposeClick}
             >
-                <button>Compose</button>
-            </a>
+                Compose
+            </button>
 
             <section className="email-sidebar-folders">
                 {folders.map((folder) => {
