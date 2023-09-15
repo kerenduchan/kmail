@@ -13,7 +13,7 @@ export function EmailSidebar({ activeFolder, onFolderClick, onComposeClick }) {
     return (
         <section className="email-sidebar">
             <button
-                className="email-sidebar-compose-button"
+                className="large-button email-sidebar-compose-button"
                 onClick={onComposeClick}
             >
                 Compose

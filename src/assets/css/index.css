@@ -2,6 +2,7 @@
 @import 'basics/base.css';
 
 /* Pages */
+@import 'pages/home.css';
 @import 'pages/email-index.css';
 @import 'pages/email-details.css';
 @import 'pages/email-compose.css';

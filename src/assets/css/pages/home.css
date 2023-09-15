@@ -1,0 +1,12 @@
+.home-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.home-go-to-inbox {
+    text-decoration: none;
+    color: unset;
+    width: 300px;
+    height: 60px;
+}
