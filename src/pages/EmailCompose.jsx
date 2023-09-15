@@ -42,52 +42,57 @@ export function EmailCompose() {
     }
 
     return (
-        <form className="email-compose" onSubmit={onSubmit}>
-            {/* To */}
-            <div className="email-compose-field">
-                <label htmlFor="email-compose-to">To:</label>
-                <input
-                    type="text"
-                    id="email-compose-to"
-                    name="to"
-                    onChange={onChange}
-                    value={draft.to}
-                />
-            </div>
+        <div className="email-compose">
+            <form className="email-compose-form" onSubmit={onSubmit}>
+                {/* To */}
+                <div className="email-compose-field">
+                    <label htmlFor="email-compose-to">To:</label>
+                    <input
+                        type="text"
+                        id="email-compose-to"
+                        name="to"
+                        onChange={onChange}
+                        value={draft.to}
+                    />
+                </div>
 
-            {/* Subject */}
-            <div className="email-compose-field">
-                <label htmlFor="email-compose-subject">Subject:</label>
-                <input
-                    type="text"
-                    id="email-compose-subject"
-                    name="subject"
-                    onChange={onChange}
-                    value={draft.subject}
-                />
-            </div>
+                {/* Subject */}
+                <div className="email-compose-field">
+                    <label htmlFor="email-compose-subject">Subject:</label>
+                    <input
+                        type="text"
+                        id="email-compose-subject"
+                        name="subject"
+                        onChange={onChange}
+                        value={draft.subject}
+                    />
+                </div>
 
-            {/* Body */}
-            <div className="email-compose-field">
-                <textarea
-                    id="email-compose-body"
-                    name="body"
-                    onChange={onChange}
-                    value={draft.body}
-                />
-            </div>
+                {/* Body */}
+                <div className="email-compose-field body">
+                    <textarea
+                        id="email-compose-body"
+                        name="body"
+                        onChange={onChange}
+                        value={draft.body}
+                    />
+                </div>
 
-            <div className="email-compose-actions">
-                <button className="email-compose-action-send" onClick={onSend}>
-                    Send
-                </button>
-                <button
-                    className="email-compose-action-save-draft"
-                    onClick={onSaveDraft}
-                >
-                    Save Draft
-                </button>
-            </div>
-        </form>
+                <div className="email-compose-actions">
+                    <button
+                        className="email-compose-action-send"
+                        onClick={onSend}
+                    >
+                        Send
+                    </button>
+                    <button
+                        className="email-compose-action-save-draft"
+                        onClick={onSaveDraft}
+                    >
+                        Save Draft
+                    </button>
+                </div>
+            </form>
+        </div>
     )
 }

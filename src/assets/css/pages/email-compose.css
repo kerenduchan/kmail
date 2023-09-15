@@ -1,11 +1,50 @@
 .email-compose {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.email-compose-form {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    flex-grow: 1;
 }
 
 .email-compose-actions {
     padding: 10px 0;
     display: flex;
     gap: 10px;
+}
+
+.email-compose-field {
+    border-bottom: 1px solid lightgray;
+    padding-bottom: 6px;
+    display: flex;
+}
+
+.email-compose-field > label {
+    padding-inline-end: 6px;
+}
+
+.email-compose-field > input,
+textarea {
+    border: none;
+    flex-grow: 1;
+}
+
+.email-compose-field > textarea {
+    resize: none;
+    width: 100%;
+    flex-grow: 1;
+}
+
+.email-compose-field.body {
+    flex-grow: 1;
+}
+
+.email-compose-field > input:focus,
+textarea:focus {
+    outline: none;
 }
