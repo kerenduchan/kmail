@@ -81,7 +81,7 @@ export function EmailPreview({
                 {/* Delete */}
                 <button
                     className="email-preview-action-delete small-action-btn"
-                    onClick={() => onDeleteEmail(email.id)}
+                    onClick={() => onDeleteEmail(email)}
                 >
                     <img src="imgs/garbage-bin.svg" alt="Delete" />
                 </button>

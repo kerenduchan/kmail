@@ -70,9 +70,16 @@ export function EmailIndex() {
         }
     }
 
-    async function onDeleteEmail(emailId) {
+    async function onDeleteEmail(email) {
         try {
-            await emailService.remove(emailId)
+            if (email.isDeleted) {
+                // permanently delete
+                await emailService.remove(email.id)
+            } else {
+                // move to bin
+                email.isDeleted = true
+                await emailService.save(email)
+            }
             await loadEmails()
         } catch (err) {
             console.log('Had issues deleting email', err)

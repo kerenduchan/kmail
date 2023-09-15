@@ -45,6 +45,9 @@ function _doesEmailMatchFilter(email, filter) {
     }
 
     // folder
+    if (filter.folder != 'bin' && email.isDeleted === true) {
+        return false
+    }
     switch (filter.folder) {
         case 'inbox':
             return email.to == emailService.getLoggedInUser().email
@@ -56,6 +59,8 @@ function _doesEmailMatchFilter(email, filter) {
             return email.isStarred
         case 'all':
             return email.sentAt != null
+        case 'bin':
+            return email.isDeleted === true
     }
     return true
 }

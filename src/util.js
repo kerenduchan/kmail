@@ -124,6 +124,10 @@ const folders = [
         id: 'all',
         name: 'All Mail',
     },
+    {
+        id: 'bin',
+        name: 'Bin',
+    },
 ]
 
 function getAllFolders() {

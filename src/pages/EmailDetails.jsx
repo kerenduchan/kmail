@@ -41,8 +41,15 @@ export function EmailDetails() {
 
     async function onDeleteEmail() {
         try {
-            await emailService.remove(params.emailId)
-            navigate('/email')
+            if (email.isDeleted) {
+                // permanently delete
+                await emailService.remove(email.id)
+            } else {
+                // move to bin
+                email.isDeleted = true
+                await emailService.save(email)
+            }
+            navigate(getContainingFolder(location.pathname))
         } catch (err) {
             console.log('Had issues deleting email', err)
         }
