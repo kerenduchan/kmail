@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { formatDateConcise } from '../util'
-
-const MAX_SUBJECT_LEN = 80
+import { SmallActionButton } from '../cmps/SmallActionButton'
 
 export function EmailPreview({
     email,
@@ -50,18 +49,10 @@ export function EmailPreview({
     return (
         <article className={'email-preview' + (email.isRead ? ' read' : '')}>
             {/* Star */}
-            <button
-                className="email-preview-action-star small-action-btn"
+            <SmallActionButton
+                type={email.isStarred ? 'starred' : 'unstarred'}
                 onClick={onStarClick}
-            >
-                <img
-                    src={
-                        'imgs/' +
-                        (email.isStarred ? 'starred.svg' : 'unstarred.svg')
-                    }
-                    alt="Star"
-                />
-            </button>
+            />
             {/* Link to email details */}
             <div
                 className="email-preview-link"
@@ -79,27 +70,17 @@ export function EmailPreview({
             {/* Actions */}
             <div className="email-preview-actions">
                 {/* Delete */}
-                <button
-                    className="email-preview-action-delete small-action-btn"
+                <SmallActionButton
+                    type="delete"
                     onClick={() => onDeleteEmail(email)}
-                >
-                    <img src="imgs/garbage-bin.svg" alt="Delete" />
-                </button>
+                />
                 {/* Mark as read/unread */}
-                <button
-                    className="small-action-btn"
+                <SmallActionButton
+                    type={email.isRead ? 'unread' : 'read'}
                     onClick={() =>
                         onMarkEmailAsReadOrUnread(email.id, !email.isRead)
                     }
-                >
-                    <img
-                        src={
-                            'imgs/mail-' +
-                            (email.isRead ? 'unread.svg' : 'read.svg')
-                        }
-                        alt={'Mark as ' + email.isRead ? 'unread' : 'read'}
-                    />
-                </button>
+                />
             </div>
         </article>
     )

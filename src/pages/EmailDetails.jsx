@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from 'react'
 import { useParams, useNavigate, useLocation } from 'react-router'
-import { Link } from 'react-router-dom'
 
 import { formatDateVerbose, getContainingFolder } from '../util'
+import { SmallActionButton } from '../cmps/SmallActionButton'
 
 // services
 import { emailService } from '../services/email.service'
@@ -83,20 +83,20 @@ export function EmailDetails() {
             {/* Actions */}
             <section className="email-details-actions">
                 {/* Back */}
-                <Link to={getContainingFolder(location.pathname)}>
-                    <button className="email-details-action-back small-action-btn">
-                        <img src="imgs/left-arrow.svg" alt="Back" />
-                    </button>
-                </Link>
+                <SmallActionButton
+                    type="back"
+                    onClick={() =>
+                        navigate(getContainingFolder(location.pathname))
+                    }
+                />
+
                 {/* Delete */}
-                <button
-                    className="email-details-action-delete small-action-btn"
-                    onClick={onDeleteEmail}
-                >
-                    <img src="imgs/garbage-bin.svg" alt="Delete" />
-                </button>
+                <SmallActionButton type="delete" onClick={onDeleteEmail} />
                 {/* Mark as unread */}
-                <button onClick={onMarkEmailAsUnread}>Mark as unread</button>
+                <SmallActionButton
+                    type="unread"
+                    onClick={onMarkEmailAsUnread}
+                />
             </section>
 
             {/* Email Contents */}
