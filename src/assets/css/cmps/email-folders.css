@@ -7,7 +7,7 @@
 
 /* Folder (Inbox, Sent, etc) */
 
-.email-sidebar-folder {
+.email-folder {
     line-height: 20px;
     cursor: pointer;
     padding-top: 2px;
@@ -20,82 +20,95 @@
     gap: 18px;
 }
 
-.email-sidebar-folder:hover {
+.email-folder:hover {
     background-color: rgba(0, 0, 0, 0.052);
 }
 
-.email-sidebar-folder.active {
+.email-folder.active {
     font-weight: bold;
     background-color: #d3e3fd;
 }
 
-.email-sidebar-folder::before {
+.email-folder::before {
     height: 20px;
 }
 
 /* Inbox */
 
-.email-sidebar-folder.inbox::before {
+.email-folder.inbox::before {
     content: url(https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/inbox_baseline_nv700_20dp.png);
 }
 
-.email-sidebar-folder.inbox.active::before {
+.email-folder.inbox.active::before {
     content: url(https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/inbox_fill_baseline_p900_20dp.png);
 }
 
 /* Sent */
 
-.email-sidebar-folder.sent::before {
+.email-folder.sent::before {
     content: url(https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/send_baseline_nv700_20dp.png);
 }
 
-.email-sidebar-folder.sent.active::before {
+.email-folder.sent.active::before {
     content: url(https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/send_fill_baseline_p900_20dp.png);
 }
 
 /* Drafts */
 
-.email-sidebar-folder.drafts::before {
+.email-folder.drafts::before {
     content: url(https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/draft_baseline_nv700_20dp.png);
 }
 
-.email-sidebar-folder.drafts.active::before {
+.email-folder.drafts.active::before {
     content: url(https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/draft_fill_baseline_p900_20dp.png);
 }
 
 /* Starred */
 
-.email-sidebar-folder.starred::before {
+.email-folder.starred::before {
     content: url(https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/star_baseline_nv700_20dp.png);
 }
 
-.email-sidebar-folder.starred.active::before {
+.email-folder.starred.active::before {
     content: url(https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/star_fill_baseline_p900_20dp.png);
 }
 
 /* All Mail */
 
-.email-sidebar-folder.all::before {
+.email-folder.all::before {
     content: url(https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/stacked_email_baseline_nv700_20dp.png);
 }
 
-.email-sidebar-folder.all.active::before {
+.email-folder.all.active::before {
     content: url(https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/stacked_email_fill_baseline_p900_20dp.png);
 }
 
 /* Bin */
 
-.email-sidebar-folder.bin::before {
+.email-folder.bin::before {
     content: url(https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/delete_baseline_nv700_20dp.png);
 }
 
-.email-sidebar-folder.bin.active::before {
+.email-folder.bin.active::before {
     content: url(https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/delete_fill_baseline_p900_20dp.png);
 }
 
 /* Styling for small screens */
 @media only screen and (max-width: 600px) {
     .email-folders {
+        grid-area: 2 / 1 / -1 / span 2;
+        z-index: 5;
+        background-color: rgb(243, 243, 243);
+        width: 80%;
+        border-top: 1px solid lightgrey;
+    }
+
+    .email-folders.hide {
         display: none;
+    }
+    .email-folder {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        margin-inline-end: 10px;
     }
 }

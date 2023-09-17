@@ -16,6 +16,7 @@ import { SmallActionButton } from '../cmps/SmallActionButton'
 export function EmailIndex() {
     const [emails, setEmails] = useState(null)
     const [filter, setFilter] = useState(emailService.getDefaultFilter())
+    const [showMenu, setShowMenu] = useState(false)
     const params = useParams()
     const location = useLocation()
     const navigate = useNavigate()
@@ -35,6 +36,7 @@ export function EmailIndex() {
             folder: params.folderId,
             ...qs,
         }))
+        setShowMenu(false)
     }, [params])
 
     function onFolderClick(folder) {
@@ -140,7 +142,7 @@ export function EmailIndex() {
     }
 
     function onHamburgerMenuClick() {
-        console.log('onHamburgerMenuClick')
+        setShowMenu((prev) => !prev)
     }
 
     if (!emails) return <div>Loading..</div>
@@ -149,17 +151,16 @@ export function EmailIndex() {
 
     return (
         <section className="email-index">
-            <section className="hamburger-menu">
-                <SmallActionButton
-                    className="hamburger-menu"
-                    type="hamburger"
-                    onClick={onHamburgerMenuClick}
-                />
-            </section>
+            <SmallActionButton
+                className="hamburger-menu-button"
+                type="hamburger"
+                onClick={onHamburgerMenuClick}
+            />
             <AppHeader />
             <EmailFilter filter={filter} onChange={onFilterChange} />
             <EmailComposeButton onComposeClick={onComposeClick} />
             <EmailFolders
+                className={showMenu ? '' : 'hide'}
                 activeFolder={params.folderId}
                 onFolderClick={onFolderClick}
             />

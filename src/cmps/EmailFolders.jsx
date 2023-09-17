@@ -1,17 +1,18 @@
 import { getAllFolders } from '../util'
 
-export function EmailFolders({ activeFolder, onFolderClick }) {
+export function EmailFolders({ activeFolder, onFolderClick, className }) {
     function getClassName(folder) {
         return (
-            `email-sidebar-folder ${folder}` +
-            (activeFolder == folder ? ' active' : '')
+            `email-folder ${folder}` + (activeFolder == folder ? ' active' : '')
         )
     }
 
     const folders = getAllFolders()
 
     return (
-        <section className="email-folders">
+        <section
+            className={'email-folders' + (className ? ` ${className}` : '')}
+        >
             {folders.map((folder) => {
                 return (
                     <a
