@@ -6,6 +6,7 @@ body {
     font-size: 0.875rem;
     color: rgb(32, 33, 36);
     margin: 0;
+    height: 100vh;
 }
 
 button {
