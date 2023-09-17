@@ -1,0 +1,26 @@
+.email-compose-button {
+    grid-area: email-compose-button;
+    margin: 8px;
+    padding-inline-end: 20px;
+    height: 40px;
+    color: #001d35;
+    width: 144px;
+}
+
+.email-compose-button::before {
+    content: url('https://www.gstatic.com/images/icons/material/system_gm/1x/create_black_20dp.png');
+    margin-left: 8px;
+    margin-right: 8px;
+    height: 20px;
+}
+
+/* Styling for small screens */
+@media only screen and (max-width: 600px) {
+    .email-compose-button {
+        grid-area: 3 / 1 / -1 / -1;
+        z-index: 2;
+        margin-bottom: 32px;
+        margin-inline-end: 32px;
+        justify-self: end;
+    }
+}

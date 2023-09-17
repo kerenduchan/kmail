@@ -1,23 +1,5 @@
-.email-sidebar {
-    grid-area: sidebar;
-}
-
-.email-sidebar-compose-button {
-    margin: 8px;
-    padding-inline-end: 20px;
-    height: 40px;
-    color: #001d35;
-    width: 144px;
-}
-
-.email-sidebar-compose-button::before {
-    content: url('https://www.gstatic.com/images/icons/material/system_gm/1x/create_black_20dp.png');
-    margin-left: 8px;
-    margin-right: 8px;
-    height: 20px;
-}
-
-.email-sidebar-folders {
+.email-folders {
+    grid-area: email-folders;
     margin-inline-end: 10px;
     display: flex;
     flex-direction: column;
@@ -109,4 +91,11 @@
 
 .email-sidebar-folder.bin.active::before {
     content: url(https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/delete_fill_baseline_p900_20dp.png);
+}
+
+/* Styling for small screens */
+@media only screen and (max-width: 600px) {
+    .email-folders {
+        display: none;
+    }
 }

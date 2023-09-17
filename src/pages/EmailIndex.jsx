@@ -4,12 +4,13 @@ import { useParams, useLocation, useNavigate, Outlet } from 'react-router'
 // components
 import { EmailFilter } from '../cmps/EmailFilter'
 import { EmailList } from '../cmps/EmailList'
-import { EmailSidebar } from '../cmps/EmailSidebar'
+import { EmailFolders } from '../cmps/EmailFolders'
 
 // services
 import { emailService } from '../services/email.service'
 import { strToNullableBool } from '../util'
 import { AppHeader } from '../cmps/AppHeader'
+import { EmailComposeButton } from '../cmps/EmailComposeButton'
 
 export function EmailIndex() {
     const [emails, setEmails] = useState(null)
@@ -145,10 +146,10 @@ export function EmailIndex() {
         <section className="email-index">
             <AppHeader />
             <EmailFilter filter={filter} onChange={onFilterChange} />
-            <EmailSidebar
+            <EmailComposeButton onComposeClick={onComposeClick} />
+            <EmailFolders
                 activeFolder={params.folderId}
                 onFolderClick={onFolderClick}
-                onComposeClick={onComposeClick}
             />
             <section className="email-index-main">
                 {showOutlet ? (
