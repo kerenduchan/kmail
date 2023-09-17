@@ -1,11 +1,16 @@
 .email-index {
+    height: 100%;
     background-color: #f6f8fc;
     display: grid;
-    grid-template-rows: 1fr;
+    grid-template-areas:
+        'header search'
+        'sidebar email-index-main';
+    grid-template-rows: auto 1fr;
     grid-template-columns: 256px 1fr;
 }
 
 .email-index-main {
+    grid-area: email-index-main;
     background-color: white;
     margin-bottom: 16px;
     margin-inline-end: 16px;

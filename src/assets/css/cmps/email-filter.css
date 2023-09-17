@@ -1,7 +1,9 @@
 .email-filter {
+    grid-area: search;
     padding: 10px;
     display: flex;
     gap: 15px;
+    align-items: center;
 }
 
 .email-filter-field {

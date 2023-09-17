@@ -9,6 +9,7 @@ import { EmailSidebar } from '../cmps/EmailSidebar'
 // services
 import { emailService } from '../services/email.service'
 import { strToNullableBool } from '../util'
+import { AppHeader } from '../cmps/AppHeader'
 
 export function EmailIndex() {
     const [emails, setEmails] = useState(null)
@@ -142,6 +143,8 @@ export function EmailIndex() {
 
     return (
         <section className="email-index">
+            <AppHeader />
+            <EmailFilter filter={filter} onChange={onFilterChange} />
             <EmailSidebar
                 activeFolder={params.folderId}
                 onFolderClick={onFolderClick}
@@ -152,10 +155,6 @@ export function EmailIndex() {
                     <Outlet />
                 ) : (
                     <>
-                        <EmailFilter
-                            filter={filter}
-                            onChange={onFilterChange}
-                        />
                         <EmailList
                             emails={emails}
                             onUpdateEmail={onUpdateEmail}

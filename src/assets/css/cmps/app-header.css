@@ -1,19 +1,10 @@
 .app-header {
-    display: grid;
-    grid-auto-flow: column;
-    align-items: center;
     padding: 19px 30px;
+    grid-area: header;
 }
 
 .app-header h1 {
     margin: 0;
     color: #4f5251;
     font-size: 20px;
-}
-
-.app-header nav {
-    display: grid;
-    grid-auto-flow: column;
-    gap: 15px;
-    justify-content: end;
 }

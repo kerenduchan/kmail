@@ -1,5 +1,6 @@
 .email-list {
     list-style: none;
     padding: 0;
+    padding-top: 24px;
     margin: 0;
 }
