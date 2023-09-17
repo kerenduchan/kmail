@@ -48,11 +48,18 @@ function _doesEmailMatchFilter(email, filter) {
     if (filter.folder != 'bin' && email.isDeleted === true) {
         return false
     }
+
     switch (filter.folder) {
         case 'inbox':
-            return email.to == emailService.getLoggedInUser().email
+            return (
+                email.sentAt !== null &&
+                email.to == emailService.getLoggedInUser().email
+            )
         case 'sent':
-            return email.from == emailService.getLoggedInUser().email
+            return (
+                email.sentAt !== null &&
+                email.from == emailService.getLoggedInUser().email
+            )
         case 'drafts':
             return email.sentAt == null
         case 'starred':
