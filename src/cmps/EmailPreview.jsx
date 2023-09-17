@@ -16,7 +16,7 @@ export function EmailPreview({
         switch (folder) {
             case 'sent':
                 setFirstColumn(
-                    <div className="email-preview-first-column email-preview-to">
+                    <div className="email-preview-first-column">
                         To: {email.to}
                     </div>
                 )
@@ -30,7 +30,7 @@ export function EmailPreview({
                 break
             default:
                 setFirstColumn(
-                    <div className="email-preview-first-column email-preview-from">
+                    <div className="email-preview-first-column">
                         {email.from}
                     </div>
                 )

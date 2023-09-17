@@ -1,7 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Google+Sans');
-/* " Sans",Roboto,RobotoDraft,Helvetica,Arial,sans-serif; */
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url('https://fonts.googleapis.com/css?family=RobotoDraft');
+
 body {
-    font-family: 'Google Sans', Arial, Helvetica, sans-serif;
+    font-family: 'Google Sans', 'Roboto', 'RobotoDraft', Helvetica, Arial,
+        sans-serif;
     background-color: #f6f8fc;
     font-size: 0.875rem;
     color: rgb(32, 33, 36);
