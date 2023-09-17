@@ -51,21 +51,23 @@ export function EmailPreview({
             {/* Star */}
             <SmallActionButton
                 type={email.isStarred ? 'starred' : 'unstarred'}
+                className="email-preview-star"
                 onClick={onStarClick}
             />
             {/* Link to email details */}
             <div
                 className="email-preview-link"
                 onClick={() => onEmailClick(email.id)}
-            >
-                {/* First Column (From/To/Draft) */}
-                {firstColumn}
-                {/* Subject */}
-                <div className="email-preview-subject">{email.subject}</div>
-                {/* Sent at */}
-                <div className="email-preview-sent-at">
-                    {folder == 'drafts' ? '' : formatDateConcise(email.sentAt)}
-                </div>
+            />
+            {/* First Column (From/To/Draft) */}
+            {firstColumn}
+            {/* Subject */}
+            <div className="email-preview-subject">
+                {email.subject || '(no subject)'}
+            </div>
+            {/* Sent at */}
+            <div className="email-preview-sent-at">
+                {folder == 'drafts' ? '' : formatDateConcise(email.sentAt)}
             </div>
             {/* Actions */}
             <div className="email-preview-actions">

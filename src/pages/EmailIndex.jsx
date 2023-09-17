@@ -11,6 +11,7 @@ import { emailService } from '../services/email.service'
 import { strToNullableBool } from '../util'
 import { AppHeader } from '../cmps/AppHeader'
 import { EmailComposeButton } from '../cmps/EmailComposeButton'
+import { SmallActionButton } from '../cmps/SmallActionButton'
 
 export function EmailIndex() {
     const [emails, setEmails] = useState(null)
@@ -138,12 +139,23 @@ export function EmailIndex() {
         }
     }
 
+    function onHamburgerMenuClick() {
+        console.log('onHamburgerMenuClick')
+    }
+
     if (!emails) return <div>Loading..</div>
 
     const showOutlet = location.pathname.includes('compose') || params.emailId
 
     return (
         <section className="email-index">
+            <section className="hamburger-menu">
+                <SmallActionButton
+                    className="hamburger-menu"
+                    type="hamburger"
+                    onClick={onHamburgerMenuClick}
+                />
+            </section>
             <AppHeader />
             <EmailFilter filter={filter} onChange={onFilterChange} />
             <EmailComposeButton onComposeClick={onComposeClick} />

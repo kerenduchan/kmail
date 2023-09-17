@@ -1,10 +1,14 @@
 .email-preview {
     font-weight: bold;
     border: 1px solid transparent;
-    display: flex;
-    align-items: center;
-    gap: 10px;
     padding: 0 10px;
+
+    display: grid;
+    grid-template-rows: 1fr;
+    /* star, from/to, subject, date/actions */
+    grid-template-columns: auto 200px 1fr auto;
+    align-items: center;
+    column-gap: 10px;
 }
 
 .email-preview:hover {
@@ -13,11 +17,17 @@
     mix-blend-mode: multiply;
 }
 
+.email-preview-star {
+    grid-area: 1 / 1 / span 1 / span 1;
+}
+
 .email-preview-actions {
     display: none;
+    z-index: 3;
 }
 
 .email-preview:hover .email-preview-actions {
+    grid-area: 1 / 4 / span 1 / span 1;
     display: flex;
 }
 
@@ -31,9 +41,7 @@
 }
 
 .email-preview-first-column {
-    flex-shrink: 0;
-    width: 200px;
-    min-width: 0;
+    grid-area: 1 / 2 / span 1 / span 1;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow-x: hidden;
@@ -45,38 +53,57 @@
 }
 
 .email-preview-link {
-    flex-grow: 1;
-    min-width: 0;
+    grid-area: 1 / 2 / -1 / -1;
+    align-self: stretch;
+    justify-self: stretch;
     cursor: pointer;
-    padding: 4px 0;
-    text-decoration: none;
-    color: unset;
-    display: flex;
-    align-items: center;
-    gap: 5px;
+    z-index: 2;
 }
 
 .email-preview-subject {
-    flex-grow: 1;
-    min-width: 0;
+    grid-area: 1 / 3 / span 1 / span 1;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow-x: hidden;
 }
 
 .email-preview-sent-at {
+    grid-area: 1 / 4 / span 1 / span 1;
     color: grey;
     font-size: 85%;
 }
 
 /* Styling for small screens */
 @media only screen and (max-width: 600px) {
-    .email-preview-link {
-        flex-direction: column;
+    .email-preview {
+        grid-template-rows: 1fr;
+        grid-template-columns: 1fr auto;
+        padding-top: 10px;
+        padding-bottom: 10px;
     }
 
-    .email-preview-actions {
-        display: flex;
+    .email-preview-link {
+        grid-area: 1 / 1 / span 2 / span 2;
+    }
+
+    .email-preview-first-column {
+        grid-area: 1 / 1 / span 1 / span 1;
+    }
+
+    .email-preview-sent-at {
+        grid-area: 1 / 2 / span 1 / span 1;
+    }
+
+    .email-preview-subject {
+        grid-area: 2 / 1 / span 1 / span 1;
+    }
+
+    .email-preview-star {
+        grid-area: 2 / 2 / -1 / -1;
+    }
+
+    .email-preview:hover .email-preview-actions {
+        display: none;
     }
 
     .email-preview:hover .email-preview-sent-at {

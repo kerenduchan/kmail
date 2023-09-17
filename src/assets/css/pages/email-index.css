@@ -27,10 +27,19 @@
 @media only screen and (max-width: 600px) {
     .email-index {
         grid-template-rows: auto 1fr auto;
-        grid-template-columns: 1fr;
+        grid-template-columns: 50px 1fr;
     }
 
     .email-index-main {
         grid-area: 2 / 1 / -1 / -1;
+        margin: 0;
+        border-radius: 0;
+        border-top: 1px solid lightgray;
+    }
+
+    .hamburger-menu {
+        grid-area: 1 / 1 / span 1 / span 1;
+        align-self: center;
+        justify-self: center;
     }
 }
