@@ -3,12 +3,12 @@
     padding: 0;
     padding-top: 24px;
     margin: 0;
-    border-top: 1px solid lightgray;
 }
 
 /* Styling for small screens */
 @media only screen and (max-width: 600px) {
     .email-list {
+        border-top: 1px solid lightgray;
         padding-top: 0;
         margin: 0;
     }
