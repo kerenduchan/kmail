@@ -26,18 +26,20 @@
 /* Styling for small screens */
 @media only screen and (max-width: 600px) {
     .email-index {
+        grid-template-areas:
+        'hamburger        header           email-compose-button'
+        'email-index-main email-index-main email-index-main    ';
         grid-template-rows: auto 1fr auto;
-        grid-template-columns: 50px 1fr;
+        grid-template-columns: 50px 1fr auto;
     }
 
     .email-index-main {
-        grid-area: 2 / 1 / -1 / -1;
         margin: 0;
         border-radius: 0;
     }
 
     .hamburger-menu-button {
-        grid-area: 1 / 1 / span 1 / span 1;
+        grid-area: hamburger;
         align-self: center;
         justify-self: center;
     }

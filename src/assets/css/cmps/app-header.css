@@ -14,6 +14,5 @@
 @media only screen and (max-width: 600px) {
     .app-header {
         padding: 12px 10px;
-        grid-area: 1 / 2 / 1 / -1;
     }
 }
