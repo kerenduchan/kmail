@@ -169,6 +169,7 @@ export function EmailIndex() {
                     <Outlet />
                 ) : (
                     <>
+                        <div className="email-list-top"></div>
                         <EmailList
                             emails={emails}
                             onUpdateEmail={onUpdateEmail}
@@ -178,6 +179,7 @@ export function EmailIndex() {
                                 onMarkEmailAsReadOrUnread
                             }
                         />
+                        <div className="email-list-bottom"></div>
                     </>
                 )}
             </section>
