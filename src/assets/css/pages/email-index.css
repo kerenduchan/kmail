@@ -23,6 +23,10 @@
     flex-direction: column;
 }
 
+.hamburger-menu-button {
+    display: none;
+}
+
 /* Styling for small screens */
 @media only screen and (max-width: 600px) {
     .email-index {
@@ -37,6 +41,7 @@
     }
 
     .hamburger-menu-button {
+        display: unset;
         grid-area: 1 / 1 / span 1 / span 1;
         align-self: center;
         justify-self: center;
