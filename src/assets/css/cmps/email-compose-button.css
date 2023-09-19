@@ -13,14 +13,3 @@
     margin-right: 8px;
     height: 20px;
 }
-
-/* Styling for small screens */
-@media only screen and (max-width: 600px) {
-    .email-compose-button {
-        grid-area: 3 / 1 / -1 / -1;
-        z-index: 2;
-        margin-bottom: 32px;
-        margin-inline-end: 32px;
-        justify-self: end;
-    }
-}
