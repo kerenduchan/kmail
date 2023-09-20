@@ -77,12 +77,12 @@ export function EmailIndex() {
 
     async function onDeleteEmail(email) {
         try {
-            if (email.isDeleted) {
+            if (email.deletedAt !== null) {
                 // permanently delete
                 await emailService.remove(email.id)
             } else {
                 // move to bin
-                email.isDeleted = true
+                email.deletedAt = Date.now()
                 await emailService.save(email)
             }
             await loadEmails()

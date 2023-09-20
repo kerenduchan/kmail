@@ -44,7 +44,7 @@ function _doesEmailMatchFilter(email, filter) {
     }
 
     // folder
-    if (filter.folder != 'bin' && email.isDeleted === true) {
+    if (filter.folder != 'bin' && email.deletedAt !== null) {
         return false
     }
 
@@ -66,7 +66,7 @@ function _doesEmailMatchFilter(email, filter) {
         case 'all':
             return email.sentAt != null
         case 'bin':
-            return email.isDeleted === true
+            return email.deletedAt !== null
     }
     return true
 }
@@ -108,7 +108,7 @@ function createEmail() {
         isRead: false,
         isStarred: false,
         sentAt: null,
-        isDeleted: false,
+        deletedAt: null,
     }
 }
 
@@ -129,7 +129,7 @@ async function generateEmails() {
             body: 'This is some text for this sample email',
             isRead: false,
             isStarred: false,
-            isDeleted: false,
+            deletedAt: null,
             sentAt: 1694112055000,
             from: 'moshe@gmail.com',
             to: 'keren.duchan@gmail.com',
@@ -140,9 +140,8 @@ async function generateEmails() {
             body: 'This is some text for this sample email',
             isRead: true,
             isStarred: false,
-            isDeleted: false,
+            deletedAt: 1695112077000,
             sentAt: 1694112055000,
-            isDeleted: true,
             from: 'moshe@gmail.com',
             to: 'keren.duchan@gmail.com',
         },
@@ -152,7 +151,7 @@ async function generateEmails() {
             body: 'Would you like to talk?',
             isRead: true,
             isStarred: true,
-            isDeleted: false,
+            deletedAt: null,
             sentAt: 1693920361000,
             from: 'shoshana@gmail.com',
             to: 'keren.duchan@gmail.com',
@@ -167,6 +166,7 @@ async function generateEmails() {
             sentAt: 1593210401000,
             from: 'keren.duchan@gmail.com',
             to: 'shoshana@gmail.com',
+            deletedAt: null,
         },
         {
             id: utilService.makeId(),
@@ -174,7 +174,7 @@ async function generateEmails() {
             body: 'Here are some thoughts...',
             isRead: true,
             isStarred: false,
-            isDeleted: false,
+            deletedAt: null,
             sentAt: null,
             from: 'keren.duchan@gmail.com',
             to: '',
@@ -188,7 +188,7 @@ async function generateEmails() {
             body: 'This is some text for this sample email ' + i,
             isRead: false,
             isStarred: false,
-            isDeleted: false,
+            deletedAt: null,
             sentAt: 1671802055000 + i * 50000000,
             from: `mass_sender${i}@gmail.com`,
             to: 'keren.duchan@gmail.com',

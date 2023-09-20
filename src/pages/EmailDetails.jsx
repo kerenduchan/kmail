@@ -41,12 +41,12 @@ export function EmailDetails() {
 
     async function onDeleteEmail() {
         try {
-            if (email.isDeleted) {
+            if (email.deletedAt !== null) {
                 // permanently delete
                 await emailService.remove(email.id)
             } else {
                 // move to bin
-                email.isDeleted = true
+                email.deletedAt = Date.now()
                 await emailService.save(email)
             }
             navigate(getContainingFolder(location.pathname))
