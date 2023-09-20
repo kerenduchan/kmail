@@ -15,6 +15,7 @@ import { SmallActionButton } from '../cmps/SmallActionButton'
 
 export function EmailIndex() {
     const [emails, setEmails] = useState(null)
+    const [emailCounts, setEmailCounts] = useState(null)
     const [filter, setFilter] = useState(emailService.getDefaultFilter())
     const [showMenu, setShowMenu] = useState(false)
     const params = useParams()
@@ -112,11 +113,15 @@ export function EmailIndex() {
 
     async function loadEmails() {
         try {
-            const emails = await emailService.query(filter)
+            let [emailCounts, emails] = await Promise.all([
+                emailService.getEmailCountsPerFolder(),
+                emailService.query(filter),
+            ])
             setEmails({
                 data: emails,
                 folder: filter.folder,
             })
+            setEmailCounts(emailCounts)
         } catch (err) {
             console.log('Had issues loading emails', err)
         }
@@ -145,7 +150,7 @@ export function EmailIndex() {
         setShowMenu((prev) => !prev)
     }
 
-    if (!emails) return <div>Loading..</div>
+    if (!emails || !emailCounts) return <div>Loading..</div>
 
     const showOutlet = location.pathname.includes('compose') || params.emailId
 
@@ -163,6 +168,7 @@ export function EmailIndex() {
                 className={showMenu ? '' : 'hide'}
                 activeFolder={params.folderId}
                 onFolderClick={onFolderClick}
+                emailCounts={emailCounts}
             />
             <section className="email-index-main">
                 {showOutlet ? (

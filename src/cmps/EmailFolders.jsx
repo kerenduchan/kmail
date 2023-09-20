@@ -1,6 +1,11 @@
 import { getAllFolders } from '../util'
 
-export function EmailFolders({ activeFolder, onFolderClick, className }) {
+export function EmailFolders({
+    activeFolder,
+    onFolderClick,
+    className,
+    emailCounts,
+}) {
     function getClassName(folder) {
         return (
             `email-folder ${folder}` + (activeFolder == folder ? ' active' : '')
@@ -20,7 +25,19 @@ export function EmailFolders({ activeFolder, onFolderClick, className }) {
                         className={getClassName(folder.id)}
                         onClick={() => onFolderClick(folder.id)}
                     >
-                        {folder.name}
+                        <div
+                            className={
+                                'email-folder-name' +
+                                (emailCounts[folder.id].unread
+                                    ? ' has-unread'
+                                    : '')
+                            }
+                        >
+                            {folder.name}
+                        </div>
+                        <div className="email-folder-unread-count">
+                            {emailCounts[folder.id].unread || ''}
+                        </div>
                     </a>
                 )
             })}

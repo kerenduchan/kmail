@@ -93,6 +93,18 @@
     content: url(https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/delete_fill_baseline_p900_20dp.png);
 }
 
+.email-folder-name {
+    flex-grow: 1;
+}
+
+.email-folder-name.has-unread {
+    font-weight: bold;
+}
+
+.email-folder-unread-count {
+    padding-inline-end: 10px;
+}
+
 /* Styling for small screens */
 @media only screen and (max-width: 600px) {
     .email-folders {
