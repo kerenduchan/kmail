@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 
-export function AppHeader() {
+export function Logo() {
     const navigate = useNavigate()
 
     function onHeaderClicked() {
@@ -8,7 +8,7 @@ export function AppHeader() {
     }
 
     return (
-        <header className="app-header" onClick={onHeaderClicked}>
+        <header className="logo" onClick={onHeaderClicked}>
             <h1>Kmail</h1>
         </header>
     )

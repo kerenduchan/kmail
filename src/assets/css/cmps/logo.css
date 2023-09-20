@@ -1,10 +1,10 @@
-.app-header {
+.logo {
     padding: 19px 30px;
     grid-area: header;
     cursor: pointer;
 }
 
-.app-header h1 {
+.logo h1 {
     margin: 0;
     color: #4f5251;
     font-size: 20px;
@@ -12,7 +12,7 @@
 
 /* Styling for small screens */
 @media only screen and (max-width: 600px) {
-    .app-header {
+    .logo {
         padding: 12px 10px;
     }
 }

@@ -9,7 +9,7 @@ import { EmailFolders } from '../cmps/EmailFolders'
 // services
 import { emailService } from '../services/email.service'
 import { strToNullableBool } from '../util'
-import { AppHeader } from '../cmps/AppHeader'
+import { Logo } from '../cmps/Logo'
 import { EmailComposeButton } from '../cmps/EmailComposeButton'
 import { SmallActionButton } from '../cmps/SmallActionButton'
 
@@ -156,7 +156,7 @@ export function EmailIndex() {
                 type="hamburger"
                 onClick={onHamburgerMenuClick}
             />
-            <AppHeader />
+            <Logo />
             <EmailFilter filter={filter} onChange={onFilterChange} />
             <EmailComposeButton onComposeClick={onComposeClick} />
             <EmailFolders

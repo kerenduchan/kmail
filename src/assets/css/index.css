@@ -10,7 +10,7 @@
 
 /* Components */
 @import 'cmps/small-action-button.css';
-@import 'cmps/app-header.css';
+@import 'cmps/logo.css';
 @import 'cmps/email-folders.css';
 @import 'cmps/email-compose-button.css';
 @import 'cmps/email-filter.css';
