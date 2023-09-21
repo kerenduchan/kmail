@@ -6,6 +6,7 @@ import { SmallActionButton } from '../cmps/SmallActionButton'
 
 // services
 import { emailService } from '../services/email.service'
+import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 
 export function EmailDetails() {
     const [email, setEmail] = useState(null)
@@ -39,19 +40,28 @@ export function EmailDetails() {
         }
     }, [email])
 
+    // Either move the email to the bin or delete it forever if it's already
+    // in the bin.
     async function onDeleteEmail() {
-        try {
-            if (email.deletedAt !== null) {
+        if (email.deletedAt !== null) {
+            try {
                 // permanently delete
                 await emailService.remove(email.id)
-            } else {
+                navigate(getContainingFolder(location.pathname))
+                showSuccessMsg('Email deleted forever.')
+            } catch (err) {
+                showErrorMsg('Failed to delete email forever.')
+            }
+        } else {
+            try {
                 // move to bin
                 email.deletedAt = Date.now()
                 await emailService.save(email)
+                navigate(getContainingFolder(location.pathname))
+                showSuccessMsg('Email moved to Bin.')
+            } catch (err) {
+                showErrorMsg('Failed to move email to Bin.')
             }
-            navigate(getContainingFolder(location.pathname))
-        } catch (err) {
-            console.log('Had issues deleting email', err)
         }
     }
 

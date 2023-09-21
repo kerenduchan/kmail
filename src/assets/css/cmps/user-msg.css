@@ -8,6 +8,7 @@
     padding-inline-end: 16px;
     column-gap: 18px;
     background-color: rgb(32, 33, 36);
+    color: white;
     border-radius: 4px;
     box-shadow: 0 1px 3px 0 rgba(60, 64, 67, 0.302),
         0 4px 8px 3px rgba(60, 64, 67, 0.149);
@@ -15,8 +16,8 @@
     align-items: center;
 }
 
-.user-msg-text {
-    color: white;
+.user-msg.error {
+    background-color: rgb(182, 18, 18);
 }
 
 .user-msg-close-button {

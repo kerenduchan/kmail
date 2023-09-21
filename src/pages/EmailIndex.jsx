@@ -12,7 +12,11 @@ import { strToNullableBool } from '../util'
 import { Logo } from '../cmps/Logo'
 import { EmailComposeButton } from '../cmps/EmailComposeButton'
 import { SmallActionButton } from '../cmps/SmallActionButton'
-import { hideUserMsg } from '../services/event-bus.service'
+import {
+    hideUserMsg,
+    showErrorMsg,
+    showSuccessMsg,
+} from '../services/event-bus.service'
 
 export function EmailIndex() {
     const [emails, setEmails] = useState(null)
@@ -47,6 +51,7 @@ export function EmailIndex() {
     }
 
     function onComposeClick() {
+        hideUserMsg()
         navigate(`/email/${params.folderId}/compose`)
     }
 
@@ -78,19 +83,28 @@ export function EmailIndex() {
         }
     }
 
+    // Either move the email to the bin or delete it forever if it's already
+    // in the bin.
     async function onDeleteEmail(email) {
-        try {
-            if (email.deletedAt !== null) {
+        if (email.deletedAt !== null) {
+            try {
                 // permanently delete
                 await emailService.remove(email.id)
-            } else {
+                await loadEmails()
+                showSuccessMsg('Email deleted forever.')
+            } catch (err) {
+                showErrorMsg('Failed to delete email forever.')
+            }
+        } else {
+            try {
                 // move to bin
                 email.deletedAt = Date.now()
                 await emailService.save(email)
+                await loadEmails()
+                showSuccessMsg('Email moved to Bin.')
+            } catch (err) {
+                showErrorMsg('Failed to move email to Bin.')
             }
-            await loadEmails()
-        } catch (err) {
-            console.log('Had issues deleting email', err)
         }
     }
 
@@ -141,6 +155,7 @@ export function EmailIndex() {
     }
 
     function onEmailClick(emailId) {
+        hideUserMsg()
         if (params.folderId == 'drafts') {
             navigate(`/email/${params.folderId}/compose/${emailId}`)
         } else {
