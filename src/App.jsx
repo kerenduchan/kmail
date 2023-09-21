@@ -6,6 +6,7 @@ import { About } from './pages/About'
 import { EmailIndex } from './pages/EmailIndex'
 import { EmailDetails } from './pages/EmailDetails'
 import { EmailCompose } from './pages/EmailCompose'
+import { UserMsg } from './cmps/UserMsg'
 
 function App() {
     return (
@@ -25,6 +26,7 @@ function App() {
                         />
                     </Route>
                 </Routes>
+                <UserMsg />
             </main>
         </Router>
     )
