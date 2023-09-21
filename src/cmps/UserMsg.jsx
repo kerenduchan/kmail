@@ -5,16 +5,25 @@ export function UserMsg() {
     const [msg, setMsg] = useState(null)
     const timeoutId = useRef(null)
 
-    // { txt: 'Im a user msg', type: 'error' }
     useEffect(() => {
-        const unsubscribe = eventBusService.on('show-user-msg', (msg) => {
+        const unsubscribeShow = eventBusService.on('show-user-msg', (msg) => {
             setMsg(msg)
             clearTimeout(timeoutId.current)
             timeoutId.current = setTimeout(() => {
                 onCloseMsg()
             }, 10000)
         })
-        return unsubscribe
+
+        const unsubscribeHide = eventBusService.on('hide-user-msg', () => {
+            clearTimeout(timeoutId.current)
+            timeoutId.current = null
+            onCloseMsg()
+        })
+
+        return () => {
+            unsubscribeShow()
+            unsubscribeHide()
+        }
     }, [])
 
     function onCloseMsg() {

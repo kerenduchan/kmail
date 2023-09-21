@@ -12,6 +12,7 @@ import { strToNullableBool } from '../util'
 import { Logo } from '../cmps/Logo'
 import { EmailComposeButton } from '../cmps/EmailComposeButton'
 import { SmallActionButton } from '../cmps/SmallActionButton'
+import { hideUserMsg } from '../services/event-bus.service'
 
 export function EmailIndex() {
     const [emails, setEmails] = useState(null)
@@ -41,6 +42,7 @@ export function EmailIndex() {
     }, [params])
 
     function onFolderClick(folder) {
+        hideUserMsg()
         navigate(`/email/${folder}`)
     }
 
