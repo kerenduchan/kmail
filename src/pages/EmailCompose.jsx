@@ -50,6 +50,7 @@ export function EmailCompose() {
             setDraft((prev) => {
                 return { ...prev, id: email.id }
             })
+            navigate(location.pathname + '/' + email.id)
         }
     }
 
