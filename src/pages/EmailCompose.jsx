@@ -3,6 +3,7 @@ import { useLocation, useNavigate, useParams } from 'react-router'
 import { getContainingFolder } from '../util'
 import { emailService } from '../services/email.service'
 import { useInterval } from '../useInterval'
+import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 
 export function EmailCompose() {
     const [draft, setDraft] = useState(emailService.createEmail())
@@ -35,8 +36,14 @@ export function EmailCompose() {
 
     async function onSend() {
         draft.sentAt = Date.now()
-        await emailService.save(draft)
-        navigate(getContainingFolder(location.pathname))
+        showSuccessMsg('Sending email...')
+        try {
+            await emailService.save(draft)
+            navigate(getContainingFolder(location.pathname))
+            showSuccessMsg('Email sent.')
+        } catch (e) {
+            showErrorMsg('Failed to send email.')
+        }
     }
 
     async function onSaveDraft() {
