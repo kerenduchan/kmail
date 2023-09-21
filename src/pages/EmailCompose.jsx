@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router'
 import { getContainingFolder } from '../util'
 import { emailService } from '../services/email.service'
+import { useInterval } from '../useInterval'
 
 export function EmailCompose() {
     const [draft, setDraft] = useState(emailService.createEmail())
@@ -15,6 +16,8 @@ export function EmailCompose() {
             loadEmail(params.emailId)
         }
     }, [])
+
+    useInterval(autoSaveDraft, 5000)
 
     async function loadEmail(emailId) {
         const email = await emailService.getById(emailId)
@@ -39,6 +42,15 @@ export function EmailCompose() {
     async function onSaveDraft() {
         await emailService.save(draft)
         navigate(getContainingFolder(location.pathname))
+    }
+
+    async function autoSaveDraft() {
+        const email = await emailService.save(draft)
+        if (draft.id === null) {
+            setDraft((prev) => {
+                return { ...prev, id: email.id }
+            })
+        }
     }
 
     return (
