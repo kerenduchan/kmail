@@ -1,17 +1,18 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useParams, useLocation, useNavigate, Outlet } from 'react-router'
-
-// components
+import { useSearchParams } from 'react-router-dom'
 import { EmailFilter } from '../cmps/EmailFilter'
 import { EmailList } from '../cmps/EmailList'
 import { EmailFolders } from '../cmps/EmailFolders'
-
-// services
-import { emailService } from '../services/email.service'
-import { strToNullableBool } from '../util'
 import { Logo } from '../cmps/Logo'
 import { EmailComposeButton } from '../cmps/EmailComposeButton'
 import { SmallActionButton } from '../cmps/SmallActionButton'
+import {
+    getEmailFilterFromParams,
+    sanitizeFilter,
+    getDefaultFilter,
+} from '../util'
+import { emailService } from '../services/email.service'
 import {
     hideUserMsg,
     showErrorMsg,
@@ -21,32 +22,28 @@ import {
 export function EmailIndex() {
     const [emails, setEmails] = useState(null)
     const [emailCounts, setEmailCounts] = useState(null)
-    const [filter, setFilter] = useState(emailService.getDefaultFilter())
-    const [showMenu, setShowMenu] = useState(false)
     const params = useParams()
+    const [searchParams, setSearchParams] = useSearchParams()
+    const [filter, setFilter] = useState(
+        getEmailFilterFromParams(params, searchParams)
+    )
+    const [showMenu, setShowMenu] = useState(false)
     const location = useLocation()
     const navigate = useNavigate()
+    const firstTime = useRef(true)
 
     useEffect(() => {
-        if (filter.folder !== null) {
-            loadEmails()
+        if (firstTime.current) {
+            firstTime.current = false
+            return
         }
+        setSearchParams(sanitizeFilter(filter))
+        loadEmails()
     }, [filter])
-
-    useEffect(() => {
-        const qs = parseQueryString()
-
-        // filter by folder
-        setFilter((prevFilter) => ({
-            ...prevFilter,
-            folder: params.folderId,
-            ...qs,
-        }))
-        setShowMenu(false)
-    }, [params])
 
     function onFolderClick(folder) {
         hideUserMsg()
+        setFilter({ ...getDefaultFilter(), folder })
         navigate(`/email/${folder}`)
     }
 
@@ -56,30 +53,16 @@ export function EmailIndex() {
     }
 
     function onFilterChange(fieldsToUpdate) {
-        const newFilter = { ...filter, ...fieldsToUpdate }
-        const queryString = new URLSearchParams()
-
-        if (newFilter.isRead !== null) {
-            queryString.set('read', '' + newFilter.isRead)
-        }
-        if (newFilter.isStarred !== null) {
-            queryString.set('starred', '' + newFilter.isStarred)
-        }
-        if (newFilter.searchString) {
-            queryString.set('search', newFilter.searchString)
-        }
-
-        navigate({
-            search: queryString.toString(),
-        })
+        setFilter((prev) => ({ ...prev, ...fieldsToUpdate }))
     }
 
     async function onUpdateEmail(email) {
+        hideUserMsg()
         try {
             await emailService.save(email)
             await loadEmails()
         } catch (err) {
-            console.log('Failed to star/unstar email', err)
+            showErrorMsg('Failed to update email', err)
         }
     }
 
@@ -109,12 +92,13 @@ export function EmailIndex() {
     }
 
     async function onMarkEmailAsReadOrUnread(emailId, isRead) {
+        hideUserMsg()
         try {
             let email = emails.data.filter((e) => e.id == emailId)
             if (email.length != 1) {
-                console.error(
-                    'Email cannot be marked as unread - not found. Email ID: ' +
-                        emailId
+                showErrorMsg(
+                    'Failed to mark email as ' + (isRead ? 'read' : 'unread'),
+                    `Email with ID=${emailId} not found`
                 )
                 return
             }
@@ -123,11 +107,15 @@ export function EmailIndex() {
             await emailService.save(email)
             await loadEmails()
         } catch (err) {
-            console.log('Had issues marking email as unread', err)
+            showErrorMsg(
+                'Failed to mark email as ' + (isRead ? 'read' : 'unread'),
+                err
+            )
         }
     }
 
     async function loadEmails() {
+        console.log('loadEmails')
         try {
             let [emailCounts, emails] = await Promise.all([
                 emailService.getEmailCountsPerFolder(),
@@ -139,18 +127,7 @@ export function EmailIndex() {
             })
             setEmailCounts(emailCounts)
         } catch (err) {
-            console.log('Had issues loading emails', err)
-        }
-    }
-
-    function parseQueryString() {
-        const queryString = new URLSearchParams(location.search)
-        const searchString = queryString.get('search')
-
-        return {
-            isRead: strToNullableBool(queryString.get('read')),
-            isStarred: strToNullableBool(queryString.get('starred')),
-            searchString: searchString ? searchString : '',
+            showErrorMsg('Error loading emails' + err)
         }
     }
 

@@ -31,8 +31,11 @@ export function showSuccessMsg(txt) {
     showUserMsg({ txt, type: 'success' })
 }
 
-export function showErrorMsg(txt) {
+export function showErrorMsg(txt, err) {
     showUserMsg({ txt, type: 'error' })
+    if (err) {
+        console.error(txt + ': ' + err)
+    }
 }
 
 export function hideUserMsg() {

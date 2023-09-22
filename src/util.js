@@ -6,6 +6,9 @@ export {
     getAllFolders,
     getAllFolderIds,
     getContainingFolder,
+    getEmailFilterFromParams,
+    sanitizeFilter,
+    getDefaultFilter,
 }
 
 function getHourAndMinuteStr(date) {
@@ -56,8 +59,6 @@ function formatDateVerbose(timestamp) {
     if (delta < hour) {
         const minutesCount = Math.floor(delta / minute)
         return getHourAndMinuteStr(tsDate)
-        relative =
-            minutesCount + ' minute' + (minutesCount === 1 ? '' : 's') + ' ago'
     } else if (delta < day) {
         res = getHourAndMinuteStr(tsDate)
         const hoursCount = Math.floor(delta / hour)
@@ -140,4 +141,38 @@ function getAllFolderIds() {
 
 function getContainingFolder(path) {
     return path.split('/').slice(0, 3).join('/')
+}
+
+function getEmailFilterFromParams(params, searchParams) {
+    const searchString = searchParams.get('search')
+
+    return {
+        isRead: strToNullableBool(searchParams.get('isRead')),
+        isStarred: strToNullableBool(searchParams.get('isStarred')),
+        searchString: searchString ? searchString : '',
+        folder: params.folderId,
+    }
+}
+
+function getDefaultFilter() {
+    return {
+        isRead: null,
+        isStarred: null,
+        searchString: '',
+    }
+}
+
+function sanitizeFilter(filter) {
+    const sanitizedFilter = {}
+
+    if (filter.isRead !== null) {
+        sanitizedFilter.isRead = filter.isRead
+    }
+    if (filter.isStarred !== null) {
+        sanitizedFilter.isStarred = filter.isStarred
+    }
+    if (filter.searchString) {
+        sanitizedFilter.searchString = filter.searchString
+    }
+    return sanitizedFilter
 }
