@@ -12,13 +12,20 @@ export function EmailCompose() {
     const location = useLocation()
 
     useEffect(() => {
-        if (params.emailId) {
-            // this is an attempt to edit a draft
-            loadEmail(params.emailId)
-        }
+        init()
     }, [])
 
     useInterval(autoSaveDraft, 5000)
+
+    async function init() {
+        if (params.emailId) {
+            // this is an attempt to edit a draft
+            await loadEmail(params.emailId)
+        }
+        setDraft((prev) => {
+            return { ...prev, isRead: true }
+        })
+    }
 
     async function loadEmail(emailId) {
         const email = await emailService.getById(emailId)
