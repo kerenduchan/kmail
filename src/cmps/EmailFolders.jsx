@@ -12,6 +12,11 @@ export function EmailFolders({
         )
     }
 
+    function getCount(folder) {
+        const counts = emailCounts[folder]
+        return folder == 'drafts' ? counts.total : counts.unread
+    }
+
     const folders = getAllFolders()
 
     return (
@@ -28,15 +33,13 @@ export function EmailFolders({
                         <div
                             className={
                                 'email-folder-name' +
-                                (emailCounts[folder.id].unread
-                                    ? ' has-unread'
-                                    : '')
+                                (getCount(folder.id) ? ' has-count' : '')
                             }
                         >
                             {folder.name}
                         </div>
-                        <div className="email-folder-unread-count">
-                            {emailCounts[folder.id].unread || ''}
+                        <div className="email-folder-count">
+                            {getCount(folder.id) || ''}
                         </div>
                     </a>
                 )

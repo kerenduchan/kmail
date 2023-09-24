@@ -97,11 +97,11 @@
     flex-grow: 1;
 }
 
-.email-folder-name.has-unread {
+.email-folder-name.has-count {
     font-weight: bold;
 }
 
-.email-folder-unread-count {
+.email-folder-count {
     padding-inline-end: 10px;
 }
 
