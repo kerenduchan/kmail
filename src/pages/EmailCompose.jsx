@@ -1,35 +1,32 @@
 import { useState, useEffect } from 'react'
-import { useLocation, useNavigate, useParams } from 'react-router'
+import { useLocation, useNavigate } from 'react-router'
 import { getContainingFolder } from '../util'
 import { emailService } from '../services/email.service'
 import { useInterval } from '../useInterval'
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
+import { useSearchParams } from 'react-router-dom'
 
 export function EmailCompose() {
-    const [draft, setDraft] = useState(emailService.createEmail())
+    const [draft, setDraft] = useState(null)
     const navigate = useNavigate()
-    const params = useParams()
+    const [searchParams, setSearchParams] = useSearchParams()
     const location = useLocation()
 
     useEffect(() => {
-        init()
-    }, [])
+        const emailId = searchParams.get('compose')
+        if (emailId == 'new') {
+            setDraft(emailService.createEmail())
+        } else {
+            // this is an attempt to edit a draft
+            loadEmail(emailId)
+        }
+    }, [searchParams])
 
     useInterval(autoSaveDraft, 5000)
 
-    async function init() {
-        if (params.emailId) {
-            // this is an attempt to edit a draft
-            await loadEmail(params.emailId)
-        }
-        setDraft((prev) => {
-            return { ...prev, isRead: true }
-        })
-    }
-
     async function loadEmail(emailId) {
         const email = await emailService.getById(emailId)
-        setDraft(email)
+        setDraft({ ...email, isRead: true })
     }
 
     function onChange(ev) {
@@ -61,12 +58,12 @@ export function EmailCompose() {
     async function autoSaveDraft() {
         const email = await emailService.save(draft)
         if (draft.id === null) {
-            setDraft((prev) => {
-                return { ...prev, id: email.id }
-            })
-            navigate(location.pathname + '/' + email.id)
+            setDraft((prev) => ({ ...prev, id: email.id }))
+            setSearchParams((prev) => ({ ...prev, compose: email.id }))
         }
     }
+
+    if (!draft) return <></>
 
     return (
         <div className="email-compose">

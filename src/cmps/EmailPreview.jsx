@@ -8,7 +8,6 @@ export function EmailPreview({
     onEmailClick,
     onUpdateEmail,
     onDeleteEmail,
-    onMarkEmailAsReadOrUnread,
 }) {
     const [firstColumn, setFirstColumn] = useState(undefined)
 
@@ -38,10 +37,10 @@ export function EmailPreview({
         }
     }, [folder])
 
-    function onStarClick() {
+    function onToggleField(field) {
         const emailAfterUpdate = {
             ...email,
-            isStarred: !email.isStarred,
+            [field]: !email[field],
         }
         onUpdateEmail(emailAfterUpdate)
     }
@@ -52,7 +51,7 @@ export function EmailPreview({
             <SmallActionButton
                 type={email.isStarred ? 'starred' : 'unstarred'}
                 className="email-preview-star"
-                onClick={onStarClick}
+                onClick={() => onToggleField('isStarred')}
             />
             {/* Link to email details */}
             <div
@@ -79,9 +78,7 @@ export function EmailPreview({
                 {/* Mark as read/unread */}
                 <SmallActionButton
                     type={email.isRead ? 'unread' : 'read'}
-                    onClick={() =>
-                        onMarkEmailAsReadOrUnread(email.id, !email.isRead)
-                    }
+                    onClick={() => onToggleField('isRead')}
                 />
             </div>
         </article>

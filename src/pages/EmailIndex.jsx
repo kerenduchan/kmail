@@ -1,59 +1,74 @@
 import { useState, useEffect, useRef } from 'react'
 import { useParams, useLocation, useNavigate, Outlet } from 'react-router'
-import { useSearchParams } from 'react-router-dom'
+import { createSearchParams, useSearchParams } from 'react-router-dom'
 import { EmailFilter } from '../cmps/EmailFilter'
 import { EmailList } from '../cmps/EmailList'
 import { EmailFolders } from '../cmps/EmailFolders'
 import { Logo } from '../cmps/Logo'
 import { EmailComposeButton } from '../cmps/EmailComposeButton'
 import { SmallActionButton } from '../cmps/SmallActionButton'
-import {
-    getEmailFilterFromParams,
-    sanitizeFilter,
-    getDefaultFilter,
-} from '../util'
+import { getEmailFilterFromParams, sanitizeFilter } from '../util'
 import { emailService } from '../services/email.service'
 import {
     hideUserMsg,
     showErrorMsg,
     showSuccessMsg,
 } from '../services/event-bus.service'
+import { EmailCompose } from './EmailCompose'
 
 export function EmailIndex() {
     const [emails, setEmails] = useState(null)
     const [emailCounts, setEmailCounts] = useState(null)
     const params = useParams()
     const [searchParams, setSearchParams] = useSearchParams()
-    const [filter, setFilter] = useState(
-        getEmailFilterFromParams(params, searchParams)
-    )
+    const [filter, setFilter] = useState(null)
     const [showMenu, setShowMenu] = useState(false)
-    const location = useLocation()
     const navigate = useNavigate()
-    const firstTime = useRef(true)
+
+    // params and search params are the single source of truth for the filter
+    useEffect(() => {
+        setFilter(getEmailFilterFromParams(params, searchParams))
+    }, [params, searchParams])
 
     useEffect(() => {
-        if (firstTime.current) {
-            firstTime.current = false
-            return
+        if (filter !== null) {
+            loadEmails()
         }
-        setSearchParams(sanitizeFilter(filter))
-        loadEmails()
     }, [filter])
 
     function onFolderClick(folder) {
         hideUserMsg()
-        setFilter({ ...getDefaultFilter(), folder })
-        navigate(`/email/${folder}`)
+        // go to the clicked folder, while retaining only the compose part
+        // of the search params
+        const navigateArgs = {
+            pathname: `/email/${folder}`,
+        }
+        const composeVal = searchParams.get('compose')
+        if (composeVal) {
+            navigateArgs.search = `?compose=${composeVal}`
+        }
+        navigate(navigateArgs)
     }
 
     function onComposeClick() {
         hideUserMsg()
-        navigate(`/email/${params.folderId}/compose`)
+        // open the compose dialog, while staying in the same folder and
+        // retaining the search params
+        setSearchParams((prev) => {
+            prev.set('compose', 'new')
+            return prev
+        })
     }
 
     function onFilterChange(fieldsToUpdate) {
-        setFilter((prev) => ({ ...prev, ...fieldsToUpdate }))
+        // update the search params accordingly
+        setSearchParams((prev) => {
+            const f = {
+                ...getEmailFilterFromParams(prev, searchParams),
+                ...fieldsToUpdate,
+            }
+            return sanitizeFilter(f)
+        })
     }
 
     async function onUpdateEmail(email) {
@@ -91,29 +106,6 @@ export function EmailIndex() {
         }
     }
 
-    async function onMarkEmailAsReadOrUnread(emailId, isRead) {
-        hideUserMsg()
-        try {
-            let email = emails.data.filter((e) => e.id == emailId)
-            if (email.length != 1) {
-                showErrorMsg(
-                    'Failed to mark email as ' + (isRead ? 'read' : 'unread'),
-                    `Email with ID=${emailId} not found`
-                )
-                return
-            }
-            email = email[0]
-            email.isRead = isRead
-            await emailService.save(email)
-            await loadEmails()
-        } catch (err) {
-            showErrorMsg(
-                'Failed to mark email as ' + (isRead ? 'read' : 'unread'),
-                err
-            )
-        }
-    }
-
     async function loadEmails() {
         try {
             let [emailCounts, emails] = await Promise.all([
@@ -133,9 +125,16 @@ export function EmailIndex() {
     function onEmailClick(emailId) {
         hideUserMsg()
         if (params.folderId == 'drafts') {
-            navigate(`/email/${params.folderId}/compose/${emailId}`)
+            // edit draft
+            setSearchParams((prev) => {
+                return { ...prev, compose: emailId }
+            })
         } else {
-            navigate(`/email/${params.folderId}/${emailId}`)
+            // view email details, while retaining the search params
+            navigate({
+                pathname: `/email/${params.folderId}/${emailId}`,
+                search: `?${createSearchParams(searchParams)}`,
+            })
         }
     }
 
@@ -172,16 +171,13 @@ export function EmailIndex() {
                             onUpdateEmail={onUpdateEmail}
                             onDeleteEmail={onDeleteEmail}
                             onEmailClick={onEmailClick}
-                            onMarkEmailAsReadOrUnread={
-                                onMarkEmailAsReadOrUnread
-                            }
                         />
                         <div className="email-list-bottom"></div>
                     </>
                 )}
             </section>
             {/* Compose modal */}
-            {location.pathname.includes('compose') && <Outlet />}
+            {searchParams.get('compose') !== null && <EmailCompose />}
         </section>
     )
 }

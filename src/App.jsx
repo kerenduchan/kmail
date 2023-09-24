@@ -17,10 +17,6 @@ function App() {
                     <Route path="/about" element={<About />} />
                     <Route path="/email/:folderId?" element={<EmailIndex />}>
                         <Route
-                            path="/email/:folderId/compose/:emailId?"
-                            element={<EmailCompose />}
-                        />
-                        <Route
                             path="/email/:folderId/:emailId"
                             element={<EmailDetails />}
                         />

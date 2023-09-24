@@ -5,7 +5,6 @@ export function EmailList({
     onUpdateEmail,
     onDeleteEmail,
     onEmailClick,
-    onMarkEmailAsReadOrUnread,
 }) {
     return (
         <ul className="email-list">
@@ -17,7 +16,6 @@ export function EmailList({
                         onUpdateEmail={onUpdateEmail}
                         onDeleteEmail={onDeleteEmail}
                         onEmailClick={onEmailClick}
-                        onMarkEmailAsReadOrUnread={onMarkEmailAsReadOrUnread}
                     />
                 </li>
             ))}
