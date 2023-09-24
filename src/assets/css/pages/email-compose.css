@@ -14,14 +14,44 @@
     display: flex;
     flex-direction: column;
 }
-/* url('//ssl.gstatic.com/ui/v1/icons/mail/rfr/ic_minimize_16px_1x.png')
-url('//ssl.gstatic.com/ui/v1/icons/mail/rfr/ic_open_in_full_16px_1x.png')
-url('//ssl.gstatic.com/ui/v1/icons/mail/rfr/ic_close_16px_1x.png')
-*/
+
 .email-compose-topbar {
     background-color: #f3f6fc;
     color: rgb(4, 30, 73);
     height: 40px;
+    padding-inline-start: 16px;
+    padding-inline-end: 12px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+}
+
+.email-compose-topbar-actions {
+    display: flex;
+    gap: 4px;
+}
+
+.email-compose-topbar-action {
+    width: 16px;
+    height: 16px;
+}
+
+.email-compose-topbar-action:hover {
+    background-color: rgba(68, 71, 70, 0.08);
+}
+
+.email-compose-topbar-action.minimize {
+    content: url('//ssl.gstatic.com/ui/v1/icons/mail/rfr/ic_minimize_16px_1x.png');
+}
+/* url('//ssl.gstatic.com/ui/v1/icons/mail/rfr/ic_maximize_16px_1x.png') */
+
+.email-compose-topbar-action.fullscreen {
+    content: url('//ssl.gstatic.com/ui/v1/icons/mail/rfr/ic_open_in_full_16px_1x.png');
+}
+/* url('//ssl.gstatic.com/ui/v1/icons/mail/rfr/ic_close_fullscreen_16px_1x.png') */
+
+.email-compose-topbar-action.close {
+    content: url('//ssl.gstatic.com/ui/v1/icons/mail/rfr/ic_close_16px_1x.png');
 }
 
 .email-compose-form {
