@@ -67,6 +67,8 @@ export function EmailCompose() {
 
     return (
         <div className="email-compose">
+            <div className="email-compose-topbar"></div>
+
             <form className="email-compose-form" onSubmit={onSubmit}>
                 {/* To */}
                 <div className="email-compose-field">

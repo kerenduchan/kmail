@@ -2,24 +2,32 @@
     position: fixed;
     bottom: 0;
     right: 30px;
-    padding: 20px;
+    z-index: 2;
     box-shadow: 0px 8px 10px 1px rgba(0, 0, 0, 0.14),
         0px 3px 14px 2px rgba(0, 0, 0, 0.12),
         0px 5px 5px -3px rgba(0, 0, 0, 0.2);
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
     width: 600px;
-    height: 50%;
+    height: 57%;
+    background-color: white;
     display: flex;
     flex-direction: column;
-    background-color: white;
-    z-index: 2;
+}
+/* url('//ssl.gstatic.com/ui/v1/icons/mail/rfr/ic_minimize_16px_1x.png')
+url('//ssl.gstatic.com/ui/v1/icons/mail/rfr/ic_open_in_full_16px_1x.png')
+url('//ssl.gstatic.com/ui/v1/icons/mail/rfr/ic_close_16px_1x.png')
+*/
+.email-compose-topbar {
+    background-color: #f3f6fc;
+    color: rgb(4, 30, 73);
+    height: 40px;
 }
 
 .email-compose-form {
+    padding: 0 16px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
     flex-grow: 1;
 }
 
@@ -31,7 +39,7 @@
 
 .email-compose-field {
     border-bottom: 1px solid lightgray;
-    padding-bottom: 6px;
+    padding: 8px 0;
     display: flex;
 }
 
