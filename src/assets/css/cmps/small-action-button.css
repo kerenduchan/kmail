@@ -11,7 +11,7 @@
 }
 
 .small-action-btn:hover {
-    background-color: #0000000e;
+    background-color: rgba(32, 33, 36, 0.06);
 }
 
 .small-action-btn img {
