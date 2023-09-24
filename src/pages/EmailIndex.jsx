@@ -115,7 +115,6 @@ export function EmailIndex() {
     }
 
     async function loadEmails() {
-        console.log('loadEmails')
         try {
             let [emailCounts, emails] = await Promise.all([
                 emailService.getEmailCountsPerFolder(),
