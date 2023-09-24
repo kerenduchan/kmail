@@ -145,8 +145,6 @@ export function EmailIndex() {
 
     if (!emails || !emailCounts) return <div>Loading..</div>
 
-    const showOutlet = location.pathname.includes('compose') || params.emailId
-
     return (
         <section className="email-index">
             <SmallActionButton
@@ -164,7 +162,7 @@ export function EmailIndex() {
                 emailCounts={emailCounts}
             />
             <section className="email-index-main">
-                {showOutlet ? (
+                {params.emailId ? (
                     <Outlet />
                 ) : (
                     <>
@@ -182,6 +180,8 @@ export function EmailIndex() {
                     </>
                 )}
             </section>
+            {/* Compose modal */}
+            {location.pathname.includes('compose') && <Outlet />}
         </section>
     )
 }
