@@ -14,14 +14,16 @@ export function EmailCompose({ onCloseClick, onDeleteDraft }) {
     })
     const [searchParams, setSearchParams] = useSearchParams()
     const isEdited = useRef(false)
+    const emailId = useRef(null)
 
     useEffect(() => {
-        const emailId = searchParams.get('compose')
-        if (emailId == 'new') {
+        const composeVal = searchParams.get('compose')
+        emailId.current = composeVal == 'new' ? null : composeVal
+        if (emailId.current == null) {
             setDraft(emailService.createEmail())
         } else {
             // this is an attempt to edit a draft
-            loadEmail(emailId)
+            loadEmail(emailId.current)
         }
     }, [searchParams])
 
@@ -75,10 +77,13 @@ export function EmailCompose({ onCloseClick, onDeleteDraft }) {
     }
 
     async function autoSaveDraft() {
-        const email = await emailService.save(draft)
-        if (draft.id === null) {
-            setDraft((prev) => ({ ...prev, id: email.id }))
-            setSearchParams((prev) => ({ ...prev, compose: email.id }))
+        if (isEdited.current === false) {
+            return
+        }
+        const email = await emailService.save({ ...draft, id: emailId.current })
+        if (emailId.current === null) {
+            emailId.current = email.id
+            setSearchParams((prev) => ({ ...prev, compose: emailId.current }))
         }
         setTitle('Draft saved')
     }
