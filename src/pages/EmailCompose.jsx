@@ -8,6 +8,10 @@ import { useSearchParams } from 'react-router-dom'
 
 export function EmailCompose() {
     const [draft, setDraft] = useState(null)
+    const [displayState, setDisplayState] = useState({
+        isMinimized: false,
+        isFullscreen: false,
+    })
     const navigate = useNavigate()
     const [searchParams, setSearchParams] = useSearchParams()
     const location = useLocation()
@@ -24,9 +28,19 @@ export function EmailCompose() {
 
     useInterval(autoSaveDraft, 5000)
 
-    async function loadEmail(emailId) {
-        const email = await emailService.getById(emailId)
-        setDraft({ ...email, isRead: true })
+    function onMinimizeClick() {
+        setDisplayState((prev) => {
+            return { ...prev, isMinimized: !prev.isMinimized }
+        })
+    }
+
+    function onFullscreenClick() {
+        setDisplayState((prev) => {
+            return {
+                isMinimized: false,
+                isFullscreen: !prev.isFullscreen,
+            }
+        })
     }
 
     function onChange(ev) {
@@ -63,71 +77,97 @@ export function EmailCompose() {
         }
     }
 
+    async function loadEmail(emailId) {
+        const email = await emailService.getById(emailId)
+        setDraft({ ...email, isRead: true })
+    }
+
     if (!draft) return <></>
 
     return (
-        <div className="email-compose">
-            {/* Topbar */}
-            <div className="email-compose-topbar">
-                <div className="email-compose-topbar-title"></div>
-                <div className="email-compose-topbar-actions">
-                    <div className="email-compose-topbar-action minimize"></div>
-                    <div className="email-compose-topbar-action fullscreen"></div>
-                    <div className="email-compose-topbar-action close"></div>
+        <div
+            className={
+                'email-compose-dialog' +
+                (displayState.isMinimized ? ' minimized' : '') +
+                (!displayState.isMinimized && displayState.isFullscreen
+                    ? ' fullscreen'
+                    : '')
+            }
+        >
+            <div className="email-compose">
+                {/* Topbar */}
+                <div className="email-compose-topbar">
+                    <div className="email-compose-topbar-title"></div>
+                    <div className="email-compose-topbar-actions">
+                        <div
+                            className="email-compose-topbar-action minimize"
+                            onClick={onMinimizeClick}
+                        />
+                        <div
+                            className={
+                                'email-compose-topbar-action ' +
+                                (displayState.isFullscreen
+                                    ? 'exit-fullscreen'
+                                    : 'fullscreen')
+                            }
+                            onClick={onFullscreenClick}
+                        />
+                        <div className="email-compose-topbar-action close" />
+                    </div>
                 </div>
+
+                {/* Form */}
+                <form className="email-compose-form" onSubmit={onSubmit}>
+                    {/* To */}
+                    <div className="email-compose-field">
+                        <label htmlFor="email-compose-to">To:</label>
+                        <input
+                            type="text"
+                            id="email-compose-to"
+                            name="to"
+                            onChange={onChange}
+                            value={draft.to}
+                        />
+                    </div>
+
+                    {/* Subject */}
+                    <div className="email-compose-field">
+                        <label htmlFor="email-compose-subject">Subject:</label>
+                        <input
+                            type="text"
+                            id="email-compose-subject"
+                            name="subject"
+                            onChange={onChange}
+                            value={draft.subject}
+                        />
+                    </div>
+
+                    {/* Body */}
+                    <div className="email-compose-field body">
+                        <textarea
+                            id="email-compose-body"
+                            name="body"
+                            onChange={onChange}
+                            value={draft.body}
+                        />
+                    </div>
+
+                    <div className="email-compose-actions">
+                        <button
+                            className="email-compose-action-send"
+                            onClick={onSend}
+                        >
+                            Send
+                        </button>
+                        <button
+                            className="email-compose-action-save-draft"
+                            onClick={onSaveDraft}
+                        >
+                            Save Draft
+                        </button>
+                    </div>
+                </form>
             </div>
-
-            {/* Form */}
-            <form className="email-compose-form" onSubmit={onSubmit}>
-                {/* To */}
-                <div className="email-compose-field">
-                    <label htmlFor="email-compose-to">To:</label>
-                    <input
-                        type="text"
-                        id="email-compose-to"
-                        name="to"
-                        onChange={onChange}
-                        value={draft.to}
-                    />
-                </div>
-
-                {/* Subject */}
-                <div className="email-compose-field">
-                    <label htmlFor="email-compose-subject">Subject:</label>
-                    <input
-                        type="text"
-                        id="email-compose-subject"
-                        name="subject"
-                        onChange={onChange}
-                        value={draft.subject}
-                    />
-                </div>
-
-                {/* Body */}
-                <div className="email-compose-field body">
-                    <textarea
-                        id="email-compose-body"
-                        name="body"
-                        onChange={onChange}
-                        value={draft.body}
-                    />
-                </div>
-
-                <div className="email-compose-actions">
-                    <button
-                        className="email-compose-action-send"
-                        onClick={onSend}
-                    >
-                        Send
-                    </button>
-                    <button
-                        className="email-compose-action-save-draft"
-                        onClick={onSaveDraft}
-                    >
-                        Save Draft
-                    </button>
-                </div>
-            </form>
         </div>
     )
 }
