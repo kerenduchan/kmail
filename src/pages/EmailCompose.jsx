@@ -103,7 +103,12 @@ export function EmailCompose({ onCloseClick, onDeleteDraft }) {
             <div className="email-compose">
                 {/* Topbar */}
                 <div className="email-compose-topbar">
-                    <div className="email-compose-topbar-title">{title}</div>
+                    <div
+                        className="email-compose-topbar-title"
+                        onClick={onMinimizeClick}
+                    >
+                        {title}
+                    </div>
                     <div className="email-compose-topbar-actions">
                         <div
                             className="email-compose-topbar-action minimize"

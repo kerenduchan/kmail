@@ -9,6 +9,7 @@
 
 .email-compose-dialog.minimized {
     height: unset;
+    width: 300px;
 }
 
 .email-compose-dialog.fullscreen {
@@ -42,8 +43,6 @@
 
 .email-compose-topbar {
     background-color: #f3f6fc;
-    height: 40px;
-    padding-inline-start: 16px;
     padding-inline-end: 12px;
     display: grid;
     grid-template-columns: 1fr auto;
@@ -51,11 +50,15 @@
 }
 
 .email-compose-topbar-title {
+    padding-inline-start: 16px;
+    height: 40px;
     color: rgb(4, 30, 73);
     font-weight: 500;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow-x: hidden;
+    display: flex;
+    align-items: center;
 }
 
 .email-compose-topbar-actions {
