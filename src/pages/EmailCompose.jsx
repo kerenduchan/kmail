@@ -91,6 +91,7 @@ export function EmailCompose({ onCloseClick, onDeleteDraft }) {
     async function loadEmail(emailId) {
         const email = await emailService.getById(emailId)
         setDraft({ ...email, isRead: true })
+        setTitle(email.subject == '' ? 'New Message' : email.subject)
     }
 
     if (!draft) return <></>
