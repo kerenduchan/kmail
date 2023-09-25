@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { emailService } from '../services/email.service'
 import { useInterval } from '../useInterval'
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
@@ -11,6 +11,7 @@ export function EmailCompose({ onCloseClick }) {
         isFullscreen: false,
     })
     const [searchParams, setSearchParams] = useSearchParams()
+    const isEdited = useRef(false)
 
     useEffect(() => {
         const emailId = searchParams.get('compose')
@@ -40,6 +41,7 @@ export function EmailCompose({ onCloseClick }) {
     }
 
     function onChange(ev) {
+        isEdited.current = true
         let { value, name: field } = ev.target
         setDraft((prev) => ({ ...prev, [field]: value }))
     }
@@ -61,7 +63,9 @@ export function EmailCompose({ onCloseClick }) {
     }
 
     async function onDraftCloseClick() {
-        await emailService.save(draft)
+        if (isEdited.current) {
+            await emailService.save(draft)
+        }
         onCloseClick()
     }
 
