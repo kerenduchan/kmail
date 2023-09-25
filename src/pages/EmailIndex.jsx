@@ -112,6 +112,7 @@ export function EmailIndex() {
         setSearchParams((prev) => {
             prev.delete('compose')
         })
+        loadEmails()
     }
 
     async function loadEmails() {

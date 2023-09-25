@@ -60,8 +60,8 @@ export function EmailCompose({ onCloseClick }) {
         }
     }
 
-    function onDraftCloseClick() {
-        emailService.save(draft)
+    async function onDraftCloseClick() {
+        await emailService.save(draft)
         onCloseClick()
     }
 
