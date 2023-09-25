@@ -60,8 +60,8 @@ export function EmailCompose({ onCloseClick }) {
         }
     }
 
-    async function onSaveDraft() {
-        await emailService.save(draft)
+    function onDraftCloseClick() {
+        emailService.save(draft)
         onCloseClick()
     }
 
@@ -110,7 +110,7 @@ export function EmailCompose({ onCloseClick }) {
                         />
                         <div
                             className="email-compose-topbar-action close"
-                            onClick={onCloseClick}
+                            onClick={onDraftCloseClick}
                         />
                     </div>
                 </div>
@@ -157,12 +157,6 @@ export function EmailCompose({ onCloseClick }) {
                             onClick={onSend}
                         >
                             Send
-                        </button>
-                        <button
-                            className="email-compose-action-save-draft"
-                            onClick={onSaveDraft}
-                        >
-                            Save Draft
                         </button>
                     </div>
                 </form>

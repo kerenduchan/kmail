@@ -132,3 +132,19 @@ textarea {
 textarea:focus {
     outline: none;
 }
+
+.email-compose-action-send {
+    height: 36px;
+    border-radius: 18px;
+    background-color: rgb(11, 87, 208);
+    color: white;
+    font-weight: 500;
+    padding: 0 20px;
+}
+
+.email-compose-action-send:hover {
+    box-shadow: rgba(26, 115, 232, 0.45) 0px 1px 2px 0px,
+        rgba(26, 115, 232, 0.3) 0px 1px 3px 1px;
+}
+
+/* discard draft url('//ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/delete_baseline_nv700_20dp.png') */
