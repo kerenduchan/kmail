@@ -7,6 +7,7 @@ import { SmallActionButton } from '../cmps/SmallActionButton'
 
 export function EmailCompose({ onCloseClick, onDeleteDraft }) {
     const [draft, setDraft] = useState(null)
+    const [title, setTitle] = useState('New Message')
     const [displayState, setDisplayState] = useState({
         isMinimized: false,
         isFullscreen: false,
@@ -45,6 +46,9 @@ export function EmailCompose({ onCloseClick, onDeleteDraft }) {
         isEdited.current = true
         let { value, name: field } = ev.target
         setDraft((prev) => ({ ...prev, [field]: value }))
+        if (field == 'subject') {
+            setTitle(value == '' ? 'New Message' : value)
+        }
     }
 
     function onSubmit(ev) {
@@ -76,6 +80,7 @@ export function EmailCompose({ onCloseClick, onDeleteDraft }) {
             setDraft((prev) => ({ ...prev, id: email.id }))
             setSearchParams((prev) => ({ ...prev, compose: email.id }))
         }
+        setTitle('Draft saved')
     }
 
     async function loadEmail(emailId) {
@@ -98,7 +103,7 @@ export function EmailCompose({ onCloseClick, onDeleteDraft }) {
             <div className="email-compose">
                 {/* Topbar */}
                 <div className="email-compose-topbar">
-                    <div className="email-compose-topbar-title"></div>
+                    <div className="email-compose-topbar-title">{title}</div>
                     <div className="email-compose-topbar-actions">
                         <div
                             className="email-compose-topbar-action minimize"

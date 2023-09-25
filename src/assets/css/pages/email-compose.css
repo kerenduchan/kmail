@@ -43,6 +43,7 @@
 .email-compose-topbar {
     background-color: #f3f6fc;
     color: rgb(4, 30, 73);
+    font-weight: 500;
     height: 40px;
     padding-inline-start: 16px;
     padding-inline-end: 12px;
