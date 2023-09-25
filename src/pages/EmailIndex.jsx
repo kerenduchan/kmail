@@ -106,6 +106,13 @@ export function EmailIndex() {
         }
     }
 
+    function onEmailComposeCloseClick() {
+        // close the compose dialog
+        setSearchParams((prev) => {
+            prev.delete('compose')
+        })
+    }
+
     async function loadEmails() {
         try {
             let [emailCounts, emails] = await Promise.all([
@@ -177,7 +184,9 @@ export function EmailIndex() {
                 )}
             </section>
             {/* Compose modal */}
-            {searchParams.get('compose') !== null && <EmailCompose />}
+            {searchParams.get('compose') !== null && (
+                <EmailCompose onCloseClick={onEmailComposeCloseClick} />
+            )}
         </section>
     )
 }

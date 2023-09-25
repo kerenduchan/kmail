@@ -6,7 +6,7 @@ import { useInterval } from '../useInterval'
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 import { useSearchParams } from 'react-router-dom'
 
-export function EmailCompose() {
+export function EmailCompose({ onCloseClick }) {
     const [draft, setDraft] = useState(null)
     const [displayState, setDisplayState] = useState({
         isMinimized: false,
@@ -112,7 +112,10 @@ export function EmailCompose() {
                             }
                             onClick={onFullscreenClick}
                         />
-                        <div className="email-compose-topbar-action close" />
+                        <div
+                            className="email-compose-topbar-action close"
+                            onClick={onCloseClick}
+                        />
                     </div>
                 </div>
 
