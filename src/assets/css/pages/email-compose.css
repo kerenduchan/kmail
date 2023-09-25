@@ -42,14 +42,20 @@
 
 .email-compose-topbar {
     background-color: #f3f6fc;
-    color: rgb(4, 30, 73);
-    font-weight: 500;
     height: 40px;
     padding-inline-start: 16px;
     padding-inline-end: 12px;
     display: grid;
     grid-template-columns: 1fr auto;
     align-items: center;
+}
+
+.email-compose-topbar-title {
+    color: rgb(4, 30, 73);
+    font-weight: 500;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow-x: hidden;
 }
 
 .email-compose-topbar-actions {
