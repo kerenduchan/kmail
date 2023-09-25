@@ -115,6 +115,14 @@ export function EmailIndex() {
         loadEmails()
     }
 
+    async function onDeleteDraft(emailId) {
+        if (emailId !== null) {
+            await emailService.remove(emailId)
+            loadEmails()
+        }
+        onEmailComposeCloseClick()
+    }
+
     async function loadEmails() {
         try {
             let [emailCounts, emails] = await Promise.all([
@@ -187,7 +195,10 @@ export function EmailIndex() {
             </section>
             {/* Compose modal */}
             {searchParams.get('compose') !== null && (
-                <EmailCompose onCloseClick={onEmailComposeCloseClick} />
+                <EmailCompose
+                    onCloseClick={onEmailComposeCloseClick}
+                    onDeleteDraft={onDeleteDraft}
+                />
             )}
         </section>
     )

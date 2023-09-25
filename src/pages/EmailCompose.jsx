@@ -3,8 +3,9 @@ import { emailService } from '../services/email.service'
 import { useInterval } from '../useInterval'
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 import { useSearchParams } from 'react-router-dom'
+import { SmallActionButton } from '../cmps/SmallActionButton'
 
-export function EmailCompose({ onCloseClick }) {
+export function EmailCompose({ onCloseClick, onDeleteDraft }) {
     const [draft, setDraft] = useState(null)
     const [displayState, setDisplayState] = useState({
         isMinimized: false,
@@ -156,12 +157,19 @@ export function EmailCompose({ onCloseClick }) {
                     </div>
 
                     <div className="email-compose-actions">
+                        {/* Send */}
                         <button
                             className="email-compose-action-send"
                             onClick={onSend}
                         >
                             Send
                         </button>
+
+                        {/* Delete */}
+                        <SmallActionButton
+                            type="delete"
+                            onClick={() => onDeleteDraft(draft.id)}
+                        />
                     </div>
                 </form>
             </div>

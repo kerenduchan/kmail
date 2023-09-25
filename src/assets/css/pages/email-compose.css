@@ -133,6 +133,11 @@ textarea:focus {
     outline: none;
 }
 
+.email-compose-actions {
+    display: flex;
+    justify-content: space-between;
+}
+
 .email-compose-action-send {
     height: 36px;
     border-radius: 18px;

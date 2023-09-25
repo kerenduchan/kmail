@@ -11,6 +11,7 @@ export function SmallActionButton({ type, img, onClick, className }) {
 
     return (
         <button
+            type="button"
             className={'small-action-btn' + (className ? ` ${className}` : '')}
             onClick={onClick}
         >
