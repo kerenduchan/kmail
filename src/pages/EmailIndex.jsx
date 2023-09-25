@@ -1,6 +1,6 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { useParams, useLocation, useNavigate, Outlet } from 'react-router'
-import { createSearchParams, useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 import { EmailFilter } from '../cmps/EmailFilter'
 import { EmailList } from '../cmps/EmailList'
 import { EmailFolders } from '../cmps/EmailFolders'
@@ -24,6 +24,7 @@ export function EmailIndex() {
     const [filter, setFilter] = useState(null)
     const [showMenu, setShowMenu] = useState(false)
     const navigate = useNavigate()
+    const location = useLocation()
 
     // params and search params are the single source of truth for the filter
     useEffect(() => {
@@ -140,7 +141,7 @@ export function EmailIndex() {
             // view email details, while retaining the search params
             navigate({
                 pathname: `/email/${params.folderId}/${emailId}`,
-                search: `?${createSearchParams(searchParams)}`,
+                search: location.search,
             })
         }
     }

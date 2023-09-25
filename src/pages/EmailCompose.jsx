@@ -1,6 +1,4 @@
 import { useState, useEffect } from 'react'
-import { useLocation, useNavigate } from 'react-router'
-import { getContainingFolder } from '../util'
 import { emailService } from '../services/email.service'
 import { useInterval } from '../useInterval'
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
@@ -12,9 +10,7 @@ export function EmailCompose({ onCloseClick }) {
         isMinimized: false,
         isFullscreen: false,
     })
-    const navigate = useNavigate()
     const [searchParams, setSearchParams] = useSearchParams()
-    const location = useLocation()
 
     useEffect(() => {
         const emailId = searchParams.get('compose')
@@ -57,7 +53,7 @@ export function EmailCompose({ onCloseClick }) {
         showSuccessMsg('Sending email...')
         try {
             await emailService.save(draft)
-            navigate(getContainingFolder(location.pathname))
+            onCloseClick()
             showSuccessMsg('Email sent.')
         } catch (e) {
             showErrorMsg('Failed to send email.')
@@ -66,7 +62,7 @@ export function EmailCompose({ onCloseClick }) {
 
     async function onSaveDraft() {
         await emailService.save(draft)
-        navigate(getContainingFolder(location.pathname))
+        onCloseClick()
     }
 
     async function autoSaveDraft() {

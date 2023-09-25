@@ -47,7 +47,7 @@ export function EmailDetails() {
             try {
                 // permanently delete
                 await emailService.remove(email.id)
-                navigate(getContainingFolder(location.pathname))
+                navigateUp()
                 showSuccessMsg('Email deleted forever.')
             } catch (err) {
                 showErrorMsg('Failed to delete email forever.')
@@ -57,7 +57,7 @@ export function EmailDetails() {
                 // move to bin
                 email.deletedAt = Date.now()
                 await emailService.save(email)
-                navigate(getContainingFolder(location.pathname))
+                navigateUp()
                 showSuccessMsg('Email moved to Bin.')
             } catch (err) {
                 showErrorMsg('Failed to move email to Bin.')
@@ -69,10 +69,19 @@ export function EmailDetails() {
         try {
             let updatedEmail = { ...email, isRead: false }
             await emailService.save(updatedEmail)
-            navigate(getContainingFolder(location.pathname))
+            navigateUp()
         } catch (err) {
             console.log('Had issues marking email as unread', err)
         }
+    }
+
+    // navigate to the containing folder, while retaining the
+    // search params
+    function navigateUp() {
+        navigate({
+            pathname: getContainingFolder(location.pathname),
+            search: location.search,
+        })
     }
 
     async function loadEmailAndMarkAsRead() {
@@ -82,7 +91,7 @@ export function EmailDetails() {
             await emailService.save(tmpEmail)
             setEmail(tmpEmail)
         } catch (err) {
-            navigate('/email')
+            navigateUp()
             console.error('Had issues loading email or marking it as read', err)
         }
     }
@@ -93,12 +102,7 @@ export function EmailDetails() {
             {/* Actions */}
             <section className="email-details-actions">
                 {/* Back */}
-                <SmallActionButton
-                    type="back"
-                    onClick={() =>
-                        navigate(getContainingFolder(location.pathname))
-                    }
-                />
+                <SmallActionButton type="back" onClick={navigateUp} />
 
                 {/* Delete */}
                 <SmallActionButton type="delete" onClick={onDeleteEmail} />
