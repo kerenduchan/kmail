@@ -159,6 +159,10 @@ export function EmailIndex() {
         setShowMenu((prev) => !prev)
     }
 
+    function onEmailFoldersClose() {
+        setShowMenu(false)
+    }
+
     if (!emails || !emailCounts) return <div>Loading..</div>
 
     return (
@@ -172,10 +176,11 @@ export function EmailIndex() {
             <EmailFilter filter={filter} onChange={onFilterChange} />
             <EmailComposeButton onComposeClick={onComposeClick} />
             <EmailFolders
-                className={showMenu ? '' : 'hide'}
+                className={showMenu ? 'visible' : ''}
                 activeFolder={params.folderId}
                 onFolderClick={onFolderClick}
                 emailCounts={emailCounts}
+                onClose={onEmailFoldersClose}
             />
             <section className="email-index-main">
                 {params.emailId ? (

@@ -5,6 +5,7 @@ export function EmailFolders({
     onFolderClick,
     className,
     emailCounts,
+    onClose,
 }) {
     function getClassName(folder) {
         return (
@@ -22,28 +23,31 @@ export function EmailFolders({
     return (
         <section
             className={'email-folders' + (className ? ` ${className}` : '')}
+            onClick={onClose}
         >
-            {folders.map((folder) => {
-                return (
-                    <a
-                        key={folder.id}
-                        className={getClassName(folder.id)}
-                        onClick={() => onFolderClick(folder.id)}
-                    >
-                        <div
-                            className={
-                                'email-folder-name' +
-                                (getCount(folder.id) ? ' has-count' : '')
-                            }
+            <section className={'email-folders-contents'}>
+                {folders.map((folder) => {
+                    return (
+                        <a
+                            key={folder.id}
+                            className={getClassName(folder.id)}
+                            onClick={() => onFolderClick(folder.id)}
                         >
-                            {folder.name}
-                        </div>
-                        <div className="email-folder-count">
-                            {getCount(folder.id) || ''}
-                        </div>
-                    </a>
-                )
-            })}
+                            <div
+                                className={
+                                    'email-folder-name' +
+                                    (getCount(folder.id) ? ' has-count' : '')
+                                }
+                            >
+                                {folder.name}
+                            </div>
+                            <div className="email-folder-count">
+                                {getCount(folder.id) || ''}
+                            </div>
+                        </a>
+                    )
+                })}
+            </section>
         </section>
     )
 }
