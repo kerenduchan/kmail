@@ -5,6 +5,7 @@ import { utilService } from './util.service.js'
 export const emailService = {
     query,
     save,
+    sendEmail,
     remove,
     getById,
     createEmail,
@@ -115,6 +116,10 @@ async function getById(id) {
 
 function remove(id) {
     return storageService.remove(STORAGE_KEY, id)
+}
+
+function sendEmail(email) {
+    return save({ ...email, sentAt: Date.now() })
 }
 
 function save(emailToSave) {

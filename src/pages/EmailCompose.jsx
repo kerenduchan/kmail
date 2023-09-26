@@ -6,24 +6,37 @@ import { useSearchParams } from 'react-router-dom'
 import { SmallActionButton } from '../cmps/SmallActionButton'
 
 export function EmailCompose({ onCloseClick, onDeleteDraft }) {
+    // Two-way binding with the form fields
     const [draft, setDraft] = useState(null)
+
+    // Topbar title
     const [title, setTitle] = useState('New Message')
+
+    // For managing minimized/fullscreen
     const [displayState, setDisplayState] = useState({
         isMinimized: false,
         isFullscreen: false,
     })
+
     const [searchParams, setSearchParams] = useSearchParams()
+
+    // The full email, including id, isRead, etc. Not part of the state for
+    // synchronicity.
+    const email = useRef(null)
+
+    // Whether the email was edited since it was loaded
     const isEdited = useRef(false)
-    const emailId = useRef(null)
 
     useEffect(() => {
         const composeVal = searchParams.get('compose')
-        emailId.current = composeVal == 'new' ? null : composeVal
-        if (emailId.current == null) {
-            setDraft(emailService.createEmail())
+        const id = composeVal == 'new' ? null : composeVal
+        if (id == null) {
+            email.current = emailService.createEmail()
+            email.current.isRead = true
+            setDraft(email.current)
         } else {
-            // this is an attempt to edit a draft
-            loadEmail(emailId.current)
+            // This is an attempt to edit an existing draft
+            loadEmail(id)
         }
     }, [searchParams])
 
@@ -47,21 +60,17 @@ export function EmailCompose({ onCloseClick, onDeleteDraft }) {
     function onChange(ev) {
         isEdited.current = true
         let { value, name: field } = ev.target
+        email.current[field] = value
         setDraft((prev) => ({ ...prev, [field]: value }))
         if (field == 'subject') {
             setTitle(value == '' ? 'New Message' : value)
         }
     }
 
-    function onSubmit(ev) {
-        ev.preventDefault()
-    }
-
     async function onSend() {
-        draft.sentAt = Date.now()
         showSuccessMsg('Sending email...')
         try {
-            await emailService.save(draft)
+            email.current = await emailService.sendEmail(email.current)
             onCloseClick()
             showSuccessMsg('Email sent.')
         } catch (e) {
@@ -71,7 +80,7 @@ export function EmailCompose({ onCloseClick, onDeleteDraft }) {
 
     async function onDraftCloseClick() {
         if (isEdited.current) {
-            await emailService.save(draft)
+            await emailService.save(email.current)
         }
         onCloseClick()
     }
@@ -80,18 +89,21 @@ export function EmailCompose({ onCloseClick, onDeleteDraft }) {
         if (isEdited.current === false) {
             return
         }
-        const email = await emailService.save({ ...draft, id: emailId.current })
-        if (emailId.current === null) {
-            emailId.current = email.id
-            setSearchParams((prev) => ({ ...prev, compose: emailId.current }))
+        const prevId = email.current.id
+        email.current = await emailService.save(email.current)
+        if (prevId === null) {
+            setSearchParams((prev) => ({ ...prev, compose: email.current.id }))
         }
         setTitle('Draft saved')
     }
 
     async function loadEmail(emailId) {
-        const email = await emailService.getById(emailId)
-        setDraft({ ...email, isRead: true })
-        setTitle(email.subject == '' ? 'New Message' : email.subject)
+        email.current = await emailService.getById(emailId)
+        email.current.isRead = true
+        setDraft(email.current)
+        setTitle(
+            email.current.subject == '' ? 'New Message' : email.current.subject
+        )
     }
 
     if (!draft) return <></>
@@ -137,7 +149,10 @@ export function EmailCompose({ onCloseClick, onDeleteDraft }) {
                 </div>
 
                 {/* Form */}
-                <form className="email-compose-form" onSubmit={onSubmit}>
+                <form
+                    className="email-compose-form"
+                    onSubmit={(ev) => ev.preventDefault()}
+                >
                     {/* To */}
                     <div className="email-compose-field">
                         <label htmlFor="email-compose-to">To:</label>
