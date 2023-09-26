@@ -2,11 +2,9 @@
 
 .email-compose-dialog {
     position: fixed;
-    bottom: 0;
-    top: 0;
-    left: 0;
-    right: 0;
-    background-color: white;
+    height: 100%;
+    width: 100%;
+    background-color: transparent;
     z-index: 4;
 }
 
@@ -37,7 +35,7 @@
 }
 
 .email-compose-topbar-action.minimize,
-.email-compose-topbar-action.email-compose-dialog.fullscreen {
+.email-compose-topbar-action.fullscreen {
     display: none;
 }
 
@@ -161,6 +159,7 @@ textarea:focus {
     .email-compose-topbar-action {
         width: 16px;
         height: 16px;
+        cursor: pointer;
     }
 
     .email-compose-topbar-action:hover {
@@ -168,6 +167,7 @@ textarea:focus {
     }
 
     .email-compose-topbar-action.minimize {
+        display: unset;
         content: url('//ssl.gstatic.com/ui/v1/icons/mail/rfr/ic_minimize_16px_1x.png');
     }
 
@@ -176,6 +176,7 @@ textarea:focus {
     }
 
     .email-compose-topbar-action.fullscreen {
+        display: unset;
         content: url('//ssl.gstatic.com/ui/v1/icons/mail/rfr/ic_open_in_full_16px_1x.png');
     }
 
