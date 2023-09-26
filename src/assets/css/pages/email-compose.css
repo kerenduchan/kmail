@@ -4,7 +4,7 @@
     position: fixed;
     height: 100%;
     width: 100%;
-    background-color: transparent;
+    background-color: white;
     z-index: 4;
 }
 
@@ -110,6 +110,7 @@ textarea:focus {
 @media screen and (min-width: 600px) {
     .email-compose-dialog {
         position: fixed;
+        background-color: transparent;
         bottom: 0;
         right: 30px;
         z-index: 2;
