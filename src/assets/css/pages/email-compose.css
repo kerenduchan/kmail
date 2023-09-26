@@ -1,44 +1,19 @@
+/* for small screens */
+
 .email-compose-dialog {
     position: fixed;
     bottom: 0;
-    right: 30px;
-    z-index: 2;
-    width: 600px;
-    height: 57%;
-}
-
-.email-compose-dialog.minimized {
-    height: unset;
-    width: 300px;
-}
-
-.email-compose-dialog.fullscreen {
-    background-color: rgba(0, 0, 0, 0.5);
-    height: 100%;
-    width: 100%;
+    top: 0;
+    left: 0;
     right: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    background-color: white;
+    z-index: 4;
 }
 
 .email-compose {
     height: 100%;
-    background-color: white;
-    box-shadow: 0px 8px 10px 1px rgba(0, 0, 0, 0.14),
-        0px 3px 14px 2px rgba(0, 0, 0, 0.12),
-        0px 5px 5px -3px rgba(0, 0, 0, 0.2);
-    border-top-right-radius: 8px;
-    border-top-left-radius: 8px;
-    overflow: hidden;
     display: flex;
     flex-direction: column;
-}
-
-.email-compose-dialog.fullscreen > .email-compose {
-    height: 90%;
-    width: 80%;
-    border-radius: 8px;
 }
 
 .email-compose-topbar {
@@ -61,34 +36,9 @@
     align-items: center;
 }
 
-.email-compose-topbar-actions {
-    display: flex;
-    gap: 4px;
-}
-
-.email-compose-topbar-action {
-    width: 16px;
-    height: 16px;
-}
-
-.email-compose-topbar-action:hover {
-    background-color: rgba(68, 71, 70, 0.08);
-}
-
-.email-compose-topbar-action.minimize {
-    content: url('//ssl.gstatic.com/ui/v1/icons/mail/rfr/ic_minimize_16px_1x.png');
-}
-
-.email-compose-dialog.minimized .email-compose-topbar-action.minimize {
-    content: url('//ssl.gstatic.com/ui/v1/icons/mail/rfr/ic_maximize_16px_1x.png');
-}
-
-.email-compose-topbar-action.fullscreen {
-    content: url('//ssl.gstatic.com/ui/v1/icons/mail/rfr/ic_open_in_full_16px_1x.png');
-}
-
-.email-compose-topbar-action.exit-fullscreen {
-    content: url('//ssl.gstatic.com/ui/v1/icons/mail/rfr/ic_close_fullscreen_16px_1x.png');
+.email-compose-topbar-action.minimize,
+.email-compose-topbar-action.email-compose-dialog.fullscreen {
+    display: none;
 }
 
 .email-compose-topbar-action.close {
@@ -100,10 +50,6 @@
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-}
-
-.email-compose-dialog.minimized .email-compose-form {
-    display: none;
 }
 
 .email-compose-actions {
@@ -162,4 +108,82 @@ textarea:focus {
         rgba(26, 115, 232, 0.3) 0px 1px 3px 1px;
 }
 
-/* discard draft url('//ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/delete_baseline_nv700_20dp.png') */
+/* styling for large screens */
+@media screen and (min-width: 600px) {
+    .email-compose-dialog {
+        position: fixed;
+        bottom: 0;
+        right: 30px;
+        z-index: 2;
+        width: 600px;
+        height: 57%;
+    }
+
+    .email-compose {
+        height: 100%;
+        background-color: white;
+        box-shadow: 0px 8px 10px 1px rgba(0, 0, 0, 0.14),
+            0px 3px 14px 2px rgba(0, 0, 0, 0.12),
+            0px 5px 5px -3px rgba(0, 0, 0, 0.2);
+        border-top-right-radius: 8px;
+        border-top-left-radius: 8px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .email-compose-dialog.minimized {
+        height: unset;
+        width: 300px;
+    }
+
+    .email-compose-dialog.fullscreen {
+        background-color: rgba(0, 0, 0, 0.5);
+        height: 100%;
+        width: 100%;
+        right: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .email-compose-dialog.fullscreen > .email-compose {
+        height: 90%;
+        width: 80%;
+        border-radius: 8px;
+    }
+
+    .email-compose-topbar-actions {
+        display: flex;
+        gap: 4px;
+    }
+
+    .email-compose-topbar-action {
+        width: 16px;
+        height: 16px;
+    }
+
+    .email-compose-topbar-action:hover {
+        background-color: rgba(68, 71, 70, 0.08);
+    }
+
+    .email-compose-topbar-action.minimize {
+        content: url('//ssl.gstatic.com/ui/v1/icons/mail/rfr/ic_minimize_16px_1x.png');
+    }
+
+    .email-compose-dialog.minimized .email-compose-topbar-action.minimize {
+        content: url('//ssl.gstatic.com/ui/v1/icons/mail/rfr/ic_maximize_16px_1x.png');
+    }
+
+    .email-compose-topbar-action.fullscreen {
+        content: url('//ssl.gstatic.com/ui/v1/icons/mail/rfr/ic_open_in_full_16px_1x.png');
+    }
+
+    .email-compose-topbar-action.exit-fullscreen {
+        content: url('//ssl.gstatic.com/ui/v1/icons/mail/rfr/ic_close_fullscreen_16px_1x.png');
+    }
+
+    .email-compose-dialog.minimized .email-compose-form {
+        display: none;
+    }
+}
