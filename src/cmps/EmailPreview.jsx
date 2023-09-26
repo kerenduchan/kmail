@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import { formatDateConcise } from '../util'
 import { SmallActionButton } from '../cmps/SmallActionButton'
 
@@ -9,34 +8,6 @@ export function EmailPreview({
     onUpdateEmail,
     onDeleteEmail,
 }) {
-    const [firstColumn, setFirstColumn] = useState(undefined)
-
-    useEffect(() => {
-        switch (folder) {
-            case 'sent':
-                setFirstColumn(
-                    <div className="email-preview-first-column">
-                        To: {email.to}
-                    </div>
-                )
-                break
-            case 'drafts':
-                setFirstColumn(
-                    <div className="email-preview-first-column email-preview-draft">
-                        Draft
-                    </div>
-                )
-                break
-            default:
-                setFirstColumn(
-                    <div className="email-preview-first-column">
-                        {email.from}
-                    </div>
-                )
-                break
-        }
-    }, [folder])
-
     function onToggleField(field) {
         const emailAfterUpdate = {
             ...email,
@@ -59,7 +30,7 @@ export function EmailPreview({
                 onClick={() => onEmailClick(email.id)}
             />
             {/* First Column (From/To/Draft) */}
-            {firstColumn}
+            <FirstColumn folder={folder} email={email} />
             {/* Subject */}
             <div className="email-preview-subject">
                 {email.subject || '(no subject)'}
@@ -83,4 +54,24 @@ export function EmailPreview({
             </div>
         </article>
     )
+}
+
+// dynamic component for first column depending on the folder
+function FirstColumn({ folder, email }) {
+    switch (folder) {
+        case 'sent':
+            return (
+                <div className="email-preview-first-column">To: {email.to}</div>
+            )
+        case 'drafts':
+            return (
+                <div className="email-preview-first-column email-preview-draft">
+                    Draft
+                </div>
+            )
+        default:
+            return (
+                <div className="email-preview-first-column">{email.from}</div>
+            )
+    }
 }
