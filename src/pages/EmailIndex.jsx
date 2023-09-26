@@ -100,9 +100,17 @@ export function EmailIndex() {
                 email.deletedAt = Date.now()
                 await emailService.save(email)
                 await loadEmails()
-                showSuccessMsg('Email moved to Bin.')
+                showSuccessMsg(
+                    filter.folder == 'drafts'
+                        ? 'Draft discarded.'
+                        : 'Email moved to Bin.'
+                )
             } catch (err) {
-                showErrorMsg('Failed to move email to Bin.')
+                showErrorMsg(
+                    filter.folder == 'drafts'
+                        ? 'Failed to discard draft.'
+                        : 'Failed to move email to Bin.'
+                )
             }
         }
     }
@@ -117,7 +125,12 @@ export function EmailIndex() {
 
     async function onDeleteDraft(emailId) {
         if (emailId !== null) {
-            await emailService.remove(emailId)
+            try {
+                await emailService.remove(emailId)
+                showSuccessMsg('Draft discarded.')
+            } catch (err) {
+                showErrorMsg('Failed to discard draft.')
+            }
             loadEmails()
         }
         onEmailComposeCloseClick()
