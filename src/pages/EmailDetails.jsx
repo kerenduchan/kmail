@@ -137,7 +137,9 @@ export function EmailDetails() {
                     </tbody>
                 </table>
                 {/* Email Body */}
-                <article className="email-details-body">{email.body}</article>
+                <article className="email-details-body">
+                    <pre>{email.body}</pre>
+                </article>
             </section>
         </section>
     )
