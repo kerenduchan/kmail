@@ -75,31 +75,37 @@
 
 /* Styling for small screens */
 @media only screen and (max-width: 600px) {
+    /* first and last row and column are for padding only while still being
+       clickable (covered by .email-preview-link) */
     .email-preview {
-        grid-template-rows: 1fr;
-        grid-template-columns: 1fr auto;
-        padding-top: 10px;
-        padding-bottom: 10px;
+        grid-template-rows: 10px auto auto 10px;
+        grid-template-columns: 10px 1fr auto 10px;
+        padding: 0;
+        column-gap: 0;
+        align-items: center;
+        align-content: center;
     }
 
     .email-preview-link {
-        grid-area: 1 / 1 / span 2 / span 1;
+        grid-area: 1 / 1 / -1 / -1;
     }
 
     .email-preview-first-column {
-        grid-area: 1 / 1 / span 1 / span 1;
+        grid-area: 2 / 2 / span 1 / span 1;
     }
 
     .email-preview-sent-at {
-        grid-area: 1 / 2 / span 1 / span 1;
+        grid-area: 2 / 3 / span 1 / span 1;
     }
 
     .email-preview-subject {
-        grid-area: 2 / 1 / span 1 / span 1;
+        grid-area: 3 / 2 / span 1 / span 1;
     }
 
     .email-preview-star {
-        grid-area: 2 / 2 / -1 / -1;
+        grid-area: 3 / 3 / span 1 / span 1;
+        z-index: 3;
+        justify-self: end;
     }
 
     .email-preview:hover .email-preview-actions {
