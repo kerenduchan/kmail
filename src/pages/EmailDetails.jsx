@@ -96,7 +96,7 @@ export function EmailDetails() {
         }
     }
 
-    if (!email) return <div>Loading..</div>
+    if (!email) return <div className="email-details-loading">Loading..</div>
     return (
         <section className="email-details">
             {/* Actions */}

@@ -1,9 +1,16 @@
+.email-details-loading {
+    flex-grow: 1;
+    background-color: white;
+    z-index: 10;
+}
+
 .email-details {
     height: 100%;
     box-sizing: border-box;
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    z-index: 10;
 }
 
 .email-details-actions {
