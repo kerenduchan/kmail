@@ -83,7 +83,7 @@
     }
 
     .email-preview-link {
-        grid-area: 1 / 1 / span 2 / span 2;
+        grid-area: 1 / 1 / span 2 / span 1;
     }
 
     .email-preview-first-column {
