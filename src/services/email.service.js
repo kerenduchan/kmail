@@ -154,7 +154,6 @@ function getDefaultFilter() {
 }
 
 async function generateEmails() {
-    console.log('genearte')
     const emails = [
         {
             id: utilService.makeId(),
