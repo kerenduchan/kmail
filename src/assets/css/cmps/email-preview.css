@@ -49,6 +49,10 @@
     font-weight: unset;
 }
 
+.email-preview.selected {
+    background-color: #c1dbff;
+}
+
 .email-preview-first-column {
     grid-area: 1 / 3 / span 1 / span 1;
     text-overflow: ellipsis;

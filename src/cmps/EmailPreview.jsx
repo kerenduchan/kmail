@@ -19,7 +19,13 @@ export function EmailPreview({
     }
 
     return (
-        <article className={'email-preview' + (email.isRead ? ' read' : '')}>
+        <article
+            className={
+                'email-preview' +
+                (email.isRead ? ' read' : '') +
+                (isSelected ? ' selected' : '')
+            }
+        >
             {/* Selected checkbox */}
             <div
                 className={
