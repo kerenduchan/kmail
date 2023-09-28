@@ -28,16 +28,7 @@ export function EmailCompose({ onCloseClick, onDeleteDraft }) {
     const isEdited = useRef(false)
 
     useEffect(() => {
-        const composeVal = searchParams.get('compose')
-        const id = composeVal == 'new' ? null : composeVal
-        if (id == null) {
-            email.current = emailService.createEmail()
-            email.current.isRead = true
-            setDraft(email.current)
-        } else {
-            // This is an attempt to edit an existing draft
-            loadEmail(id)
-        }
+        handleSearchParamsChange()
     }, [searchParams])
 
     useInterval(autoSaveDraft, 5000)
@@ -95,6 +86,32 @@ export function EmailCompose({ onCloseClick, onDeleteDraft }) {
             setSearchParams((prev) => ({ ...prev, compose: email.current.id }))
         }
         setTitle('Draft saved')
+    }
+
+    async function handleSearchParamsChange() {
+        const composeVal = searchParams.get('compose')
+        const id = composeVal == 'new' ? null : composeVal
+
+        if (email !== null) {
+            // searchParams switched while the compose dialog was open
+            setDisplayState((prev) => ({
+                ...prev,
+                isMinimized: false,
+            }))
+
+            if (isEdited.current) {
+                await emailService.save(email.current)
+            }
+        }
+
+        if (id == null) {
+            email.current = emailService.createEmail()
+            email.current.isRead = true
+            setDraft(email.current)
+        } else {
+            // This is an attempt to edit an existing draft
+            loadEmail(id)
+        }
     }
 
     async function loadEmail(emailId) {
