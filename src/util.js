@@ -144,7 +144,7 @@ function getContainingFolder(path) {
 }
 
 function getEmailFilterFromParams(params, searchParams) {
-    const searchString = searchParams.get('search')
+    const searchString = searchParams.get('searchString')
 
     return {
         isRead: strToNullableBool(searchParams.get('isRead')),
