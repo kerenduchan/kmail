@@ -1,24 +1,27 @@
 import { useState, useEffect } from 'react'
 import { useParams, useLocation, useNavigate, Outlet } from 'react-router'
 import { useSearchParams } from 'react-router-dom'
+import { EmailCompose } from './EmailCompose'
 import { EmailFilter } from '../cmps/EmailFilter'
 import { EmailList } from '../cmps/EmailList'
 import { EmailFolders } from '../cmps/EmailFolders'
 import { Logo } from '../cmps/Logo'
 import { EmailComposeButton } from '../cmps/EmailComposeButton'
 import { SmallActionButton } from '../cmps/SmallActionButton'
-import { getEmailFilterFromParams, sanitizeFilter } from '../util'
+import { MultiSelector } from '../cmps/MultiSelector'
 import { emailService } from '../services/email.service'
+import { getEmailFilterFromParams, sanitizeFilter } from '../util'
 import {
     hideUserMsg,
     showErrorMsg,
     showSuccessMsg,
 } from '../services/event-bus.service'
-import { EmailCompose } from './EmailCompose'
 
 export function EmailIndex() {
-    const [emails, setEmails] = useState(null)
+    const [emailsData, setEmailsData] = useState(null)
+    const [selectedEmailIds, setSelectedEmailIds] = useState([])
     const [emailCounts, setEmailCounts] = useState(null)
+    const [multiSelectorState, setMultiSelectorState] = useState('none')
     const params = useParams()
     const [searchParams, setSearchParams] = useSearchParams()
     const [filter, setFilter] = useState(null)
@@ -36,6 +39,16 @@ export function EmailIndex() {
             loadEmails()
         }
     }, [filter])
+
+    useEffect(() => {
+        if (selectedEmailIds.length === 0) {
+            setMultiSelectorState('none')
+        } else if (selectedEmailIds.length === emailsData.emails.length) {
+            setMultiSelectorState('all')
+        } else {
+            setMultiSelectorState('some')
+        }
+    }, [selectedEmailIds])
 
     function onFolderClick(folder) {
         hideUserMsg()
@@ -142,8 +155,8 @@ export function EmailIndex() {
                 emailService.getEmailCountsPerFolder(),
                 emailService.query(filter),
             ])
-            setEmails({
-                data: emails,
+            setEmailsData({
+                emails,
                 folder: filter.folder,
             })
             setEmailCounts(emailCounts)
@@ -168,6 +181,16 @@ export function EmailIndex() {
         }
     }
 
+    function onEmailCheckboxClick(emailId, isChecked) {
+        if (isChecked) {
+            // deselect the email
+            setSelectedEmailIds((prev) => prev.filter((id) => id != emailId))
+        } else {
+            // select the email
+            setSelectedEmailIds((prev) => prev.concat([emailId]))
+        }
+    }
+
     function onHamburgerMenuClick() {
         setShowMenu((prev) => !prev)
     }
@@ -176,7 +199,18 @@ export function EmailIndex() {
         setShowMenu(false)
     }
 
-    if (!emails || !emailCounts) return <div>Loading..</div>
+    function onMultiSelectorFilterChange(filter) {
+        switch (filter) {
+            case 'none':
+                setSelectedEmailIds([])
+                break
+            case 'all':
+                setSelectedEmailIds(emailsData.emails.map((e) => e.id))
+                break
+        }
+    }
+
+    if (!emailsData || !emailCounts) return <div>Loading..</div>
 
     return (
         <section className="email-index">
@@ -200,12 +234,18 @@ export function EmailIndex() {
                     <Outlet />
                 ) : (
                     <>
-                        <div className="email-list-top"></div>
+                        <div className="email-list-top">
+                            <MultiSelector
+                                state={multiSelectorState}
+                                onFilterChange={onMultiSelectorFilterChange}
+                            />
+                        </div>
                         <EmailList
-                            emails={emails}
+                            emailsData={{ ...emailsData, selectedEmailIds }}
                             onUpdateEmail={onUpdateEmail}
                             onDeleteEmail={onDeleteEmail}
                             onEmailClick={onEmailClick}
+                            onEmailCheckboxClick={onEmailCheckboxClick}
                         />
                         <div className="email-list-bottom"></div>
                     </>

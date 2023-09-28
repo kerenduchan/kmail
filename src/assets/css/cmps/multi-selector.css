@@ -1,0 +1,23 @@
+.multi-selector {
+    display: flex;
+}
+
+.multi-selector-checkbox {
+    height: 20px;
+    width: 20px;
+}
+.multi-selector-checkbox.none {
+    content: url('//ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/check_box_outline_blank_baseline_nv700_20dp.png');
+}
+
+.multi-selector-checkbox.all {
+    content: url('//ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/check_box_baseline_nv700_20dp.png');
+}
+
+.multi-selector-checkbox.some {
+    content: url('//ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/indeterminate_check_box_baseline_nv700_20dp.png');
+}
+
+.multi-selector-dropdown-arrow {
+    content: url('//ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/arrow_drop_down_baseline_nv700_20dp.png');
+}

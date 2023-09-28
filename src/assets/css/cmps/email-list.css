@@ -7,7 +7,13 @@
 
 .email-list-top,
 .email-list-bottom {
-    height: 24px;
+    padding-inline-start: 14px;
+    height: 48px;
+}
+
+.email-list-top {
+    display: flex;
+    align-items: center;
 }
 
 /* Styling for small screens */

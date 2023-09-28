@@ -19,7 +19,6 @@
     flex-grow: 1;
     min-width: 0;
     border-radius: 16px;
-    gap: 10px;
     display: flex;
     flex-direction: column;
 }

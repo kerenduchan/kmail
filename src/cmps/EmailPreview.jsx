@@ -2,11 +2,13 @@ import { formatDateConcise } from '../util'
 import { SmallActionButton } from '../cmps/SmallActionButton'
 
 export function EmailPreview({
+    isSelected,
     email,
     folder,
     onEmailClick,
     onUpdateEmail,
     onDeleteEmail,
+    onEmailCheckboxClick,
 }) {
     function onToggleField(field) {
         const emailAfterUpdate = {
@@ -18,6 +20,13 @@ export function EmailPreview({
 
     return (
         <article className={'email-preview' + (email.isRead ? ' read' : '')}>
+            {/* Selected checkbox */}
+            <div
+                className={
+                    'email-preview-checkbox' + (isSelected ? ' checked' : '')
+                }
+                onClick={() => onEmailCheckboxClick(email.id, isSelected)}
+            />
             {/* Star */}
             <SmallActionButton
                 type={email.isStarred ? 'starred' : 'unstarred'}
