@@ -10,6 +10,7 @@ body {
     color: rgb(32, 33, 36);
     margin: 0;
     height: 100vh;
+    user-select: none;
 }
 
 button {
