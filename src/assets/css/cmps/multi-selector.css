@@ -3,18 +3,30 @@
 }
 
 .multi-selector-checkbox {
+    height: 30px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+}
+
+.multi-selector-checkbox:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.multi-selector-checkbox img {
     height: 20px;
     width: 20px;
 }
-.multi-selector-checkbox.none {
+
+.multi-selector-checkbox.none img {
     content: url('//ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/check_box_outline_blank_baseline_nv700_20dp.png');
 }
 
-.multi-selector-checkbox.all {
+.multi-selector-checkbox.all img {
     content: url('//ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/check_box_baseline_nv700_20dp.png');
 }
 
-.multi-selector-checkbox.some {
+.multi-selector-checkbox.some img {
     content: url('//ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/indeterminate_check_box_baseline_nv700_20dp.png');
 }
 

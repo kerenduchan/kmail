@@ -18,7 +18,9 @@ export function MultiSelector({ state, filters, onFilterChange }) {
             <div
                 className={`multi-selector-checkbox ${state || 'none'}`}
                 onClick={onCheckboxClick}
-            />
+            >
+                <img />
+            </div>
             <div className="multi-selector-dropdown-arrow" />
         </div>
     )
