@@ -61,6 +61,7 @@ export function EmailIndex() {
 
     function onFolderClick(folder) {
         hideUserMsg()
+        setSelectedEmailIds([])
         // go to the clicked folder, while retaining only the compose part
         // of the search params
         const navigateArgs = {
