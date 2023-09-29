@@ -112,6 +112,14 @@
         align-content: center;
     }
 
+    .email-preview-first-column {
+        padding: 0;
+    }
+
+    .email-preview-checkbox {
+        display: none;
+    }
+
     .email-preview-link {
         grid-area: 1 / 1 / -1 / -1;
     }
