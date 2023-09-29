@@ -30,9 +30,25 @@
     grid-area: 1 / 2 / span 1 / span 1;
 }
 
+.email-preview-star.small-action-btn-unstarred {
+    opacity: 0.32;
+}
+
+.email-preview-star.small-action-btn-starred {
+    opacity: 0.7;
+}
+
 .email-preview-actions {
     display: none;
     z-index: 3;
+}
+
+.email-preview:hover .email-preview-star.small-action-btn-unstarred {
+    opacity: 0.8;
+}
+
+.email-preview:hover .email-preview-star.small-action-btn-starred {
+    opacity: 1;
 }
 
 .email-preview:hover .email-preview-actions {
