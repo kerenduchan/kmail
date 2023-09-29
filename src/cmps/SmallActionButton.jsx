@@ -1,18 +1,16 @@
 export function SmallActionButton({ type, img, onClick, className }) {
     const types = {
-        delete: 'imgs/garbage-bin.svg',
-        back: 'imgs/left-arrow.svg',
-        read: 'imgs/mail-read.svg',
-        unread: 'imgs/mail-unread.svg',
-        starred: 'imgs/starred.svg',
-        unstarred: 'imgs/unstarred.svg',
         hamburger: 'imgs/hamburger-menu.svg',
     }
 
     return (
         <button
             type="button"
-            className={'small-action-btn' + (className ? ` ${className}` : '')}
+            className={
+                'small-action-btn small-action-btn-' +
+                type +
+                (className ? ` ${className}` : '')
+            }
             onClick={onClick}
         >
             <img src={img ? img : types[type]} />

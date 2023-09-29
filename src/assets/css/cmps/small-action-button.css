@@ -15,6 +15,30 @@
 }
 
 .small-action-btn img {
-    width: 15px;
-    height: 15px;
+    width: 20px;
+    height: 20px;
+}
+
+.small-action-btn-delete img {
+    content: url(https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/delete_baseline_nv700_20dp.png);
+}
+
+.small-action-btn-unread img {
+    content: url(https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/mail_baseline_nv700_20dp.png);
+}
+
+.small-action-btn-read img {
+    content: url(https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/drafts_baseline_nv700_20dp.png);
+}
+
+.small-action-btn-unstarred img {
+    content: url(https://www.gstatic.com/images/icons/material/system_gm/1x/star_border_black_20dp.png);
+}
+
+.small-action-btn-starred img {
+    content: url(https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/star_fill_googyellow500_20dp.png);
+}
+
+.small-action-btn-back img {
+    content: url(https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/arrow_back_baseline_nv700_20dp.png);
 }
