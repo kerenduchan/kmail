@@ -42,3 +42,11 @@
 .small-action-btn-back img {
     content: url(https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/arrow_back_baseline_nv700_20dp.png);
 }
+
+.small-action-btn-checked img {
+    content: url(//ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/check_box_baseline_nv700_20dp.png);
+}
+
+.small-action-btn-unchecked img {
+    content: url(//ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/check_box_outline_blank_baseline_nv700_20dp.png);
+}

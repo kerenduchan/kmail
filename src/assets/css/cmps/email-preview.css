@@ -19,11 +19,6 @@
 
 .email-preview-checkbox {
     grid-area: 1 / 1 / span 1 / span 1;
-    content: url('//ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/check_box_outline_blank_baseline_nv700_20dp.png');
-}
-
-.email-preview-checkbox.checked {
-    content: url('//ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/check_box_baseline_nv700_20dp.png');
 }
 
 .email-preview-star {

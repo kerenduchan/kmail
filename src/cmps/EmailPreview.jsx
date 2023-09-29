@@ -27,10 +27,9 @@ export function EmailPreview({
             }
         >
             {/* Selected checkbox */}
-            <div
-                className={
-                    'email-preview-checkbox' + (isSelected ? ' checked' : '')
-                }
+            <SmallActionButton
+                type={isSelected ? 'checked' : 'unchecked'}
+                className="email-preview-checkbox"
                 onClick={() => onEmailCheckboxClick(email.id, isSelected)}
             />
             {/* Star */}
