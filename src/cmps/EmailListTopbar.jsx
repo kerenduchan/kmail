@@ -4,7 +4,8 @@ import { SmallActionButton } from './SmallActionButton'
 export function EmailListTopbar({
     multiSelectorState,
     onMultiSelectorFilterChange,
-    onDeleteSelectedEmailsClick,
+    onDeleteClick,
+    onMarkUnreadClick,
 }) {
     return (
         <div className="email-list-topbar">
@@ -16,13 +17,14 @@ export function EmailListTopbar({
             {/* Actions */}
             <EmailListTopbarActions
                 state={multiSelectorState}
-                onDeleteClick={onDeleteSelectedEmailsClick}
+                onDeleteClick={onDeleteClick}
+                onMarkUnreadClick={onMarkUnreadClick}
             />
         </div>
     )
 }
 
-function EmailListTopbarActions({ state, onDeleteClick }) {
+function EmailListTopbarActions({ state, onDeleteClick, onMarkUnreadClick }) {
     if (state == 'none') {
         // TODO
         return <div></div>
@@ -30,7 +32,7 @@ function EmailListTopbarActions({ state, onDeleteClick }) {
         return (
             <div className="email-list-topbar-actions">
                 <SmallActionButton type="delete" onClick={onDeleteClick} />
-                <SmallActionButton type="unread" />
+                <SmallActionButton type="unread" onClick={onMarkUnreadClick} />
             </div>
         )
     }

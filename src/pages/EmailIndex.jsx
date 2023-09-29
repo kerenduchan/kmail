@@ -183,6 +183,10 @@ export function EmailIndex() {
         setSelectedEmailIds([])
     }
 
+    async function onMarkSelectedEmailsAsUnreadClick() {
+        
+    }
+
     async function deleteEmailsByIds(emailIds) {
         const suffix = emailIds.length === 1 ? '' : 's'
 
@@ -249,8 +253,9 @@ export function EmailIndex() {
                             onMultiSelectorFilterChange={
                                 onMultiSelectorFilterChange
                             }
-                            onDeleteSelectedEmailsClick={
-                                onDeleteSelectedEmailsClick
+                            onDeleteClick={onDeleteSelectedEmailsClick}
+                            onMarkUnreadClick={
+                                onMarkSelectedEmailsAsUnreadClick
                             }
                         />
                         <EmailList
