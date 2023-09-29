@@ -3,7 +3,9 @@ export const storageService = {
     get,
     post,
     put,
+    putMany,
     remove,
+    removeMany,
 }
 
 function query(entityType, delay = 200) {
@@ -47,6 +49,15 @@ function put(entityType, updatedEntity) {
     })
 }
 
+function putMany(entityType, updatedEntities) {
+    return query(entityType).then((entities) => {
+        const updatedEntityIds = updatedEntities.map((e) => e.id)
+        entities = entities.filter((e) => !updatedEntityIds.includes(e.id))
+        entities = entities.concat(updatedEntities)
+        _save(entityType, entities)
+    })
+}
+
 function remove(entityType, entityId) {
     return query(entityType).then((entities) => {
         const idx = entities.findIndex((entity) => entity.id === entityId)
@@ -56,6 +67,16 @@ function remove(entityType, entityId) {
             )
         entities.splice(idx, 1)
         _save(entityType, entities)
+    })
+}
+
+function removeMany(entityType, entityIds) {
+    return query(entityType).then((entities) => {
+        entities.filter((e) => !entityIds.includes(e.id))
+        _save(
+            entityType,
+            entities.filter((e) => !entityIds.includes(e.id))
+        )
     })
 }
 

@@ -96,39 +96,6 @@ export function EmailIndex() {
         }
     }
 
-    // Either move the email to the bin or delete it forever if it's already
-    // in the bin.
-    async function onDeleteEmail(email) {
-        if (email.deletedAt !== null) {
-            try {
-                // permanently delete
-                await emailService.remove(email.id)
-                await loadEmails()
-                showSuccessMsg('Email deleted forever.')
-            } catch (err) {
-                showErrorMsg('Failed to delete email forever.')
-            }
-        } else {
-            try {
-                // move to bin
-                email.deletedAt = Date.now()
-                await emailService.save(email)
-                await loadEmails()
-                showSuccessMsg(
-                    filter.folder == 'drafts'
-                        ? 'Draft discarded.'
-                        : 'Email moved to Bin.'
-                )
-            } catch (err) {
-                showErrorMsg(
-                    filter.folder == 'drafts'
-                        ? 'Failed to discard draft.'
-                        : 'Failed to move email to Bin.'
-                )
-            }
-        }
-    }
-
     function onEmailComposeCloseClick() {
         // close the compose dialog
         setSearchParams((prev) => {
@@ -211,6 +178,48 @@ export function EmailIndex() {
         }
     }
 
+    async function onDeleteSelectedEmailsClick() {
+        await deleteEmailsByIds(selectedEmailIds)
+        setSelectedEmailIds([])
+    }
+
+    async function deleteEmailsByIds(emailIds) {
+        const suffix = emailIds.length === 1 ? '' : 's'
+
+        if (params.folderId == 'bin') {
+            // delete emails forever
+            try {
+                await emailService.deleteEmailsByIds(emailIds)
+                showSuccessMsg(`Email${suffix} deleted forever.`)
+            } catch (err) {
+                showErrorMsg(`Failed to delete email${suffix} forever.`)
+            }
+        } else {
+            // move emails to bin
+            try {
+                const emails = emailsData.emails.filter((e) =>
+                    emailIds.includes(e.id)
+                )
+                emails.forEach((e) => {
+                    e.deletedAt = Date.now()
+                })
+                await emailService.updateMany(emails)
+                showSuccessMsg(
+                    filter.folder == 'drafts'
+                        ? `Draft${suffix} discarded.`
+                        : `Email${suffix} moved to Bin.`
+                )
+            } catch (err) {
+                showErrorMsg(
+                    filter.folder == 'drafts'
+                        ? `Failed to discard draft${suffix}.`
+                        : `Failed to move email${suffix} to Bin.`
+                )
+            }
+        }
+        await loadEmails()
+    }
+
     if (!emailsData || !emailCounts) return <div>Loading..</div>
 
     return (
@@ -240,11 +249,14 @@ export function EmailIndex() {
                             onMultiSelectorFilterChange={
                                 onMultiSelectorFilterChange
                             }
+                            onDeleteSelectedEmailsClick={
+                                onDeleteSelectedEmailsClick
+                            }
                         />
                         <EmailList
                             emailsData={{ ...emailsData, selectedEmailIds }}
                             onUpdateEmail={onUpdateEmail}
-                            onDeleteEmail={onDeleteEmail}
+                            onDeleteEmail={() => deleteEmailsByIds([email.id])}
                             onEmailClick={onEmailClick}
                             onEmailCheckboxClick={onEmailCheckboxClick}
                         />

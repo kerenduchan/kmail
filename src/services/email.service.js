@@ -5,8 +5,10 @@ import { utilService } from './util.service.js'
 export const emailService = {
     query,
     save,
+    updateMany,
     sendEmail,
     remove,
+    deleteEmailsByIds,
     getById,
     createEmail,
     getDefaultFilter,
@@ -118,16 +120,24 @@ function remove(id) {
     return storageService.remove(STORAGE_KEY, id)
 }
 
+function deleteEmailsByIds(ids) {
+    return storageService.removeMany(STORAGE_KEY, ids)
+}
+
 function sendEmail(email) {
     return save({ ...email, sentAt: Date.now() })
 }
 
-function save(emailToSave) {
-    if (emailToSave.id) {
-        return storageService.put(STORAGE_KEY, emailToSave)
+function save(email) {
+    if (email.id) {
+        return storageService.put(STORAGE_KEY, email)
     } else {
-        return storageService.post(STORAGE_KEY, emailToSave)
+        return storageService.post(STORAGE_KEY, email)
     }
+}
+
+async function updateMany(emails) {
+    return storageService.putMany(STORAGE_KEY, emails)
 }
 
 function createEmail() {
