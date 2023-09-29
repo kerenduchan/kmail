@@ -5,8 +5,9 @@
     grid-template-areas:
         'header               search'
         'email-compose-button email-index-main'
-        'email-folders        email-index-main';
-    grid-template-rows: auto auto 1fr;
+        'email-folders        email-index-main'
+        'email-labels         email-index-main';
+    grid-template-rows: auto auto auto 1fr;
     grid-template-columns: 256px 1fr;
 }
 

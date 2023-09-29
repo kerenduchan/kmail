@@ -12,6 +12,8 @@
 @import 'cmps/email-compose-button.css';
 @import 'cmps/email-filter.css';
 @import 'cmps/email-folders.css';
+@import 'cmps/email-label-create.css';
+@import 'cmps/email-labels.css';
 @import 'cmps/email-list-topbar.css';
 @import 'cmps/email-list.css';
 @import 'cmps/email-preview.css';

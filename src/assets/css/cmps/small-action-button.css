@@ -50,3 +50,11 @@
 .small-action-btn-unchecked img {
     content: url(//ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/check_box_outline_blank_baseline_nv700_20dp.png);
 }
+
+.small-action-btn-create img {
+    content: url(https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/add_large_baseline_nv700_20dp.png);
+}
+
+.small-action-btn-close img {
+    content: url(https://www.gstatic.com/images/icons/material/system/1x/close_black_24dp.png);
+}

@@ -5,6 +5,7 @@ import { EmailCompose } from './EmailCompose'
 import { EmailFilter } from '../cmps/EmailFilter'
 import { EmailList } from '../cmps/EmailList'
 import { EmailFolders } from '../cmps/EmailFolders'
+import { EmailLabels } from '../cmps/EmailLabels'
 import { Logo } from '../cmps/Logo'
 import { EmailComposeButton } from '../cmps/EmailComposeButton'
 import { SmallActionButton } from '../cmps/SmallActionButton'
@@ -17,6 +18,8 @@ import {
     showErrorMsg,
     showSuccessMsg,
 } from '../services/event-bus.service'
+import { labelService } from '../services/label.service'
+import { EmailLabelCreate } from '../cmps/EmailLabelCreate'
 
 export function EmailIndex() {
     const [emailsData, setEmailsData] = useState(null)
@@ -24,6 +27,8 @@ export function EmailIndex() {
     const [areAllSelectedEmailsRead, setAreAllSelectedEmailsRead] =
         useState(false)
     const [emailCounts, setEmailCounts] = useState(null)
+    const [labels, setLabels] = useState(null)
+    const [showCreateLabelDialog, setShowCreateLabelDialog] = useState(false)
     const [multiSelectorState, setMultiSelectorState] = useState('none')
     const params = useParams()
     const [searchParams, setSearchParams] = useSearchParams()
@@ -35,6 +40,7 @@ export function EmailIndex() {
     // params and search params are the single source of truth for the filter
     useEffect(() => {
         setFilter(getEmailFilterFromParams(params, searchParams))
+        loadLabels()
     }, [params, searchParams])
 
     useEffect(() => {
@@ -139,6 +145,15 @@ export function EmailIndex() {
             setEmailCounts(emailCounts)
         } catch (err) {
             showErrorMsg('Error loading emails' + err)
+        }
+    }
+
+    async function loadLabels() {
+        try {
+            const labels = await labelService.getAllLabels()
+            setLabels(labels)
+        } catch (err) {
+            showErrorMsg('Error loading labels' + err)
         }
     }
 
@@ -292,6 +307,11 @@ export function EmailIndex() {
                 emailCounts={emailCounts}
                 onClose={onEmailFoldersClose}
             />
+            <EmailLabels
+                labels={labels}
+                onCreateClick={() => setShowCreateLabelDialog(true)}
+            />
+
             <section className="email-index-main">
                 {params.emailId ? (
                     <Outlet />
@@ -317,11 +337,18 @@ export function EmailIndex() {
                     </>
                 )}
             </section>
-            {/* Compose modal */}
+            {/* Compose dialog */}
             {searchParams.get('compose') !== null && (
                 <EmailCompose
                     onCloseClick={onEmailComposeCloseClick}
                     onDeleteDraft={onDeleteDraft}
+                />
+            )}
+
+            {/* Create label dialog */}
+            {showCreateLabelDialog && (
+                <EmailLabelCreate
+                    onCloseClick={() => setShowCreateLabelDialog(false)}
                 />
             )}
         </section>

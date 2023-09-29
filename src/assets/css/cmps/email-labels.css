@@ -1,0 +1,27 @@
+.email-labels {
+    grid-area: email-labels;
+    margin-top: 28px;
+    display: grid;
+    grid-template-areas:
+        'title create'
+        'list  list';
+    grid-template-columns: 1fr auto;
+    align-content: start;
+    align-items: center;
+}
+
+.email-labels-title {
+    grid-area: title;
+    padding-inline-start: 26px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.email-labels-create-btn-container {
+    grid-area: create;
+    padding-inline-end: 16px;
+}
+
+.email-labels-list {
+    grid-area: list;
+}
