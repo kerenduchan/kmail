@@ -2,19 +2,20 @@
 @import 'basics/base.css';
 
 /* Pages */
-@import 'pages/home.css';
 @import 'pages/about.css';
-@import 'pages/email-index.css';
-@import 'pages/email-details.css';
 @import 'pages/email-compose.css';
+@import 'pages/email-details.css';
+@import 'pages/email-index.css';
+@import 'pages/home.css';
 
 /* Components */
-@import 'cmps/small-action-button.css';
-@import 'cmps/logo.css';
-@import 'cmps/email-folders.css';
 @import 'cmps/email-compose-button.css';
 @import 'cmps/email-filter.css';
+@import 'cmps/email-folders.css';
+@import 'cmps/email-list-topbar.css';
 @import 'cmps/email-list.css';
 @import 'cmps/email-preview.css';
-@import 'cmps/user-msg.css';
+@import 'cmps/logo.css';
 @import 'cmps/multi-selector.css';
+@import 'cmps/small-action-button.css';
+@import 'cmps/user-msg.css';

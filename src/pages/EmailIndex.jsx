@@ -8,7 +8,8 @@ import { EmailFolders } from '../cmps/EmailFolders'
 import { Logo } from '../cmps/Logo'
 import { EmailComposeButton } from '../cmps/EmailComposeButton'
 import { SmallActionButton } from '../cmps/SmallActionButton'
-import { MultiSelector } from '../cmps/MultiSelector'
+import { EmailListTopbar } from '../cmps/EmailListTopbar'
+
 import { emailService } from '../services/email.service'
 import { getEmailFilterFromParams, sanitizeFilter } from '../util'
 import {
@@ -234,12 +235,12 @@ export function EmailIndex() {
                     <Outlet />
                 ) : (
                     <>
-                        <div className="email-list-top">
-                            <MultiSelector
-                                state={multiSelectorState}
-                                onFilterChange={onMultiSelectorFilterChange}
-                            />
-                        </div>
+                        <EmailListTopbar
+                            multiSelectorState={multiSelectorState}
+                            onMultiSelectorFilterChange={
+                                onMultiSelectorFilterChange
+                            }
+                        />
                         <EmailList
                             emailsData={{ ...emailsData, selectedEmailIds }}
                             onUpdateEmail={onUpdateEmail}

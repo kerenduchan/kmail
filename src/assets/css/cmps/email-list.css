@@ -5,15 +5,9 @@
     overflow-y: auto;
 }
 
-.email-list-top,
 .email-list-bottom {
     padding-inline-start: 19px;
     height: 48px;
-}
-
-.email-list-top {
-    display: flex;
-    align-items: center;
 }
 
 /* Styling for small screens */
@@ -24,7 +18,6 @@
         margin: 0;
     }
 
-    .email-list-top,
     .email-list-bottom {
         display: none;
     }
