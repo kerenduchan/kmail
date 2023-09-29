@@ -195,8 +195,15 @@ export function EmailIndex() {
     async function onUpdateSelectedEmails(fieldsToUpdate) {
         let msg = ''
         if (fieldsToUpdate.isRead !== undefined) {
-            msg =
-                `${selectedEmailIds.length} emails marked as ` +
+            if (selectedEmailIds.length === 1) {
+                msg = emailsData.folder == 'drafts' ? 'Draft' : 'Email'
+            } else {
+                msg =
+                    `${selectedEmailIds.length} ` +
+                    (emailsData.folder == 'drafts' ? 'drafts' : 'emails')
+            }
+            msg +=
+                ' marked as ' +
                 (fieldsToUpdate.isRead ? 'read' : 'unread') +
                 '.'
         }
