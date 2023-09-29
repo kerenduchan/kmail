@@ -75,7 +75,9 @@ function FirstColumn({ folder, email }) {
     switch (folder) {
         case 'sent':
             return (
-                <div className="email-preview-first-column">To: {email.to}</div>
+                <div className="email-preview-first-column">
+                    To: {email.to.split('@')[0]}
+                </div>
             )
         case 'drafts':
             return (
@@ -85,7 +87,9 @@ function FirstColumn({ folder, email }) {
             )
         default:
             return (
-                <div className="email-preview-first-column">{email.from}</div>
+                <div className="email-preview-first-column">
+                    {email.from.split('@')[0]}
+                </div>
             )
     }
 }
