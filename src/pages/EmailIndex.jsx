@@ -21,6 +21,8 @@ import {
 export function EmailIndex() {
     const [emailsData, setEmailsData] = useState(null)
     const [selectedEmailIds, setSelectedEmailIds] = useState([])
+    const [areAllSelectedEmailsRead, setAreAllSelectedEmailsRead] =
+        useState(false)
     const [emailCounts, setEmailCounts] = useState(null)
     const [multiSelectorState, setMultiSelectorState] = useState('none')
     const params = useParams()
@@ -49,7 +51,13 @@ export function EmailIndex() {
         } else {
             setMultiSelectorState('some')
         }
+
+        updateAreAllSelectedEmailsRead()
     }, [selectedEmailIds])
+
+    useEffect(() => {
+        updateAreAllSelectedEmailsRead()
+    }, [emailsData])
 
     function onFolderClick(folder) {
         hideUserMsg()
@@ -183,8 +191,31 @@ export function EmailIndex() {
         setSelectedEmailIds([])
     }
 
-    async function onMarkSelectedEmailsAsUnreadClick() {
-        
+    async function onUpdateSelectedEmails(fieldsToUpdate) {
+        let msg = ''
+        if (fieldsToUpdate.isRead !== undefined) {
+            msg =
+                `${selectedEmailIds.length} emails marked as ` +
+                (fieldsToUpdate.isRead ? 'read' : 'unread') +
+                '.'
+        }
+        updateManyEmails(selectedEmailIds, fieldsToUpdate, msg)
+    }
+
+    async function updateManyEmails(emailIds, fieldsToUpdate, msg) {
+        const suffix = emailIds.length === 1 ? '' : 's'
+
+        let emails = getEmailsByIds(emailIds)
+        emails = emails.map((e) => ({ ...e, ...fieldsToUpdate }))
+
+        hideUserMsg()
+        try {
+            await emailService.updateMany(emails)
+            showSuccessMsg(msg)
+            await loadEmails()
+        } catch (err) {
+            showErrorMsg(`Failed to update email${suffix}`, err)
+        }
     }
 
     async function deleteEmailsByIds(emailIds) {
@@ -201,9 +232,7 @@ export function EmailIndex() {
         } else {
             // move emails to bin
             try {
-                const emails = emailsData.emails.filter((e) =>
-                    emailIds.includes(e.id)
-                )
+                const emails = getEmailsByIds(emailIds)
                 emails.forEach((e) => {
                     e.deletedAt = Date.now()
                 })
@@ -222,6 +251,18 @@ export function EmailIndex() {
             }
         }
         await loadEmails()
+    }
+
+    function getEmailsByIds(emailIds) {
+        if (emailsData === null) {
+            return []
+        }
+        return emailsData.emails.filter((e) => emailIds.includes(e.id))
+    }
+
+    function updateAreAllSelectedEmailsRead() {
+        const emails = getEmailsByIds(selectedEmailIds)
+        setAreAllSelectedEmailsRead(emails.every((e) => e.isRead === true))
     }
 
     if (!emailsData || !emailCounts) return <div>Loading..</div>
@@ -254,9 +295,8 @@ export function EmailIndex() {
                                 onMultiSelectorFilterChange
                             }
                             onDeleteClick={onDeleteSelectedEmailsClick}
-                            onMarkUnreadClick={
-                                onMarkSelectedEmailsAsUnreadClick
-                            }
+                            onUpdateSelectedEmails={onUpdateSelectedEmails}
+                            readButtonToShow={!areAllSelectedEmailsRead}
                         />
                         <EmailList
                             emailsData={{ ...emailsData, selectedEmailIds }}

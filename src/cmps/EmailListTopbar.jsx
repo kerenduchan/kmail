@@ -5,7 +5,8 @@ export function EmailListTopbar({
     multiSelectorState,
     onMultiSelectorFilterChange,
     onDeleteClick,
-    onMarkUnreadClick,
+    onUpdateSelectedEmails,
+    readButtonToShow,
 }) {
     return (
         <div className="email-list-topbar">
@@ -18,13 +19,23 @@ export function EmailListTopbar({
             <EmailListTopbarActions
                 state={multiSelectorState}
                 onDeleteClick={onDeleteClick}
-                onMarkUnreadClick={onMarkUnreadClick}
+                onUpdateSelectedEmails={onUpdateSelectedEmails}
+                readButtonToShow={readButtonToShow}
             />
         </div>
     )
 }
 
-function EmailListTopbarActions({ state, onDeleteClick, onMarkUnreadClick }) {
+function EmailListTopbarActions({
+    state,
+    onDeleteClick,
+    onUpdateSelectedEmails,
+    readButtonToShow,
+}) {
+    async function onReadOrUnreadClick() {
+        onUpdateSelectedEmails({ isRead: readButtonToShow })
+    }
+
     if (state == 'none') {
         // TODO
         return <div></div>
@@ -32,7 +43,10 @@ function EmailListTopbarActions({ state, onDeleteClick, onMarkUnreadClick }) {
         return (
             <div className="email-list-topbar-actions">
                 <SmallActionButton type="delete" onClick={onDeleteClick} />
-                <SmallActionButton type="unread" onClick={onMarkUnreadClick} />
+                <SmallActionButton
+                    type={readButtonToShow ? 'read' : 'unread'}
+                    onClick={onReadOrUnreadClick}
+                />
             </div>
         )
     }
