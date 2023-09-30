@@ -1,6 +1,7 @@
-import { SmallActionButton } from './SmallActionButton'
+import { SmallActionButton } from '../SmallActionButton'
+import { EmailLabelList } from './EmailLabelList'
 
-export function EmailLabels({ labels, onCreateClick }) {
+export function EmailLabelIndex({ labels, onCreateClick }) {
     return (
         <div className="email-labels">
             <div className="email-labels-title">Labels</div>
@@ -9,11 +10,7 @@ export function EmailLabels({ labels, onCreateClick }) {
                 className="email-labels-create-btn-container"
                 onClick={onCreateClick}
             />
-            <div className="email-labels-list">
-                {labels.map((label) => (
-                    <div key={label.id}>{label.name}</div>
-                ))}
-            </div>
+            <EmailLabelList labels={labels} />
         </div>
     )
 }

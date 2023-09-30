@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { SmallActionButton } from './SmallActionButton'
+import { SmallActionButton } from '../SmallActionButton'
 
 // Dialog for creating an email label
 export function EmailLabelCreate({ onCloseClick, onSave }) {

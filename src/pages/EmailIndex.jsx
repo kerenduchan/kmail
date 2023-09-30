@@ -5,7 +5,8 @@ import { EmailCompose } from './EmailCompose'
 import { EmailFilter } from '../cmps/EmailFilter'
 import { EmailList } from '../cmps/EmailList'
 import { EmailFolders } from '../cmps/EmailFolders'
-import { EmailLabels } from '../cmps/EmailLabels'
+import { EmailLabelIndex } from '../cmps/email-label/EmailLabelIndex'
+import { EmailLabelCreate } from '../cmps/email-label/EmailLabelCreate'
 import { Logo } from '../cmps/Logo'
 import { EmailComposeButton } from '../cmps/EmailComposeButton'
 import { SmallActionButton } from '../cmps/SmallActionButton'
@@ -19,7 +20,6 @@ import {
     showSuccessMsg,
 } from '../services/event-bus.service'
 import { labelService } from '../services/label.service'
-import { EmailLabelCreate } from '../cmps/EmailLabelCreate'
 
 export function EmailIndex() {
     const [emailsData, setEmailsData] = useState(null)
@@ -323,7 +323,7 @@ export function EmailIndex() {
                 emailCounts={emailCounts}
                 onClose={onEmailFoldersClose}
             />
-            <EmailLabels
+            <EmailLabelIndex
                 labels={labels}
                 onCreateClick={() => onShowCreateLabelDialog()}
             />
