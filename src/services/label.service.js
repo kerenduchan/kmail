@@ -12,5 +12,5 @@ async function getAllLabels() {
 }
 
 async function createLabel(name) {
-    return post(STORAGE_KEY, { name })
+    return storageService.post(STORAGE_KEY, { name })
 }

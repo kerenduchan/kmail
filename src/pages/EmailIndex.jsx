@@ -225,6 +225,22 @@ export function EmailIndex() {
         updateManyEmails(selectedEmailIds, fieldsToUpdate, msg)
     }
 
+    async function onCreateLabel(name) {
+        await labelService.createLabel(name)
+        setShowCreateLabelDialog(false)
+        await loadLabels()
+        showSuccessMsg(`Label '${name}' was created.`)
+    }
+
+    function onHideCreateLabelDialog() {
+        setShowCreateLabelDialog(false)
+    }
+
+    function onShowCreateLabelDialog() {
+        hideUserMsg()
+        setShowCreateLabelDialog(true)
+    }
+
     async function updateManyEmails(emailIds, fieldsToUpdate, msg) {
         const suffix = emailIds.length === 1 ? '' : 's'
 
@@ -309,7 +325,7 @@ export function EmailIndex() {
             />
             <EmailLabels
                 labels={labels}
-                onCreateClick={() => setShowCreateLabelDialog(true)}
+                onCreateClick={() => onShowCreateLabelDialog()}
             />
 
             <section className="email-index-main">
@@ -348,7 +364,8 @@ export function EmailIndex() {
             {/* Create label dialog */}
             {showCreateLabelDialog && (
                 <EmailLabelCreate
-                    onCloseClick={() => setShowCreateLabelDialog(false)}
+                    onCloseClick={onHideCreateLabelDialog}
+                    onSave={onCreateLabel}
                 />
             )}
         </section>
