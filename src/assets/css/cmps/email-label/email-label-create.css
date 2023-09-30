@@ -1,0 +1,26 @@
+.email-label-create {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 400px;
+    height: 100px;
+}
+
+.email-label-create-form-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.email-label-create-form-field label {
+    margin-bottom: 4px;
+}
+
+.email-label-create-form-field input {
+    padding: 3px;
+    font-size: 14px;
+}
+
+.email-label-create-actions {
+    flex-grow: 0;
+    align-self: flex-end;
+}

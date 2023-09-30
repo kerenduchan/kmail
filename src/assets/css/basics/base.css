@@ -52,3 +52,17 @@ pre {
     white-space: -o-pre-wrap; /* Opera 7 */
     word-wrap: break-word; /* Internet Explorer 5.5+ */
 }
+
+.strong-action-btn {
+    height: 36px;
+    border-radius: 18px;
+    background-color: rgb(11, 87, 208);
+    color: white;
+    font-weight: 500;
+    padding: 0 20px;
+}
+
+.strong-action-btn:hover {
+    box-shadow: rgba(26, 115, 232, 0.45) 0px 1px 2px 0px,
+        rgba(26, 115, 232, 0.3) 0px 1px 3px 1px;
+}

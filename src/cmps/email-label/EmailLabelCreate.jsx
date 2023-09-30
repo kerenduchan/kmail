@@ -17,16 +17,31 @@ export function EmailLabelCreate({ onCloseClick, onSave }) {
 
     return (
         <Dialog title="New Label" onCloseClick={onCloseClick}>
-            <form onSubmit={onFormSubmit}>
-                <label htmlFor="label-name">New label name:</label>
-                <input
-                    autoFocus
-                    type="text"
-                    id="label-name"
-                    onChange={onNameChange}
-                    value={name}
-                />
-            </form>
+            <div className="email-label-create">
+                <form
+                    className="email-label-create-form"
+                    onSubmit={onFormSubmit}
+                >
+                    <div className="email-label-create-form-field">
+                        <label htmlFor="label-name">New label name:</label>
+                        <input
+                            autoFocus
+                            type="text"
+                            id="label-name"
+                            onChange={onNameChange}
+                            value={name}
+                        />
+                    </div>
+                </form>
+                <div className="email-label-create-actions">
+                    <button
+                        className="strong-action-btn"
+                        onClick={onFormSubmit}
+                    >
+                        Create
+                    </button>
+                </div>
+            </div>
         </Dialog>
     )
 }

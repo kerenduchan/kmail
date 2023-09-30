@@ -207,7 +207,7 @@ export function EmailCompose({ onCloseClick, onDeleteDraft }) {
                     <div className="email-compose-actions">
                         {/* Send */}
                         <button
-                            className="email-compose-action-send"
+                            className="strong-action-btn email-compose-action-send"
                             onClick={onSend}
                         >
                             Send
