@@ -25,6 +25,7 @@
 @import 'cmps/email-preview.css';
 
 /* general */
+@import 'cmps/dialog.css';
 @import 'cmps/logo.css';
 @import 'cmps/multi-selector.css';
 @import 'cmps/small-action-button.css';
