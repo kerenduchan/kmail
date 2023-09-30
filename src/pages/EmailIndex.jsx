@@ -345,7 +345,9 @@ export function EmailIndex() {
                         <EmailList
                             emailsData={{ ...emailsData, selectedEmailIds }}
                             onUpdateEmail={onUpdateEmail}
-                            onDeleteEmail={() => deleteEmailsByIds([email.id])}
+                            onDeleteEmail={(email) =>
+                                deleteEmailsByIds([email.id])
+                            }
                             onEmailClick={onEmailClick}
                             onEmailCheckboxClick={onEmailCheckboxClick}
                         />
