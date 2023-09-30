@@ -23,4 +23,6 @@
 .email-label-create-actions {
     flex-grow: 0;
     align-self: flex-end;
+    display: flex;
+    gap: 8px;
 }

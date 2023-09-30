@@ -66,3 +66,16 @@ pre {
     box-shadow: rgba(26, 115, 232, 0.45) 0px 1px 2px 0px,
         rgba(26, 115, 232, 0.3) 0px 1px 3px 1px;
 }
+
+.weak-action-btn {
+    background-color: transparent;
+    height: 36px;
+    border-radius: 18px;
+    color: rgb(68, 71, 70);
+    font-weight: 500;
+    padding: 0 20px;
+}
+
+.weak-action-btn:hover {
+    background-color: rgba(32, 33, 36, 0.06);
+}

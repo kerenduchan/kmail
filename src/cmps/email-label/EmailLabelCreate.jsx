@@ -34,6 +34,9 @@ export function EmailLabelCreate({ onCloseClick, onSave }) {
                     </div>
                 </form>
                 <div className="email-label-create-actions">
+                    <button className="weak-action-btn" onClick={onCloseClick}>
+                        Cancel
+                    </button>
                     <button
                         className="strong-action-btn"
                         onClick={onFormSubmit}
