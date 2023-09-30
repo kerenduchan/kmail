@@ -1,0 +1,8 @@
+.email-label-list {
+    grid-area: list;
+    padding-inline-start: 26px;
+}
+
+.email-label-list li {
+    list-style-type: none;
+}

@@ -3,13 +3,11 @@ import { EmailLabelList } from './EmailLabelList'
 
 export function EmailLabelIndex({ labels, onCreateClick }) {
     return (
-        <div className="email-labels">
-            <div className="email-labels-title">Labels</div>
-            <SmallActionButton
-                type="create"
-                className="email-labels-create-btn-container"
-                onClick={onCreateClick}
-            />
+        <div className="email-label-index">
+            <div className="email-label-index-title">Labels</div>
+            <div className="email-label-index-actions">
+                <SmallActionButton type="create" onClick={onCreateClick} />
+            </div>
             <EmailLabelList labels={labels} />
         </div>
     )

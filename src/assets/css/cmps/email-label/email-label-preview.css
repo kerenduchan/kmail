@@ -1,0 +1,28 @@
+.email-label-preview {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    grid-template-rows: 24px;
+    margin-inline-end: 16px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+}
+
+.email-label-preview:hover {
+    background-color: rgba(32, 33, 36, 0.06);
+}
+
+.email-label-preview.selected {
+    background-color: rgb(225, 227, 225);
+}
+
+.email-label-icon::before {
+    display: block;
+    content: ' ';
+    background-image: url(https://www.gstatic.com/images/icons/material/system_gm_filled/1x/label_gm_grey_24dp.png);
+    background-position: 50%;
+    background-size: contain;
+    height: 20px;
+    width: 20px;
+    margin-inline-end: 18px;
+}

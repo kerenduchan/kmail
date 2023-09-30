@@ -9,14 +9,22 @@
 @import 'pages/home.css';
 
 /* Components */
+
+/* email-label */
+@import 'cmps/email-label/email-label-create.css';
+@import 'cmps/email-label/email-label-index.css';
+@import 'cmps/email-label/email-label-list.css';
+@import 'cmps/email-label/email-label-preview.css';
+
+/* email */
 @import 'cmps/email-compose-button.css';
 @import 'cmps/email-filter.css';
 @import 'cmps/email-folders.css';
-@import 'cmps/email-label-create.css';
-@import 'cmps/email-labels.css';
 @import 'cmps/email-list-topbar.css';
 @import 'cmps/email-list.css';
 @import 'cmps/email-preview.css';
+
+/* general */
 @import 'cmps/logo.css';
 @import 'cmps/multi-selector.css';
 @import 'cmps/small-action-button.css';

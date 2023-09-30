@@ -1,4 +1,4 @@
-.email-labels {
+.email-label-index {
     grid-area: email-labels;
     margin-top: 28px;
     display: grid;
@@ -10,18 +10,14 @@
     align-items: center;
 }
 
-.email-labels-title {
+.email-label-index-title {
     grid-area: title;
     padding-inline-start: 26px;
     font-size: 16px;
     font-weight: 500;
 }
 
-.email-labels-create-btn-container {
+.email-label-index-actions {
     grid-area: create;
     padding-inline-end: 16px;
-}
-
-.email-labels-list {
-    grid-area: list;
 }
