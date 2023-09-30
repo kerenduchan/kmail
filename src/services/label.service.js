@@ -5,6 +5,7 @@ const STORAGE_KEY = 'labels'
 export const labelService = {
     getAllLabels,
     createLabel,
+    deleteLabel,
 }
 
 async function getAllLabels() {
@@ -13,4 +14,8 @@ async function getAllLabels() {
 
 async function createLabel(name) {
     return storageService.post(STORAGE_KEY, { name })
+}
+
+async function deleteLabel(id) {
+    return storageService.remove(STORAGE_KEY, id)
 }

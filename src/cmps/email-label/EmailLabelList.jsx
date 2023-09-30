@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { EmailLabelPreview } from './EmailLabelPreview'
 
-export function EmailLabelList({ labels }) {
+export function EmailLabelList({ labels, onDeleteLabel }) {
     const [selectedLabelId, setSelectedLabelId] = useState(null)
 
     function onLabelClick(labelId) {
@@ -16,6 +16,7 @@ export function EmailLabelList({ labels }) {
                         label={label}
                         isSelected={selectedLabelId === label.id}
                         onClick={() => onLabelClick(label.id)}
+                        onDeleteClick={() => onDeleteLabel(label)}
                     />
                 </li>
             ))}

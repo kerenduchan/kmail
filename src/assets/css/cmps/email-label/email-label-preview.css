@@ -1,6 +1,6 @@
 .email-label-preview {
     display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: auto 1fr auto;
     align-items: center;
     grid-template-rows: 24px;
     margin-inline-end: 16px;
@@ -25,4 +25,12 @@
     height: 20px;
     width: 20px;
     margin-inline-end: 18px;
+}
+
+.email-label-preview-actions {
+    display: none;
+}
+
+.email-label-preview:hover .email-label-preview-actions {
+    display: flex;
 }

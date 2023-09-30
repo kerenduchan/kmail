@@ -229,7 +229,13 @@ export function EmailIndex() {
         await labelService.createLabel(name)
         setShowCreateLabelDialog(false)
         await loadLabels()
-        showSuccessMsg(`Label '${name}' was created.`)
+        showSuccessMsg(`Label '${name}' created.`)
+    }
+
+    async function onDeleteLabel(label) {
+        await labelService.deleteLabel(label.id)
+        await loadLabels()
+        showSuccessMsg(`Label '${label.name}' deleted.`)
     }
 
     function onHideCreateLabelDialog() {
@@ -326,6 +332,7 @@ export function EmailIndex() {
             <EmailLabelIndex
                 labels={labels}
                 onCreateClick={() => onShowCreateLabelDialog()}
+                onDeleteLabel={onDeleteLabel}
             />
 
             <section className="email-index-main">

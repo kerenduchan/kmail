@@ -1,6 +1,7 @@
 export function SmallActionButton({ type, img, onClick, className }) {
     const types = {
         hamburger: 'imgs/hamburger-menu.svg',
+        edit: 'imgs/edit.svg',
     }
 
     return (
