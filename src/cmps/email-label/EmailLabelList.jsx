@@ -1,7 +1,11 @@
 import { useState } from 'react'
 import { EmailLabelPreview } from './EmailLabelPreview'
 
-export function EmailLabelList({ labels, onDeleteLabel }) {
+export function EmailLabelList({
+    labels,
+    onDeleteLabelClick,
+    onEditLabelClick,
+}) {
     const [selectedLabelId, setSelectedLabelId] = useState(null)
 
     function onLabelClick(labelId) {
@@ -16,7 +20,8 @@ export function EmailLabelList({ labels, onDeleteLabel }) {
                         label={label}
                         isSelected={selectedLabelId === label.id}
                         onClick={() => onLabelClick(label.id)}
-                        onDeleteClick={() => onDeleteLabel(label)}
+                        onEditClick={() => onEditLabelClick(label)}
+                        onDeleteClick={() => onDeleteLabelClick(label)}
                     />
                 </li>
             ))}

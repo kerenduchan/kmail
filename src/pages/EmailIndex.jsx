@@ -28,6 +28,7 @@ export function EmailIndex() {
         useState(false)
     const [emailCounts, setEmailCounts] = useState(null)
     const [labels, setLabels] = useState(null)
+    const [selectedLabel, setSelectedLabel] = useState(null)
     const [showCreateLabelDialog, setShowCreateLabelDialog] = useState(false)
     const [multiSelectorState, setMultiSelectorState] = useState('none')
     const params = useParams()
@@ -225,17 +226,29 @@ export function EmailIndex() {
         updateManyEmails(selectedEmailIds, fieldsToUpdate, msg)
     }
 
-    async function onCreateLabel(name) {
-        await labelService.createLabel(name)
+    async function onSaveLabelClick(label) {
+        if (label.id) {
+            await labelService.updateLabel(label)
+        } else {
+            await labelService.createLabel(label)
+        }
         setShowCreateLabelDialog(false)
         await loadLabels()
-        showSuccessMsg(`Label '${name}' created.`)
+        showSuccessMsg(
+            `Label '${label.name}' ` + (label.id ? 'updated.' : 'created.')
+        )
     }
 
-    async function onDeleteLabel(label) {
+    async function onDeleteLabelClick(label) {
         await labelService.deleteLabel(label.id)
         await loadLabels()
         showSuccessMsg(`Label '${label.name}' deleted.`)
+    }
+
+    async function onEditLabelClick(label) {
+        setSelectedLabel(label)
+        hideUserMsg()
+        setShowCreateLabelDialog(true)
     }
 
     function onHideCreateLabelDialog() {
@@ -332,7 +345,8 @@ export function EmailIndex() {
             <EmailLabelIndex
                 labels={labels}
                 onCreateClick={() => onShowCreateLabelDialog()}
-                onDeleteLabel={onDeleteLabel}
+                onDeleteLabelClick={onDeleteLabelClick}
+                onEditLabelClick={onEditLabelClick}
             />
 
             <section className="email-index-main">
@@ -373,8 +387,9 @@ export function EmailIndex() {
             {/* Create label dialog */}
             {showCreateLabelDialog && (
                 <EmailLabelCreate
+                    label={selectedLabel}
                     onCloseClick={onHideCreateLabelDialog}
-                    onSave={onCreateLabel}
+                    onSaveClick={onSaveLabelClick}
                 />
             )}
         </section>

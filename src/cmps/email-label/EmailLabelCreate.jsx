@@ -2,21 +2,24 @@ import { useState } from 'react'
 import { Dialog } from '../Dialog'
 
 // Dialog for creating an email label
-export function EmailLabelCreate({ onCloseClick, onSave }) {
+export function EmailLabelCreate({ label, onCloseClick, onSaveClick }) {
     // the about-to-be created label's name
-    const [name, setName] = useState('')
+    const [draft, setDraft] = useState(label || { name: '' })
 
     function onFormSubmit(ev) {
         ev.preventDefault()
-        onSave(name)
+        onSaveClick(draft)
     }
 
     function onNameChange(ev) {
-        setName(ev.target.value)
+        setDraft((prev) => ({ ...prev, name: ev.target.value }))
     }
 
     return (
-        <Dialog title="New Label" onCloseClick={onCloseClick}>
+        <Dialog
+            title={label ? 'Edit Label' : 'New Label'}
+            onCloseClick={onCloseClick}
+        >
             <div className="email-label-create">
                 <form
                     className="email-label-create-form"
@@ -29,7 +32,7 @@ export function EmailLabelCreate({ onCloseClick, onSave }) {
                             type="text"
                             id="label-name"
                             onChange={onNameChange}
-                            value={name}
+                            value={draft.name}
                         />
                     </div>
                 </form>
@@ -41,7 +44,7 @@ export function EmailLabelCreate({ onCloseClick, onSave }) {
                         className="strong-action-btn"
                         onClick={onFormSubmit}
                     >
-                        Create
+                        {label ? 'Save' : 'Create'}
                     </button>
                 </div>
             </div>
