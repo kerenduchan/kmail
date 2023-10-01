@@ -1,5 +1,5 @@
 .email-compose-button {
-    grid-area: email-compose-button;
+    grid-area: compose-button;
     margin: 8px;
     padding-inline-end: 20px;
     height: 40px;

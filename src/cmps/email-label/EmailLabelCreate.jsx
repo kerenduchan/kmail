@@ -26,7 +26,7 @@ export function EmailLabelCreate({ label, onCloseClick, onSaveClick }) {
                     onSubmit={onFormSubmit}
                 >
                     <div className="email-label-create-form-field">
-                        <label htmlFor="label-name">New label name:</label>
+                        <label htmlFor="label-name">Label name:</label>
                         <input
                             autoFocus
                             type="text"

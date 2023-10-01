@@ -232,7 +232,7 @@ export function EmailIndex() {
         } else {
             await labelService.createLabel(label)
         }
-        setShowCreateLabelDialog(false)
+        onHideCreateLabelDialog()
         await loadLabels()
         showSuccessMsg(
             `Label '${label.name}' ` + (label.id ? 'updated.' : 'created.')
@@ -253,6 +253,7 @@ export function EmailIndex() {
 
     function onHideCreateLabelDialog() {
         setShowCreateLabelDialog(false)
+        setSelectedLabel(null)
     }
 
     function onShowCreateLabelDialog() {
@@ -333,22 +334,33 @@ export function EmailIndex() {
                 onClick={onHamburgerMenuClick}
             />
             <Logo />
-            <EmailFilter filter={filter} onChange={onFilterChange} />
-            <EmailComposeButton onComposeClick={onComposeClick} />
-            <EmailFolders
-                className={showMenu ? 'visible' : ''}
-                activeFolder={params.folderId}
-                onFolderClick={onFolderClick}
-                emailCounts={emailCounts}
-                onClose={onEmailFoldersClose}
-            />
-            <EmailLabelIndex
-                labels={labels}
-                onCreateClick={() => onShowCreateLabelDialog()}
-                onDeleteLabelClick={onDeleteLabelClick}
-                onEditLabelClick={onEditLabelClick}
-            />
 
+            {/* Filter */}
+            <EmailFilter filter={filter} onChange={onFilterChange} />
+
+            {/* Sidebar (or menu on mobile) */}
+            <div
+                className={'email-sidebar-bg' + (showMenu ? ' visible' : '')}
+                onClick={onEmailFoldersClose}
+            >
+                <div className="email-sidebar">
+                    <EmailComposeButton onComposeClick={onComposeClick} />
+                    <EmailFolders
+                        activeFolder={params.folderId}
+                        onFolderClick={onFolderClick}
+                        emailCounts={emailCounts}
+                        onClose={onEmailFoldersClose}
+                    />
+                    <EmailLabelIndex
+                        labels={labels}
+                        onCreateClick={() => onShowCreateLabelDialog()}
+                        onDeleteLabelClick={onDeleteLabelClick}
+                        onEditLabelClick={onEditLabelClick}
+                    />
+                </div>
+            </div>
+
+            {/* Main section (email list or email details) */}
             <section className="email-index-main">
                 {params.emailId ? (
                     <Outlet />
@@ -376,6 +388,7 @@ export function EmailIndex() {
                     </>
                 )}
             </section>
+
             {/* Compose dialog */}
             {searchParams.get('compose') !== null && (
                 <EmailCompose

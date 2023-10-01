@@ -3,16 +3,15 @@
     background-color: #f6f8fc;
     display: grid;
     grid-template-areas:
-        'header               search'
-        'email-compose-button email-index-main'
-        'email-folders        email-index-main'
-        'email-labels         email-index-main';
+        'header         search'
+        'compose-button main'
+        'sidebar        main';
     grid-template-rows: auto auto auto 1fr;
     grid-template-columns: 256px 1fr;
 }
 
 .email-index-main {
-    grid-area: email-index-main;
+    grid-area: main;
     background-color: white;
     margin-bottom: 16px;
     margin-inline-end: 16px;
@@ -29,14 +28,19 @@
     display: none;
 }
 
+.email-sidebar {
+    grid-area: sidebar;
+    margin-inline-end: 10px;
+}
+
 /* Styling for small screens */
 @media only screen and (max-width: 600px) {
     .email-index {
         grid-template-areas:
-            'hamburger        header           email-compose-button'
-            'email-index-main email-index-main email-index-main    ';
-        grid-template-rows: auto 1fr auto;
-        grid-template-columns: 50px 1fr auto;
+            'hamburger header'
+            'main      main';
+        grid-template-rows: auto 1fr;
+        grid-template-columns: 50px 1fr;
     }
 
     .email-index-main {
@@ -49,5 +53,26 @@
         grid-area: 1 / 1 / span 1 / span 1;
         align-self: center;
         justify-self: center;
+    }
+
+    .email-sidebar-bg {
+        position: fixed;
+        height: 100%;
+        width: 100%;
+        z-index: 20;
+        background-color: rgba(0, 0, 0, 0.2);
+        display: none;
+    }
+
+    .email-sidebar-bg.visible {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .email-sidebar {
+        flex-grow: 1;
+        width: 80%;
+        height: 100%;
+        background-color: rgb(236, 236, 236);
     }
 }

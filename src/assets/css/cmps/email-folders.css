@@ -1,9 +1,4 @@
 .email-folders {
-    grid-area: email-folders;
-    margin-inline-end: 10px;
-}
-
-.email-folders-contents {
     display: flex;
     flex-direction: column;
 }
@@ -110,27 +105,6 @@
 
 /* Styling for small screens */
 @media only screen and (max-width: 600px) {
-    .email-folders {
-        position: fixed;
-        height: 100%;
-        width: 100%;
-        z-index: 20;
-        background-color: rgba(0, 0, 0, 0.2);
-        display: none;
-    }
-
-    .email-folders.visible {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .email-folders-contents {
-        flex-grow: 1;
-        width: 80%;
-        height: 100%;
-        background-color: rgb(236, 236, 236);
-    }
-
     .email-folder {
         padding-top: 10px;
         padding-bottom: 10px;
