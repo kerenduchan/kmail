@@ -15,6 +15,7 @@ export const emailService = {
     getLoggedInUser,
     generateEmails,
     getEmailCountsPerFolder,
+    updateLabelsForEmails,
 }
 
 const loggedinUser = {
@@ -138,6 +139,28 @@ function save(email) {
 
 async function updateMany(emails) {
     return storageService.putMany(STORAGE_KEY, emails)
+}
+
+// add/remove the given label IDs to/from the given emails
+// label IDs is a map object: key is labelId, value is true (add label)
+// or false (remove label)
+async function updateLabelsForEmails(emails, labelIds) {
+    let emailsToUpdate = null
+    Object.keys(labelIds).forEach((labelId) => {
+        if (labelIds[labelId] === false) {
+            // remove the label from all emails
+            emailsToUpdate = emails.map((e) => ({
+                ...e,
+                labelIds: e.labelIds.filter((lId) => lId != labelId),
+            }))
+        } else {
+            // add the label to any emails that don't already have it
+            emailsToUpdate = emails
+                .filter((e) => !e.labelIds.includes(labelId))
+                .map((e) => ({ ...e, labelIds: e.labelIds.concat(labelId) }))
+        }
+    })
+    return emailService.updateMany(emailsToUpdate)
 }
 
 function createEmail() {

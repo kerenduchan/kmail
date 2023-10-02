@@ -300,8 +300,10 @@ export function EmailIndex() {
         }
     }
 
+    // add/remove the given label IDs to/from the given emails
     async function updateLabelsForEmails(emails, labelIds) {
-        console.log('updateLabelsForEmails', emails, labelIds)
+        await emailService.updateLabelsForEmails(emails, labelIds)
+        loadEmails()
     }
 
     // Delete all the given emails or drafts
