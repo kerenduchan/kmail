@@ -54,9 +54,6 @@ export function EmailIndex() {
     // IDs of all selected emails
     const [selectedEmailIds, setSelectedEmailIds] = useState([])
 
-    // Toggle for showing/hiding the apply labels dialog in the top bar
-    const [isLabelMenuVisible, setIsLabelMenuVisible] = useState(false)
-
     /* For the label create/edit dialog ======================================*/
 
     // All the labels
@@ -326,7 +323,7 @@ export function EmailIndex() {
     }
 
     // Update all the given emails
-    async function updateEmails(emails, close = false) {
+    async function updateEmails(emails) {
         hideUserMsg()
         try {
             await emailService.updateMany(emails)
@@ -337,9 +334,6 @@ export function EmailIndex() {
                 `Failed to update email${emailIds.length === 1 ? '' : 's'}`,
                 err
             )
-        }
-        if (close) {
-            setIsLabelMenuVisible(false)
         }
     }
 
@@ -387,11 +381,6 @@ export function EmailIndex() {
         return emailsData.emails.filter((e) => emailIds.includes(e.id))
     }
 
-    // Show/hide the apply label menu in the top bar
-    function toggleShowLabelMenu() {
-        setIsLabelMenuVisible((prev) => !prev)
-    }
-
     /* JSX ===================================================================*/
 
     if (!emailsData || !emailCounts) return <div>Loading..</div>
@@ -434,7 +423,6 @@ export function EmailIndex() {
                         onCreateClick={() => onShowCreateLabelDialog()}
                         onDeleteLabelClick={onDeleteLabelClick}
                         onEditLabelClick={onEditLabelClick}
-                        isLabelMenuVisible={isLabelMenuVisible}
                     />
                 </div>
             </div>
@@ -454,8 +442,6 @@ export function EmailIndex() {
                             onUpdateSelectedEmails={onUpdateSelectedEmails}
                             labels={labels}
                             updateEmails={updateEmails}
-                            isLabelMenuVisible={isLabelMenuVisible}
-                            toggleShowLabelMenu={toggleShowLabelMenu}
                         />
 
                         {/* Email list */}

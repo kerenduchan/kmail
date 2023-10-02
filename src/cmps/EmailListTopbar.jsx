@@ -11,7 +11,6 @@ export function EmailListTopbar({
     onUpdateSelectedEmails,
     labels,
     updateEmails,
-    isLabelMenuVisible,
     toggleShowLabelMenu,
 }) {
     // Whether all the selected emals are read. Affects the read/unread button
@@ -20,6 +19,9 @@ export function EmailListTopbar({
     // Whether all the selected emals are starred.
     // Affects the star/unstar button
     const [areAllStarred, setAreAllStarred] = useState(false)
+
+    // Toggle for showing/hiding the apply labels dialog
+    const [showLabelMenu, setShowLabelMenu] = useState(false)
 
     // the state of the email multi-selector in the top bar (none, some, all)
     const [multiSelectorState, setMultiSelectorState] = useState('none')
@@ -73,6 +75,11 @@ export function EmailListTopbar({
         return emails.filter((e) => selectedEmailIds.includes(e.id))
     }
 
+    // Show/hide the apply label menu in the top bar
+    function toggleShowLabelMenu() {
+        setShowLabelMenu((prev) => !prev)
+    }
+
     return (
         <div className="email-list-topbar">
             {/* Checkbox */}
@@ -103,7 +110,7 @@ export function EmailListTopbar({
 
                     {/* Apply Labels */}
                     <EmailLabelApplyMenu
-                        show={isLabelMenuVisible}
+                        show={showLabelMenu}
                         emails={getSelectedEmails()}
                         labels={labels}
                         updateEmails={updateEmails}
