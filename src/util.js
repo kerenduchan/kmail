@@ -141,9 +141,7 @@ function getAllFolderIds() {
 }
 
 function getFolderNameById(folderId) {
-    console.log(folderId)
     const found = folders.filter((f) => f.id === folderId)
-
     return found.length ? found[0].name : null
 }
 
