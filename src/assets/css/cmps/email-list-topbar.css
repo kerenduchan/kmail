@@ -3,13 +3,14 @@
     height: 48px;
     display: flex;
     align-items: center;
+    gap: 16px;
 }
 
 .email-list-topbar-actions {
     display: grid;
     padding: 0 10px;
     grid-auto-flow: column;
-    column-gap: 10px;
+    column-gap: 16px;
 }
 
 /* Styling for small screens */
