@@ -228,6 +228,9 @@ export function EmailIndex() {
 
     // Handle a click on the delete label button for the given label
     async function onDeleteLabelClick(label) {
+        await emailService.removeLabelFromAllEmails(label.id)
+        await loadEmails()
+        // delete the label from the list of labels
         await labelService.deleteLabel(label.id)
         await loadLabels()
         showSuccessMsg(`Label '${label.name}' deleted.`)

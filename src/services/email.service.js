@@ -16,6 +16,7 @@ export const emailService = {
     generateEmails,
     getEmailCountsPerFolder,
     updateLabelsForEmails,
+    removeLabelFromAllEmails,
 }
 
 const loggedinUser = {
@@ -161,6 +162,16 @@ async function updateLabelsForEmails(emails, labelIds) {
         }
     })
     return emailService.updateMany(emailsToUpdate)
+}
+
+// Remove the given label ID from all emails. Needs to be done as part of
+// deleting a label.
+async function removeLabelFromAllEmails(labelId) {
+    const allEmails = await emailService.query()
+    allEmails.forEach(
+        (e) => (e.labelIds = e.labelIds.filter((lId) => lId !== labelId))
+    )
+    return updateMany(allEmails)
 }
 
 function createEmail() {
