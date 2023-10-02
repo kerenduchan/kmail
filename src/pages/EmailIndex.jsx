@@ -70,7 +70,6 @@ export function EmailIndex() {
 
     function onFolderClick(folder) {
         hideUserMsg()
-        setSelectedEmailIds([])
         // go to the clicked folder, while retaining only the compose part
         // of the search params
         const navigateArgs = {
@@ -146,6 +145,7 @@ export function EmailIndex() {
                 folder: filter.folder,
             })
             setEmailCounts(emailCounts)
+            setSelectedEmailIds([])
         } catch (err) {
             showErrorMsg('Error loading emails' + err)
         }
@@ -207,7 +207,6 @@ export function EmailIndex() {
 
     async function onDeleteSelectedEmailsClick() {
         await deleteEmailsByIds(selectedEmailIds)
-        setSelectedEmailIds([])
     }
 
     async function onUpdateSelectedEmails(field, value) {
