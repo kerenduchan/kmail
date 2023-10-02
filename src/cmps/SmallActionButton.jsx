@@ -12,7 +12,7 @@ export function SmallActionButton({ type, img, onClick, className }) {
             }`}
             onClick={onClick}
         >
-            <img className={'icon-' + type} src={img ? img : types[type]} />
+            <img className={`icon-${type}`} src={img ? img : types[type]} />
         </button>
     )
 }
