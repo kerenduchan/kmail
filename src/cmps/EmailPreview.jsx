@@ -37,6 +37,7 @@ export function EmailPreview({
                 type={email.isStarred ? 'starred' : 'unstarred'}
                 className="email-preview-star"
                 onClick={() => onToggleField('isStarred')}
+                title={email.isStarred ? 'Starred' : 'Not starred'}
             />
             {/* Link to email details */}
             <div
