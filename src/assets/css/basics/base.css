@@ -79,3 +79,15 @@ pre {
 .weak-action-btn:hover {
     background-color: rgba(32, 33, 36, 0.06);
 }
+
+.icon-button-delete img {
+    content: url(https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/delete_baseline_nv700_20dp.png);
+}
+
+img.icon-label {
+    content: url(https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/label_baseline_nv700_20dp.png);
+}
+
+img.icon-unchecked {
+    content: url(//ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/check_box_outline_blank_baseline_nv700_20dp.png);
+}
