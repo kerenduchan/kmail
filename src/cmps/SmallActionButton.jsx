@@ -1,6 +1,4 @@
-import { Tooltip } from '@mui/material'
-
-export function SmallActionButton({ type, onClick, className, title }) {
+export function SmallActionButton({ type, onClick, className }) {
     const types = {
         hamburger: 'imgs/hamburger-menu.svg',
         edit: 'imgs/edit.svg',
@@ -35,16 +33,14 @@ export function SmallActionButton({ type, onClick, className, title }) {
     }
 
     return (
-        <Tooltip title={title || getTitleByType(type)}>
-            <button
-                type="button"
-                className={`small-action-btn small-action-btn-${type} ${
-                    className ? ` ${className}` : ''
-                }`}
-                onClick={onClick}
-            >
-                <img className={`icon-${type}`} src={types[type]} />
-            </button>
-        </Tooltip>
+        <button
+            type="button"
+            className={`small-action-btn small-action-btn-${type} ${
+                className ? ` ${className}` : ''
+            }`}
+            onClick={onClick}
+        >
+            <img className={`icon-${type}`} src={types[type]} />
+        </button>
     )
 }
