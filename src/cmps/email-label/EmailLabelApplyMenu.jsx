@@ -3,38 +3,21 @@ import { MultiSelector } from '../MultiSelector'
 import { SmallActionButton } from '../SmallActionButton'
 
 export default function EmailLabelApplyMenu({
-    show,
     labels,
     emails,
-    updateEmails,
-    toggleShowLabelMenu,
+    updateLabelsForEmails,
 }) {
-    function onToggleLabel(labelId, close = false) {
-        const state = getLabelState(labelId)
-        let emailsToUpdate = null
-        if (state == 'none') {
-            // Add label to all emails
-            emailsToUpdate = emails.map((e) => ({
-                ...e,
-                labelIds: e.labelIds.concat(labelId),
-            }))
-        } else if (state == 'all') {
-            // Remove label from all emails
-            emailsToUpdate = emails.map((e) => ({
-                ...e,
-                labelIds: e.labelIds.filter((l) => l.id !== labelId),
-            }))
-        } else {
-            // state is 'some'. Add label to all emails that don't already have
-            // it
-            emailsToUpdate = emails
-                .filter((e) => !e.labelIds.includes(labelId))
-                .map((e) => ({
-                    ...e,
-                    labelIds: e.labelIds.concat(labelId),
-                }))
+    // Toggle for showing/hiding the apply labels menu
+    const [show, setShow] = useState(false)
+
+    async function onToggleLabel(labelId, close = false) {
+        // add label if it is applied to none/some, remove label if it is
+        // applied to all
+        const isAddLabel = getLabelState(labelId) != 'all'
+        await updateLabelsForEmails(emails, { [labelId]: isAddLabel })
+        if (close) {
+            setShow(false)
         }
-        updateEmails(emailsToUpdate)
     }
 
     function getLabelState(labelId) {
@@ -47,9 +30,14 @@ export default function EmailLabelApplyMenu({
         return 'none'
     }
 
+    // Show/hide the apply label menu in the top bar
+    function toggleShow() {
+        setShow((prev) => !prev)
+    }
+
     return (
         <div>
-            <SmallActionButton type="label" onClick={toggleShowLabelMenu} />
+            <SmallActionButton type="label" onClick={toggleShow} />
 
             <div className={`email-label-apply-menu${show ? ' visible' : ''}`}>
                 <div className="email-label-apply-menu-title">Label as:</div>

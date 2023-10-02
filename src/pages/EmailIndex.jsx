@@ -300,6 +300,10 @@ export function EmailIndex() {
         }
     }
 
+    async function updateLabelsForEmails(emails, labelIds) {
+        console.log('updateLabelsForEmails', emails, labelIds)
+    }
+
     // Delete all the given emails or drafts
     async function deleteEmailsByIds(emailIds) {
         const suffix = emailIds.length === 1 ? '' : 's'
@@ -405,6 +409,7 @@ export function EmailIndex() {
                             onMultiSelectorChange={onMultiSelectorChange}
                             onDeleteClick={onDeleteSelectedEmailsClick}
                             updateEmails={updateEmails}
+                            updateLabelsForEmails={updateLabelsForEmails}
                         />
 
                         {/* Email list */}
