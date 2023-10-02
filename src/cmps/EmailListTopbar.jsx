@@ -6,12 +6,11 @@ import EmailLabelApplyMenu from './email-label/EmailLabelApplyMenu'
 export function EmailListTopbar({
     emails,
     selectedEmailIds,
+    labels,
     onMultiSelectorChange,
     onDeleteClick,
     onUpdateSelectedEmails,
-    labels,
     updateEmails,
-    toggleShowLabelMenu,
 }) {
     // Whether all the selected emals are read. Affects the read/unread button
     const [areAllRead, setAreAllRead] = useState(false)

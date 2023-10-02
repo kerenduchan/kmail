@@ -437,10 +437,10 @@ export function EmailIndex() {
                         <EmailListTopbar
                             emails={emailsData.emails}
                             selectedEmailIds={selectedEmailIds}
+                            labels={labels}
                             onMultiSelectorChange={onMultiSelectorChange}
                             onDeleteClick={onDeleteSelectedEmailsClick}
                             onUpdateSelectedEmails={onUpdateSelectedEmails}
-                            labels={labels}
                             updateEmails={updateEmails}
                         />
 
