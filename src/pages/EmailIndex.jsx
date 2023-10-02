@@ -210,7 +210,7 @@ export function EmailIndex() {
         setSelectedEmailIds([])
     }
 
-    async function onUpdateSelectedEmails(fieldsToUpdate) {
+    async function onUpdateSelectedEmails(field, value) {
         let msg = ''
         if (selectedEmailIds.length === 1) {
             msg = emailsData.folder == 'drafts' ? 'Draft' : 'Email'
@@ -219,15 +219,12 @@ export function EmailIndex() {
                 `${selectedEmailIds.length} ` +
                 (emailsData.folder == 'drafts' ? 'drafts' : 'emails')
         }
-        if (fieldsToUpdate.isRead !== undefined) {
-            msg +=
-                ' marked as ' +
-                (fieldsToUpdate.isRead ? 'read' : 'unread') +
-                '.'
-        } else if (fieldsToUpdate.isStarred !== undefined) {
-            msg += ` ${fieldsToUpdate.isStarred ? 'starred' : 'unstarred'}.`
+        if (field == 'isRead') {
+            msg += ' marked as ' + (value ? 'read' : 'unread') + '.'
+        } else if (field == 'isStarred') {
+            msg += ` ${value ? 'starred' : 'unstarred'}.`
         }
-        updateManyEmails(selectedEmailIds, fieldsToUpdate, msg)
+        updateManyEmails(selectedEmailIds, field, value, msg)
     }
 
     async function onSaveLabelClick(label) {
@@ -265,19 +262,19 @@ export function EmailIndex() {
         setShowCreateLabelDialog(true)
     }
 
-    async function updateManyEmails(emailIds, fieldsToUpdate, msg) {
-        const suffix = emailIds.length === 1 ? '' : 's'
-
-        let emails = getEmailsByIds(emailIds)
-        emails = emails.map((e) => ({ ...e, ...fieldsToUpdate }))
-
+    async function updateManyEmails(emailIds, field, value, msg) {
+        const emails = getEmailsByIds(emailIds)
+        emails.forEach((e) => (e[field] = value))
         hideUserMsg()
         try {
             await emailService.updateMany(emails)
             showSuccessMsg(msg)
             await loadEmails()
         } catch (err) {
-            showErrorMsg(`Failed to update email${suffix}`, err)
+            showErrorMsg(
+                `Failed to update email${emailIds.length === 1 ? '' : 's'}`,
+                err
+            )
         }
     }
 

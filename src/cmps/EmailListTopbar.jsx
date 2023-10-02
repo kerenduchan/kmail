@@ -10,11 +10,11 @@ export function EmailListTopbar({
     starredButtonToShow,
 }) {
     async function onReadOrUnreadClick() {
-        onUpdateSelectedEmails({ isRead: readButtonToShow })
+        onUpdateSelectedEmails('isRead', readButtonToShow)
     }
 
     async function onStarredOrUnstarredClick() {
-        onUpdateSelectedEmails({ isStarred: starredButtonToShow })
+        onUpdateSelectedEmails('isStarred', starredButtonToShow)
     }
 
     function onCheckboxClick() {
