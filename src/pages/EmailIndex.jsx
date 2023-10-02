@@ -41,7 +41,7 @@ export function EmailIndex() {
     const [emailsData, setEmailsData] = useState(null)
 
     // Show/hide the sidebar (for mobile only)
-    const [showMenu, setShowMenu] = useState(false)
+    const [showSidebar, setShowSidebar] = useState(false)
 
     /* For the sidebar =======================================================*/
 
@@ -216,12 +216,12 @@ export function EmailIndex() {
 
     // Handle the hamburger menu being clicked (mobile only)
     function onHamburgerMenuClick() {
-        setShowMenu((prev) => !prev)
+        setShowSidebar((prev) => !prev)
     }
 
-    // Close the sidebar (mobile only)
-    function onEmailFoldersClose() {
-        setShowMenu(false)
+    // Hide the sidebar (mobile only)
+    function onHideSidebar() {
+        setShowSidebar(false)
     }
 
     // Handle a state change in the email multi-selector in the top bar
@@ -447,8 +447,8 @@ export function EmailIndex() {
 
             {/* Sidebar */}
             <div
-                className={'email-sidebar-bg' + (showMenu ? ' visible' : '')}
-                onClick={onEmailFoldersClose}
+                className={'email-sidebar-bg' + (showSidebar ? ' visible' : '')}
+                onClick={onHideSidebar}
             >
                 <div className="email-sidebar">
                     {/* Compose button */}
@@ -459,7 +459,7 @@ export function EmailIndex() {
                         activeFolder={params.folderId}
                         onFolderClick={onFolderClick}
                         emailCounts={emailCounts}
-                        onClose={onEmailFoldersClose}
+                        onClose={onHideSidebar}
                     />
 
                     {/* Labels */}
