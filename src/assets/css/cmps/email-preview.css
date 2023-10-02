@@ -49,6 +49,7 @@
 .email-preview:hover .email-preview-actions {
     grid-area: 1 / 5 / span 1 / span 1;
     display: flex;
+    gap: 16px;
 }
 
 .email-preview:hover .email-preview-sent-at {

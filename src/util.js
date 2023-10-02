@@ -5,6 +5,7 @@ export {
     strToNullableBool,
     getAllFolders,
     getAllFolderIds,
+    getFolderNameById,
     getContainingFolder,
     getEmailFilterFromParams,
     sanitizeFilter,
@@ -137,6 +138,13 @@ function getAllFolders() {
 
 function getAllFolderIds() {
     return folders.map((f) => f.id)
+}
+
+function getFolderNameById(folderId) {
+    console.log(folderId)
+    const found = folders.filter((f) => f.id === folderId)
+
+    return found.length ? found[0].name : null
 }
 
 function getContainingFolder(path) {

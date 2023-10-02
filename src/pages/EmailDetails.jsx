@@ -1,7 +1,11 @@
 import { useState, useEffect, useRef } from 'react'
 import { useParams, useNavigate, useLocation } from 'react-router'
 
-import { formatDateVerbose, getContainingFolder } from '../util'
+import {
+    formatDateVerbose,
+    getFolderNameById,
+    getContainingFolder,
+} from '../util'
 import { SmallActionButton } from '../cmps/SmallActionButton'
 
 // services
@@ -102,7 +106,11 @@ export function EmailDetails() {
             {/* Actions */}
             <section className="email-details-actions">
                 {/* Back */}
-                <SmallActionButton type="back" onClick={navigateUp} />
+                <SmallActionButton
+                    type="back"
+                    onClick={navigateUp}
+                    title={`Back to ${getFolderNameById(params.folderId)}`}
+                />
 
                 {/* Delete */}
                 <SmallActionButton type="delete" onClick={onDeleteEmail} />

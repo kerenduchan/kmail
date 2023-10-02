@@ -11,7 +11,11 @@ export function EmailLabelIndex({
         <div className="email-label-index">
             <div className="email-label-index-title">Labels</div>
             <div className="email-label-index-actions">
-                <SmallActionButton type="create" onClick={onCreateClick} />
+                <SmallActionButton
+                    type="create"
+                    onClick={onCreateClick}
+                    title="Create new label"
+                />
             </div>
             <EmailLabelList
                 labels={labels}
