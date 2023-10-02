@@ -80,6 +80,7 @@ export function EmailListTopbar({
                 state={multiSelectorState}
                 onClick={onCheckboxClick}
             />
+
             {/* Actions */}
             {multiSelectorState == 'none' ? (
                 <div></div>
@@ -87,16 +88,19 @@ export function EmailListTopbar({
                 <div className="email-list-topbar-actions">
                     {/* Delete */}
                     <SmallActionButton type="delete" onClick={onDeleteClick} />
+
                     {/* Mark as uread/unread */}
                     <SmallActionButton
                         type={areAllRead ? 'unread' : 'read'}
                         onClick={onReadOrUnreadClick}
                     />
+
                     {/* Mark as starred/unstarred */}
                     <SmallActionButton
                         type={areAllStarred ? 'unstarred' : 'starred'}
                         onClick={onStarOrUnstarClick}
                     />
+
                     {/* Apply Labels */}
                     <EmailLabelApplyMenu
                         show={isLabelMenuVisible}
