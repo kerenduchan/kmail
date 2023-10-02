@@ -57,11 +57,12 @@ export function EmailPreview({
 
             {/* Labels */}
             <div className="email-preview-labels">
-                {email.labelIds.map((labelId) => (
-                    <div className="email-preview-label">
-                        {getLabelNameById(labelId)}
-                    </div>
-                ))}
+                {email.labelIds
+                    .map((labelId) => getLabelNameById(labelId))
+                    .sort()
+                    .map((labelName) => (
+                        <div className="email-preview-label">{labelName}</div>
+                    ))}
             </div>
 
             {/* First Column (From/To/Draft) */}
