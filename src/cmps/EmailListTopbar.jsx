@@ -7,9 +7,9 @@ export function EmailListTopbar({
     emails,
     selectedEmailIds,
     labels,
+    folderId,
     onMultiSelectorChange,
     onDeleteClick,
-    onUpdateSelectedEmails,
     updateEmails,
 }) {
     // Whether all the selected emals are read. Affects the read/unread button
@@ -68,6 +68,30 @@ export function EmailListTopbar({
                 onMultiSelectorChange('all')
                 break
         }
+    }
+
+    // Handle a click on the read/starred buttons - update all
+    // the selected emails accordingly.
+    async function onUpdateSelectedEmails(field, value) {
+        let msg = ''
+        if (selectedEmailIds.length === 1) {
+            msg = folderId == 'drafts' ? 'Draft' : 'Email'
+        } else {
+            msg =
+                `${selectedEmailIds.length} ` +
+                (folderId == 'drafts' ? 'drafts' : 'emails')
+        }
+        if (field == 'isRead') {
+            msg += ' marked as ' + (value ? 'read' : 'unread') + '.'
+        } else if (field == 'isStarred') {
+            msg += ` ${value ? 'starred' : 'unstarred'}.`
+        }
+
+        const emailsToUpdate = getSelectedEmails().map((e) => ({
+            ...e,
+            [field]: value,
+        }))
+        updateEmails(emailsToUpdate, msg)
     }
 
     function getSelectedEmails() {

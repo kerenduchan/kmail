@@ -212,25 +212,6 @@ export function EmailIndex() {
         await deleteEmailsByIds(selectedEmailIds)
     }
 
-    // Handle a click on the read/starred buttons in the top bar - update all
-    // the selected emails accordingly.
-    async function onUpdateSelectedEmails(field, value) {
-        let msg = ''
-        if (selectedEmailIds.length === 1) {
-            msg = emailsData.folder == 'drafts' ? 'Draft' : 'Email'
-        } else {
-            msg =
-                `${selectedEmailIds.length} ` +
-                (emailsData.folder == 'drafts' ? 'drafts' : 'emails')
-        }
-        if (field == 'isRead') {
-            msg += ' marked as ' + (value ? 'read' : 'unread') + '.'
-        } else if (field == 'isStarred') {
-            msg += ` ${value ? 'starred' : 'unstarred'}.`
-        }
-        updateManyEmails(selectedEmailIds, field, value, msg)
-    }
-
     // Handle a click on the create/save button in the label create/edit dialog
     async function onSaveLabelClick(label) {
         if (label.id) {
@@ -304,11 +285,8 @@ export function EmailIndex() {
         }
     }
 
-    // Update all the given field on all emails with the given ids to the
-    // given value
-    async function updateManyEmails(emailIds, field, value, msg) {
-        const emails = getEmailsByIds(emailIds)
-        emails.forEach((e) => (e[field] = value))
+    // Update all the given emails
+    async function updateEmails(emails, msg) {
         hideUserMsg()
         try {
             await emailService.updateMany(emails)
@@ -316,22 +294,7 @@ export function EmailIndex() {
             await loadEmails()
         } catch (err) {
             showErrorMsg(
-                `Failed to update email${emailIds.length === 1 ? '' : 's'}`,
-                err
-            )
-        }
-    }
-
-    // Update all the given emails
-    async function updateEmails(emails) {
-        hideUserMsg()
-        try {
-            await emailService.updateMany(emails)
-            showSuccessMsg('sss')
-            await loadEmails()
-        } catch (err) {
-            showErrorMsg(
-                `Failed to update email${emailIds.length === 1 ? '' : 's'}`,
+                `Failed to update email${emails.length === 1 ? '' : 's'}`,
                 err
             )
         }
@@ -438,9 +401,9 @@ export function EmailIndex() {
                             emails={emailsData.emails}
                             selectedEmailIds={selectedEmailIds}
                             labels={labels}
+                            folderId={params.folderId}
                             onMultiSelectorChange={onMultiSelectorChange}
                             onDeleteClick={onDeleteSelectedEmailsClick}
-                            onUpdateSelectedEmails={onUpdateSelectedEmails}
                             updateEmails={updateEmails}
                         />
 
