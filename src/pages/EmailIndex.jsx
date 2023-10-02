@@ -228,9 +228,11 @@ export function EmailIndex() {
     function onMultiSelectorChange(state) {
         switch (state) {
             case 'none':
+                // deselect all emails
                 setSelectedEmailIds([])
                 break
             case 'all':
+                // select all emails
                 setSelectedEmailIds(emailsData.emails.map((e) => e.id))
                 break
         }
@@ -302,7 +304,7 @@ export function EmailIndex() {
     }
 
     // Load the emails from the email service, based on the filter
-    async function loadEmails(deselect = true) {
+    async function loadEmails() {
         try {
             let [emailCounts, emails] = await Promise.all([
                 emailService.getEmailCountsPerFolder(),
@@ -313,9 +315,12 @@ export function EmailIndex() {
                 folder: filter.folder,
             })
             setEmailCounts(emailCounts)
-            if (deselect) {
-                setSelectedEmailIds([])
-            }
+            // deselect any emails that have been filtered out
+            setSelectedEmailIds((prev) =>
+                prev.filter((emailId) =>
+                    emails.map((e) => e.id).includes(emailId)
+                )
+            )
         } catch (err) {
             showErrorMsg('Error loading emails' + err)
         }
@@ -355,7 +360,7 @@ export function EmailIndex() {
         try {
             await emailService.updateMany(emails)
             showSuccessMsg('sss')
-            await loadEmails(false)
+            await loadEmails()
         } catch (err) {
             showErrorMsg(
                 `Failed to update email${emailIds.length === 1 ? '' : 's'}`,
