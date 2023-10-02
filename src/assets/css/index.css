@@ -11,6 +11,7 @@
 /* Components */
 
 /* email-label */
+@import 'cmps/email-label/email-label-apply-menu.css';
 @import 'cmps/email-label/email-label-create.css';
 @import 'cmps/email-label/email-label-index.css';
 @import 'cmps/email-label/email-label-list.css';

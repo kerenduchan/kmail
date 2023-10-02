@@ -1,5 +1,6 @@
 import { MultiSelector } from './MultiSelector'
 import { SmallActionButton } from './SmallActionButton'
+import EmailLabelApplyMenu from './email-label/EmailLabelApplyMenu'
 
 export function EmailListTopbar({
     multiSelectorState,
@@ -8,6 +9,8 @@ export function EmailListTopbar({
     onUpdateSelectedEmails,
     readButtonToShow,
     starredButtonToShow,
+    selectedEmails,
+    labels,
 }) {
     async function onReadOrUnreadClick() {
         onUpdateSelectedEmails('isRead', readButtonToShow)
@@ -52,6 +55,11 @@ export function EmailListTopbar({
                     <SmallActionButton
                         type={starredButtonToShow ? 'starred' : 'unstarred'}
                         onClick={onStarredOrUnstarredClick}
+                    />
+                    {/* Apply Labels */}
+                    <EmailLabelApplyMenu
+                        emails={selectedEmails}
+                        labels={labels}
                     />
                 </div>
             )}

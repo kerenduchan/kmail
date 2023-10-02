@@ -378,6 +378,8 @@ export function EmailIndex() {
                             starredButtonToShow={
                                 !selectedEmailsInfo.areAllStarred
                             }
+                            selectedEmails={getEmailsByIds(selectedEmailIds)}
+                            labels={labels}
                         />
                         <EmailList
                             emailsData={{ ...emailsData, selectedEmailIds }}

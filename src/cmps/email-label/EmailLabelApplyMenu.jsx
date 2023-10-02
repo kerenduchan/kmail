@@ -1,16 +1,9 @@
-import { IconButton, Menu, MenuItem, Tooltip } from '@mui/material'
 import { useState } from 'react'
 import { MultiSelector } from '../MultiSelector'
+import { SmallActionButton } from '../SmallActionButton'
 
 export default function EmailLabelApplyMenu({ labels, emails, updateEmails }) {
-    const [anchorEl, setAnchorEl] = useState(null)
-    const open = Boolean(anchorEl)
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget)
-    }
-    const handleClose = () => {
-        setAnchorEl(null)
-    }
+    const [show, setShow] = useState(false)
 
     function onToggleLabel(labelId, close = false) {
         const state = getLabelState(labelId)
@@ -37,7 +30,7 @@ export default function EmailLabelApplyMenu({ labels, emails, updateEmails }) {
                     labelIds: e.labelIds.concat(labelId),
                 }))
         }
-        updateEmails(emailsToUpdate)
+        //updateEmails(emailsToUpdate)
 
         if (close) {
             handleClose()
@@ -56,30 +49,19 @@ export default function EmailLabelApplyMenu({ labels, emails, updateEmails }) {
 
     return (
         <div>
-            <Tooltip title="Label">
-                <IconButton
-                    aria-label="label"
-                    id="label-button"
-                    aria-controls={open ? 'label-menu' : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={open ? 'true' : undefined}
-                    onClick={handleClick}
-                >
-                    <img className="icon-label" />
-                </IconButton>
-            </Tooltip>
-            <Menu
-                id="label-menu"
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-                MenuListProps={{
-                    'aria-labelledby': 'label-button',
-                }}
-            >
+            <SmallActionButton
+                type="label"
+                onClick={() => setShow((prev) => !prev)}
+            />
+
+            <div className={`email-label-apply-menu${show ? ' visible' : ''}`}>
+                <div className="email-label-apply-menu-title">Label as:</div>
                 {labels.map((label) => {
                     return (
-                        <MenuItem key={label.id}>
+                        <div
+                            className="email-label-apply-menu-item"
+                            key={label.id}
+                        >
                             {/* Checkbox */}
                             <MultiSelector
                                 state={getLabelState(label.id)}
@@ -88,10 +70,10 @@ export default function EmailLabelApplyMenu({ labels, emails, updateEmails }) {
                             <div onClick={() => onToggleLabel(label.id, true)}>
                                 {label.name}
                             </div>
-                        </MenuItem>
+                        </div>
                     )
                 })}
-            </Menu>
+            </div>
         </div>
     )
 }
