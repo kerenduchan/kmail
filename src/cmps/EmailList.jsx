@@ -2,6 +2,7 @@ import { EmailPreview } from './EmailPreview'
 
 export function EmailList({
     emailsData,
+    labels,
     onUpdateEmail,
     onDeleteEmail,
     onEmailClick,
@@ -17,6 +18,7 @@ export function EmailList({
                         )}
                         folder={emailsData.folder}
                         email={email}
+                        labels={labels}
                         onUpdateEmail={onUpdateEmail}
                         onDeleteEmail={onDeleteEmail}
                         onEmailClick={onEmailClick}

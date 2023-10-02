@@ -4,6 +4,7 @@ import { SmallActionButton } from '../cmps/SmallActionButton'
 export function EmailPreview({
     isSelected,
     email,
+    labels,
     folder,
     onEmailClick,
     onUpdateEmail,
@@ -16,6 +17,14 @@ export function EmailPreview({
             [field]: !email[field],
         }
         onUpdateEmail(emailAfterUpdate)
+    }
+
+    function getLabelNameById(labelId) {
+        const found = labels.filter((l) => l.id === labelId)
+        if (found.length === 0) {
+            return null
+        }
+        return found[0].name
     }
 
     return (
@@ -32,6 +41,7 @@ export function EmailPreview({
                 className="email-preview-checkbox"
                 onClick={() => onEmailCheckboxClick(email.id, isSelected)}
             />
+
             {/* Star */}
             <SmallActionButton
                 type={email.isStarred ? 'starred' : 'unstarred'}
@@ -44,16 +54,29 @@ export function EmailPreview({
                 className="email-preview-link"
                 onClick={() => onEmailClick(email.id)}
             />
+
+            {/* Labels */}
+            <div className="email-preview-labels">
+                {email.labelIds.map((labelId) => (
+                    <div className="email-preview-label">
+                        {getLabelNameById(labelId)}
+                    </div>
+                ))}
+            </div>
+
             {/* First Column (From/To/Draft) */}
             <FirstColumn folder={folder} email={email} />
+
             {/* Subject */}
             <div className="email-preview-subject">
                 {email.subject || '(no subject)'}
             </div>
+
             {/* Sent at */}
             <div className="email-preview-sent-at">
                 {folder == 'drafts' ? '' : formatDateConcise(email.sentAt)}
             </div>
+
             {/* Actions */}
             <div className="email-preview-actions">
                 {/* Delete */}
@@ -61,6 +84,7 @@ export function EmailPreview({
                     type="delete"
                     onClick={() => onDeleteEmail(email)}
                 />
+
                 {/* Mark as read/unread */}
                 <SmallActionButton
                     type={email.isRead ? 'unread' : 'read'}
