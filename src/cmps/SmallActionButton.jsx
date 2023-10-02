@@ -5,19 +5,16 @@ export function SmallActionButton({ type, img, onClick, className }) {
     }
 
     return (
-        <div
+        <button
+            type="button"
             className={
-                'small-action-btn-container' +
+                'small-action-btn small-action-btn-' +
+                type +
                 (className ? ` ${className}` : '')
             }
+            onClick={onClick}
         >
-            <button
-                type="button"
-                className={'small-action-btn'}
-                onClick={onClick}
-            >
-                <img className={'icon-' + type} src={img ? img : types[type]} />
-            </button>
-        </div>
+            <img className={'icon-' + type} src={img ? img : types[type]} />
+        </button>
     )
 }
