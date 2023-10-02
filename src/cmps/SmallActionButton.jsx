@@ -13,10 +13,10 @@ export function SmallActionButton({ type, img, onClick, className }) {
         >
             <button
                 type="button"
-                className={'small-action-btn small-action-btn-' + type}
+                className={'small-action-btn'}
                 onClick={onClick}
             >
-                <img src={img ? img : types[type]} />
+                <img className={'icon-' + type} src={img ? img : types[type]} />
             </button>
         </div>
     )

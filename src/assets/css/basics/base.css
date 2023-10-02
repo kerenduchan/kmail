@@ -80,14 +80,46 @@ pre {
     background-color: rgba(32, 33, 36, 0.06);
 }
 
-.icon-button-delete img {
+img.icon-delete {
     content: url(https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/delete_baseline_nv700_20dp.png);
 }
 
-img.icon-label {
-    content: url(https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/label_baseline_nv700_20dp.png);
+img.icon-unread {
+    content: url(https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/mail_baseline_nv700_20dp.png);
+}
+
+img.icon-read {
+    content: url(https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/drafts_baseline_nv700_20dp.png);
+}
+
+img.icon-unstarred {
+    content: url(https://www.gstatic.com/images/icons/material/system_gm/1x/star_border_black_20dp.png);
+}
+
+img.icon-starred {
+    content: url(https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/star_fill_googyellow500_20dp.png);
+}
+
+img.icon-back {
+    content: url(https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/arrow_back_baseline_nv700_20dp.png);
+}
+
+img.icon-checked {
+    content: url(//ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/check_box_baseline_nv700_20dp.png);
 }
 
 img.icon-unchecked {
     content: url(//ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/check_box_outline_blank_baseline_nv700_20dp.png);
+}
+
+img.icon-create {
+    content: url(https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/add_large_baseline_nv700_20dp.png);
+}
+
+img.icon-close {
+    content: url(https://www.gstatic.com/images/icons/material/system/1x/close_black_24dp.png);
+}
+
+img.icon-label {
+    content: url(https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/label_baseline_nv700_20dp.png);
 }
