@@ -11,6 +11,9 @@ export function EmailListTopbar({
     starredButtonToShow,
     selectedEmails,
     labels,
+    updateEmails,
+    isLabelMenuVisible,
+    toggleShowLabelMenu,
 }) {
     async function onReadOrUnreadClick() {
         onUpdateSelectedEmails('isRead', readButtonToShow)
@@ -58,8 +61,11 @@ export function EmailListTopbar({
                     />
                     {/* Apply Labels */}
                     <EmailLabelApplyMenu
+                        show={isLabelMenuVisible}
                         emails={selectedEmails}
                         labels={labels}
+                        updateEmails={updateEmails}
+                        toggleShowLabelMenu={toggleShowLabelMenu}
                     />
                 </div>
             )}

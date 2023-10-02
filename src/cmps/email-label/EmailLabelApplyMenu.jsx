@@ -2,9 +2,13 @@ import { useState } from 'react'
 import { MultiSelector } from '../MultiSelector'
 import { SmallActionButton } from '../SmallActionButton'
 
-export default function EmailLabelApplyMenu({ labels, emails, updateEmails }) {
-    const [show, setShow] = useState(false)
-
+export default function EmailLabelApplyMenu({
+    show,
+    labels,
+    emails,
+    updateEmails,
+    toggleShowLabelMenu,
+}) {
     function onToggleLabel(labelId, close = false) {
         const state = getLabelState(labelId)
         let emailsToUpdate = null
@@ -30,11 +34,7 @@ export default function EmailLabelApplyMenu({ labels, emails, updateEmails }) {
                     labelIds: e.labelIds.concat(labelId),
                 }))
         }
-        //updateEmails(emailsToUpdate)
-
-        if (close) {
-            handleClose()
-        }
+        updateEmails(emailsToUpdate)
     }
 
     function getLabelState(labelId) {
@@ -49,10 +49,7 @@ export default function EmailLabelApplyMenu({ labels, emails, updateEmails }) {
 
     return (
         <div>
-            <SmallActionButton
-                type="label"
-                onClick={() => setShow((prev) => !prev)}
-            />
+            <SmallActionButton type="label" onClick={toggleShowLabelMenu} />
 
             <div className={`email-label-apply-menu${show ? ' visible' : ''}`}>
                 <div className="email-label-apply-menu-title">Label as:</div>
@@ -65,7 +62,7 @@ export default function EmailLabelApplyMenu({ labels, emails, updateEmails }) {
                             {/* Checkbox */}
                             <MultiSelector
                                 state={getLabelState(label.id)}
-                                onChange={() => onToggleLabel(label.id)}
+                                onClick={() => onToggleLabel(label.id)}
                             />
                             <div onClick={() => onToggleLabel(label.id, true)}>
                                 {label.name}

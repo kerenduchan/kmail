@@ -33,6 +33,7 @@ export function EmailIndex() {
     const [selectedLabel, setSelectedLabel] = useState(null)
     const [showCreateLabelDialog, setShowCreateLabelDialog] = useState(false)
     const [multiSelectorState, setMultiSelectorState] = useState('none')
+    const [isLabelMenuVisible, setIsLabelMenuVisible] = useState(false)
     const params = useParams()
     const [searchParams, setSearchParams] = useSearchParams()
     const [filter, setFilter] = useState(null)
@@ -134,7 +135,7 @@ export function EmailIndex() {
         onEmailComposeCloseClick()
     }
 
-    async function loadEmails() {
+    async function loadEmails(deselect = true) {
         try {
             let [emailCounts, emails] = await Promise.all([
                 emailService.getEmailCountsPerFolder(),
@@ -145,7 +146,9 @@ export function EmailIndex() {
                 folder: filter.folder,
             })
             setEmailCounts(emailCounts)
-            setSelectedEmailIds([])
+            if (deselect) {
+                setSelectedEmailIds([])
+            }
         } catch (err) {
             showErrorMsg('Error loading emails' + err)
         }
@@ -277,6 +280,23 @@ export function EmailIndex() {
         }
     }
 
+    async function updateEmails(emails, close = false) {
+        hideUserMsg()
+        try {
+            await emailService.updateMany(emails)
+            showSuccessMsg('sss')
+            await loadEmails(false)
+        } catch (err) {
+            showErrorMsg(
+                `Failed to update email${emailIds.length === 1 ? '' : 's'}`,
+                err
+            )
+        }
+        if (close) {
+            setIsLabelMenuVisible(false)
+        }
+    }
+
     async function deleteEmailsByIds(emailIds) {
         const suffix = emailIds.length === 1 ? '' : 's'
 
@@ -327,6 +347,10 @@ export function EmailIndex() {
         })
     }
 
+    function toggleShowLabelMenu() {
+        setIsLabelMenuVisible((prev) => !prev)
+    }
+
     if (!emailsData || !emailCounts) return <div>Loading..</div>
 
     return (
@@ -359,6 +383,7 @@ export function EmailIndex() {
                         onCreateClick={() => onShowCreateLabelDialog()}
                         onDeleteLabelClick={onDeleteLabelClick}
                         onEditLabelClick={onEditLabelClick}
+                        isLabelMenuVisible={isLabelMenuVisible}
                     />
                 </div>
             </div>
@@ -380,6 +405,9 @@ export function EmailIndex() {
                             }
                             selectedEmails={getEmailsByIds(selectedEmailIds)}
                             labels={labels}
+                            updateEmails={updateEmails}
+                            isLabelMenuVisible={isLabelMenuVisible}
+                            toggleShowLabelMenu={toggleShowLabelMenu}
                         />
                         <EmailList
                             emailsData={{ ...emailsData, selectedEmailIds }}
