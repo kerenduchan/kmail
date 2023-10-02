@@ -58,10 +58,17 @@ export function EmailPreview({
             {/* Labels */}
             <div className="email-preview-labels">
                 {email.labelIds
-                    .map((labelId) => getLabelNameById(labelId))
-                    .sort()
-                    .map((labelName) => (
-                        <div className="email-preview-label">{labelName}</div>
+                    .map((labelId) => ({
+                        id: labelId,
+                        name: getLabelNameById(labelId),
+                    }))
+                    .sort((l1, l2) =>
+                        l1.name == l2.name ? 0 : l1.name < l2.name ? -1 : 1
+                    )
+                    .map((l) => (
+                        <div key={l.id} className="email-preview-label">
+                            {l.name}
+                        </div>
                     ))}
             </div>
 
