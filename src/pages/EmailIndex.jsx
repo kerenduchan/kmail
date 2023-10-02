@@ -51,18 +51,8 @@ export function EmailIndex() {
 
     /* For the top bar =======================================================*/
 
-    // the state of the email multi-selector in the top bar (none, some, all)
-    const [multiSelectorState, setMultiSelectorState] = useState('none')
-
     // IDs of all selected emails
     const [selectedEmailIds, setSelectedEmailIds] = useState([])
-
-    // Information about the selected emails. Needed for the multi-select
-    // in the top bar.
-    const [selectedEmailsInfo, setSelectedEmailsInfo] = useState({
-        areAllRead: false,
-        areAllStarred: false,
-    })
 
     // Toggle for showing/hiding the apply labels dialog in the top bar
     const [isLabelMenuVisible, setIsLabelMenuVisible] = useState(false)
@@ -92,25 +82,6 @@ export function EmailIndex() {
             loadEmails()
         }
     }, [filter])
-
-    // Changing the selected emails affects the multi-selector state in the
-    // top bar as well as other top bar buttons (mark read, star/unstar)
-    useEffect(() => {
-        if (selectedEmailIds.length === 0) {
-            setMultiSelectorState('none')
-        } else if (selectedEmailIds.length === emailsData.emails.length) {
-            setMultiSelectorState('all')
-        } else {
-            setMultiSelectorState('some')
-        }
-
-        updateSelectedEmailsInfo()
-    }, [selectedEmailIds])
-
-    // Reloading the emails affects the top bar buttons (mark read, star/unstar)
-    useEffect(() => {
-        updateSelectedEmailsInfo()
-    }, [emailsData])
 
     /* "on" handlers =========================================================*/
 
@@ -416,16 +387,6 @@ export function EmailIndex() {
         return emailsData.emails.filter((e) => emailIds.includes(e.id))
     }
 
-    // Update the selected emails info - whether all the selected emails are
-    // read / starred. Needed for the top bar buttons.
-    function updateSelectedEmailsInfo() {
-        const emails = getEmailsByIds(selectedEmailIds)
-        setSelectedEmailsInfo({
-            areAllRead: emails.every((e) => e.isRead === true),
-            areAllStarred: emails.every((e) => e.isStarred === true),
-        })
-    }
-
     // Show/hide the apply label menu in the top bar
     function toggleShowLabelMenu() {
         setIsLabelMenuVisible((prev) => !prev)
@@ -486,15 +447,11 @@ export function EmailIndex() {
                     <>
                         {/* Top bar for email list */}
                         <EmailListTopbar
-                            multiSelectorState={multiSelectorState}
+                            emails={emailsData.emails}
+                            selectedEmailIds={selectedEmailIds}
                             onMultiSelectorChange={onMultiSelectorChange}
                             onDeleteClick={onDeleteSelectedEmailsClick}
                             onUpdateSelectedEmails={onUpdateSelectedEmails}
-                            readButtonToShow={!selectedEmailsInfo.areAllRead}
-                            starredButtonToShow={
-                                !selectedEmailsInfo.areAllStarred
-                            }
-                            selectedEmails={getEmailsByIds(selectedEmailIds)}
                             labels={labels}
                             updateEmails={updateEmails}
                             isLabelMenuVisible={isLabelMenuVisible}
