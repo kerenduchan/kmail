@@ -24,8 +24,10 @@ import { labelService } from '../services/label.service'
 export function EmailIndex() {
     const [emailsData, setEmailsData] = useState(null)
     const [selectedEmailIds, setSelectedEmailIds] = useState([])
-    const [areAllSelectedEmailsRead, setAreAllSelectedEmailsRead] =
-        useState(false)
+    const [selectedEmailsInfo, setSelectedEmailsInfo] = useState({
+        areAllRead: false,
+        areAllStarred: false,
+    })
     const [emailCounts, setEmailCounts] = useState(null)
     const [labels, setLabels] = useState(null)
     const [selectedLabel, setSelectedLabel] = useState(null)
@@ -59,11 +61,11 @@ export function EmailIndex() {
             setMultiSelectorState('some')
         }
 
-        updateAreAllSelectedEmailsRead()
+        updateSelectedEmailsInfo()
     }, [selectedEmailIds])
 
     useEffect(() => {
-        updateAreAllSelectedEmailsRead()
+        updateSelectedEmailsInfo()
     }, [emailsData])
 
     function onFolderClick(folder) {
@@ -210,18 +212,20 @@ export function EmailIndex() {
 
     async function onUpdateSelectedEmails(fieldsToUpdate) {
         let msg = ''
+        if (selectedEmailIds.length === 1) {
+            msg = emailsData.folder == 'drafts' ? 'Draft' : 'Email'
+        } else {
+            msg =
+                `${selectedEmailIds.length} ` +
+                (emailsData.folder == 'drafts' ? 'drafts' : 'emails')
+        }
         if (fieldsToUpdate.isRead !== undefined) {
-            if (selectedEmailIds.length === 1) {
-                msg = emailsData.folder == 'drafts' ? 'Draft' : 'Email'
-            } else {
-                msg =
-                    `${selectedEmailIds.length} ` +
-                    (emailsData.folder == 'drafts' ? 'drafts' : 'emails')
-            }
             msg +=
                 ' marked as ' +
                 (fieldsToUpdate.isRead ? 'read' : 'unread') +
                 '.'
+        } else if (fieldsToUpdate.isStarred !== undefined) {
+            msg += ` ${fieldsToUpdate.isStarred ? 'starred' : 'unstarred'}.`
         }
         updateManyEmails(selectedEmailIds, fieldsToUpdate, msg)
     }
@@ -319,9 +323,12 @@ export function EmailIndex() {
         return emailsData.emails.filter((e) => emailIds.includes(e.id))
     }
 
-    function updateAreAllSelectedEmailsRead() {
+    function updateSelectedEmailsInfo() {
         const emails = getEmailsByIds(selectedEmailIds)
-        setAreAllSelectedEmailsRead(emails.every((e) => e.isRead === true))
+        setSelectedEmailsInfo({
+            areAllRead: emails.every((e) => e.isRead === true),
+            areAllStarred: emails.every((e) => e.isStarred === true),
+        })
     }
 
     if (!emailsData || !emailCounts) return <div>Loading..</div>
@@ -371,7 +378,10 @@ export function EmailIndex() {
                             onMultiSelectorChange={onMultiSelectorChange}
                             onDeleteClick={onDeleteSelectedEmailsClick}
                             onUpdateSelectedEmails={onUpdateSelectedEmails}
-                            readButtonToShow={!areAllSelectedEmailsRead}
+                            readButtonToShow={!selectedEmailsInfo.areAllRead}
+                            starredButtonToShow={
+                                !selectedEmailsInfo.areAllStarred
+                            }
                         />
                         <EmailList
                             emailsData={{ ...emailsData, selectedEmailIds }}

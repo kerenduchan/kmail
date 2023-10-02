@@ -7,9 +7,14 @@ export function EmailListTopbar({
     onDeleteClick,
     onUpdateSelectedEmails,
     readButtonToShow,
+    starredButtonToShow,
 }) {
     async function onReadOrUnreadClick() {
         onUpdateSelectedEmails({ isRead: readButtonToShow })
+    }
+
+    async function onStarredOrUnstarredClick() {
+        onUpdateSelectedEmails({ isStarred: starredButtonToShow })
     }
 
     function onCheckboxClick() {
@@ -42,6 +47,11 @@ export function EmailListTopbar({
                     <SmallActionButton
                         type={readButtonToShow ? 'read' : 'unread'}
                         onClick={onReadOrUnreadClick}
+                    />
+                    {/* Mark as starred/unstarred */}
+                    <SmallActionButton
+                        type={starredButtonToShow ? 'starred' : 'unstarred'}
+                        onClick={onStarredOrUnstarredClick}
                     />
                 </div>
             )}
