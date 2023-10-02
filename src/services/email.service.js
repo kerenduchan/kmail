@@ -175,6 +175,7 @@ async function generateEmails() {
             sentAt: 1694113055000,
             from: 'moshe@gmail.com',
             to: 'keren.duchan@gmail.com',
+            labelIds: [],
         },
         {
             id: utilService.makeId(),
@@ -191,6 +192,7 @@ async function generateEmails() {
             sentAt: 1694112055000,
             from: 'bob@gmail.com',
             to: 'keren.duchan@gmail.com',
+            labelIds: [],
         },
         {
             id: utilService.makeId(),
@@ -202,6 +204,7 @@ async function generateEmails() {
             sentAt: 1694132055000,
             from: 'moshe@gmail.com',
             to: 'keren.duchan@gmail.com',
+            labelIds: [],
         },
         {
             id: utilService.makeId(),
@@ -213,6 +216,7 @@ async function generateEmails() {
             sentAt: 1694112055000,
             from: 'moshe@gmail.com',
             to: 'keren.duchan@gmail.com',
+            labelIds: [],
         },
         {
             id: utilService.makeId(),
@@ -224,6 +228,7 @@ async function generateEmails() {
             sentAt: 1693920361000,
             from: 'shoshana@gmail.com',
             to: 'keren.duchan@gmail.com',
+            labelIds: [],
         },
         {
             id: utilService.makeId(),
@@ -235,6 +240,7 @@ async function generateEmails() {
             sentAt: 1693930361000,
             from: 'keren.duchan@gmail.com',
             to: 'shoshana@gmail.com',
+            labelIds: [],
         },
         {
             id: utilService.makeId(),
@@ -247,6 +253,7 @@ async function generateEmails() {
             from: 'shoshana@gmail.com',
             to: 'keren.duchan@gmail.com',
             deletedAt: null,
+            labelIds: [],
         },
         {
             id: utilService.makeId(),
@@ -265,6 +272,7 @@ Etiam auctor vitae nulla eu consequat. Maecenas sed tortor porttitor, viverra ur
             sentAt: null,
             from: 'keren.duchan@gmail.com',
             to: '',
+            labelIds: [],
         },
         {
             id: utilService.makeId(),
@@ -291,6 +299,7 @@ Etiam auctor vitae nulla eu consequat. Maecenas sed tortor porttitor, viverra ur
             sentAt: 1593210401000,
             from: 'lorem@gmail.com',
             to: 'keren.duchan@gmail.com',
+            labelIds: [],
         },
     ]
 
@@ -305,6 +314,7 @@ Etiam auctor vitae nulla eu consequat. Maecenas sed tortor porttitor, viverra ur
             sentAt: 1670802055000 + i * 50000000,
             from: `mass_sender${i}@gmail.com`,
             to: 'keren.duchan@gmail.com',
+            labelIds: [],
         })
     }
 
