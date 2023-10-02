@@ -3,7 +3,7 @@ import { SmallActionButton } from './SmallActionButton'
 
 export function EmailListTopbar({
     multiSelectorState,
-    onMultiSelectorFilterChange,
+    onMultiSelectorChange,
     onDeleteClick,
     onUpdateSelectedEmails,
     readButtonToShow,
@@ -12,12 +12,24 @@ export function EmailListTopbar({
         onUpdateSelectedEmails({ isRead: readButtonToShow })
     }
 
+    function onCheckboxClick() {
+        switch (multiSelectorState) {
+            case 'all':
+            case 'some':
+                onMultiSelectorChange('none')
+                break
+            case 'none':
+                onMultiSelectorChange('all')
+                break
+        }
+    }
+
     return (
         <div className="email-list-topbar">
             {/* Checkbox */}
             <MultiSelector
                 state={multiSelectorState}
-                onFilterChange={onMultiSelectorFilterChange}
+                onClick={onCheckboxClick}
             />
             {/* Actions */}
             {multiSelectorState == 'none' ? (

@@ -192,8 +192,8 @@ export function EmailIndex() {
         setShowMenu(false)
     }
 
-    function onMultiSelectorFilterChange(filter) {
-        switch (filter) {
+    function onMultiSelectorChange(state) {
+        switch (state) {
             case 'none':
                 setSelectedEmailIds([])
                 break
@@ -368,9 +368,7 @@ export function EmailIndex() {
                     <>
                         <EmailListTopbar
                             multiSelectorState={multiSelectorState}
-                            onMultiSelectorFilterChange={
-                                onMultiSelectorFilterChange
-                            }
+                            onMultiSelectorChange={onMultiSelectorChange}
                             onDeleteClick={onDeleteSelectedEmailsClick}
                             onUpdateSelectedEmails={onUpdateSelectedEmails}
                             readButtonToShow={!areAllSelectedEmailsRead}
