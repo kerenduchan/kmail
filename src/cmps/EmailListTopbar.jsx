@@ -8,6 +8,10 @@ export function EmailListTopbar({
     onUpdateSelectedEmails,
     readButtonToShow,
 }) {
+    async function onReadOrUnreadClick() {
+        onUpdateSelectedEmails({ isRead: readButtonToShow })
+    }
+
     return (
         <div className="email-list-topbar">
             {/* Checkbox */}
@@ -16,38 +20,19 @@ export function EmailListTopbar({
                 onFilterChange={onMultiSelectorFilterChange}
             />
             {/* Actions */}
-            <EmailListTopbarActions
-                state={multiSelectorState}
-                onDeleteClick={onDeleteClick}
-                onUpdateSelectedEmails={onUpdateSelectedEmails}
-                readButtonToShow={readButtonToShow}
-            />
+            {multiSelectorState == 'none' ? (
+                <div></div>
+            ) : (
+                <div className="email-list-topbar-actions">
+                    {/* Delete */}
+                    <SmallActionButton type="delete" onClick={onDeleteClick} />
+                    {/* Mark as uread/unread */}
+                    <SmallActionButton
+                        type={readButtonToShow ? 'read' : 'unread'}
+                        onClick={onReadOrUnreadClick}
+                    />
+                </div>
+            )}
         </div>
     )
-}
-
-function EmailListTopbarActions({
-    state,
-    onDeleteClick,
-    onUpdateSelectedEmails,
-    readButtonToShow,
-}) {
-    async function onReadOrUnreadClick() {
-        onUpdateSelectedEmails({ isRead: readButtonToShow })
-    }
-
-    if (state == 'none') {
-        // TODO
-        return <div></div>
-    } else {
-        return (
-            <div className="email-list-topbar-actions">
-                <SmallActionButton type="delete" onClick={onDeleteClick} />
-                <SmallActionButton
-                    type={readButtonToShow ? 'read' : 'unread'}
-                    onClick={onReadOrUnreadClick}
-                />
-            </div>
-        )
-    }
 }
