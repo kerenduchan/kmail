@@ -10,7 +10,11 @@ import { SmallActionButton } from '../cmps/SmallActionButton'
 
 // services
 import { emailService } from '../services/email.service'
-import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
+import {
+    hideUserMsg,
+    showErrorMsg,
+    showSuccessMsg,
+} from '../services/event-bus.service'
 
 export function EmailDetails() {
     const [email, setEmail] = useState(null)
@@ -79,6 +83,19 @@ export function EmailDetails() {
         }
     }
 
+    async function onRemoveLabel(label) {
+        hideUserMsg()
+        try {
+            await emailService.updateLabelsForEmails([email], {
+                [label.id]: false,
+            })
+            showSuccessMsg(`Email removed from '${label.name}'.`)
+        } catch (e) {
+            showErrorMsg(`Failed to remove email from '${label.name}'`)
+        }
+        loadEmailAndMarkAsRead()
+    }
+
     // navigate to the containing folder, while retaining the
     // search params
     function navigateUp() {
@@ -134,7 +151,10 @@ export function EmailDetails() {
                                 <div className="email-details-label-name">
                                     {l.name}
                                 </div>
-                                <button className="email-details-label-delete"></button>
+                                <button
+                                    className="email-details-label-delete"
+                                    onClick={() => onRemoveLabel(l)}
+                                ></button>
                             </div>
                         ))}
                     </div>
