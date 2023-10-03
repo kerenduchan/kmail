@@ -7,7 +7,6 @@ export function EmailList({
     onEmailClick,
     onEmailCheckboxClick,
 }) {
-    console.log(emailsData.emails)
     return (
         <ul className="email-list">
             {emailsData.emails.map((email) => (
