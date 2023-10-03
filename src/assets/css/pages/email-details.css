@@ -31,14 +31,15 @@
 }
 
 .email-details-header {
-    display: flex;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
     align-items: center;
-    justify-content: space-between;
+    padding: 20px 0;
 }
 
 .email-details-subject {
     font-size: 20px;
-    padding: 20px 0;
+    padding-inline-end: 10px;
 }
 
 .email-details-sent-at {
@@ -46,6 +47,16 @@
     color: grey;
 }
 
+.email-details-labels {
+    display: flex;
+    gap: 8px;
+}
+
+.email-details-label {
+    background-color: #ddd;
+    border-radius: 4px;
+    padding: 0 4px;
+}
 .email-details-metadata {
     font-size: 14px;
     padding-bottom: 20px;

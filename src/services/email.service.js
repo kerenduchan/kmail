@@ -63,29 +63,8 @@ async function query(filter) {
         }
     }
 
-    // expand the labelIds per email to also contain the label name
-    let allLabels = await labelService.getAllLabels()
-
-    emails.forEach((e) => {
-        e.labels = []
-        e.labelIds.forEach((labelId) =>
-            e.labels.push({
-                id: labelId,
-                name: getLabelNameById(labelId, allLabels),
-            })
-        )
-        e.labelIds = undefined
-    })
-
+    await _expandLabelsOnEmails(emails)
     return emails
-}
-
-function getLabelNameById(labelId, allLabels) {
-    const found = allLabels.filter((l) => l.id === labelId)
-    if (found.length === 0) {
-        return null
-    }
-    return found[0].name
 }
 
 function doesEmailBelongInFolder(email, folder) {
@@ -139,7 +118,9 @@ async function getEmailCountsPerFolder() {
 }
 
 async function getById(id) {
-    return storageService.get(STORAGE_KEY, id)
+    const email = await storageService.get(STORAGE_KEY, id)
+    await _expandLabelsOnEmails([email])
+    return email
 }
 
 function remove(id) {
@@ -155,6 +136,10 @@ function sendEmail(email) {
 }
 
 function save(email) {
+    // remove expanded labels field
+    const emailToSave = { ...email }
+    delete emailToSave.labels
+
     if (email.id) {
         return storageService.put(STORAGE_KEY, email)
     } else {
@@ -377,4 +362,27 @@ Etiam auctor vitae nulla eu consequat. Maecenas sed tortor porttitor, viverra ur
     }
 
     utilService.saveToStorage(STORAGE_KEY, emails)
+}
+
+// expand the labelIds per email to also contain the label name
+async function _expandLabelsOnEmails(emails) {
+    let allLabels = await labelService.getAllLabels()
+
+    emails.forEach((e) => {
+        e.labels = []
+        e.labelIds.forEach((labelId) =>
+            e.labels.push({
+                id: labelId,
+                name: _getLabelNameById(labelId, allLabels),
+            })
+        )
+    })
+}
+
+function _getLabelNameById(labelId, allLabels) {
+    const found = allLabels.filter((l) => l.id === labelId)
+    if (found.length === 0) {
+        return null
+    }
+    return found[0].name
 }
