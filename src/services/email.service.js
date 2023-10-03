@@ -155,7 +155,6 @@ async function updateMany(emails) {
 // labelInfos is an array containing {label, isAdd}. isAdd is true (add label)
 // or false (remove label)
 async function updateLabelsForEmails(emails, labelInfos) {
-    console.log(labelInfos)
     let emailsToUpdate = null
     labelInfos.forEach((labelInfo) => {
         const label = labelInfo.label
