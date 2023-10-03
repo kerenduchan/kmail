@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { useParams, useNavigate, useLocation } from 'react-router'
+import { useOutletContext } from 'react-router-dom'
 
 import {
     formatDateVerbose,
@@ -15,6 +16,7 @@ import {
     showErrorMsg,
     showSuccessMsg,
 } from '../services/event-bus.service'
+import EmailLabelApplyMenu from '../cmps/email-label/EmailLabelApplyMenu'
 
 export function EmailDetails() {
     const [email, setEmail] = useState(null)
@@ -24,6 +26,7 @@ export function EmailDetails() {
     const params = useParams()
     const navigate = useNavigate()
     const location = useLocation()
+    const [labels] = useOutletContext()
 
     useEffect(() => {
         loadEmailAndMarkAsRead()
@@ -84,20 +87,28 @@ export function EmailDetails() {
     }
 
     async function onRemoveLabel(label) {
+        await updateLabelsForEmails(
+            [email],
+            [
+                {
+                    label,
+                    isAdd: false,
+                },
+            ]
+        )
+    }
+
+    async function updateLabelsForEmails(emails, labelInfos) {
         hideUserMsg()
+        const labelName = labelInfos[0].label.name
+        const isAdd = labelInfos[0].isAdd
         try {
-            await emailService.updateLabelsForEmails(
-                [email],
-                [
-                    {
-                        label,
-                        isAdd: false,
-                    },
-                ]
-            )
-            showSuccessMsg(`Email removed from '${label.name}'.`)
+            await emailService.updateLabelsForEmails(emails, labelInfos)
+            const action = isAdd ? 'added to' : 'removed from'
+            showSuccessMsg(`Email ${action} '${labelName}'.`)
         } catch (e) {
-            showErrorMsg(`Failed to remove email from '${label.name}'`)
+            const action = isAdd ? 'add email to' : 'remove email from'
+            showErrorMsg(`Failed to ${action} '${labelName}'`)
         }
         loadEmailAndMarkAsRead()
     }
@@ -137,10 +148,18 @@ export function EmailDetails() {
 
                 {/* Delete */}
                 <SmallActionButton type="delete" onClick={onDeleteEmail} />
+
                 {/* Mark as unread */}
                 <SmallActionButton
                     type="unread"
                     onClick={onMarkEmailAsUnread}
+                />
+
+                {/* Label as */}
+                <EmailLabelApplyMenu
+                    emails={[email]}
+                    labels={labels}
+                    updateLabelsForEmails={updateLabelsForEmails}
                 />
             </section>
 

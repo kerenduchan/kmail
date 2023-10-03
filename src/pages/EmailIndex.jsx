@@ -413,7 +413,7 @@ export function EmailIndex() {
             {/* Main section (email list or email details) */}
             <section className="email-index-main">
                 {params.emailId ? (
-                    <Outlet />
+                    <Outlet context={[labels]} />
                 ) : (
                     <>
                         {/* Top bar for email list */}
