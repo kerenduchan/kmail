@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { EmailLabelPreview } from './EmailLabelPreview'
+import { useNavigate, useParams } from 'react-router'
 
 export function EmailLabelList({
     labels,
@@ -7,9 +8,19 @@ export function EmailLabelList({
     onEditLabelClick,
 }) {
     const [selectedLabelId, setSelectedLabelId] = useState(null)
+    const params = useParams()
+    const navigate = useNavigate()
 
-    function onLabelClick(labelId) {
-        setSelectedLabelId(labelId)
+    useEffect(() => {
+        const found = labels.filter((l) => l.name == params.folderId)
+        if (found.length === 1) {
+            // the current folderId is a label
+            setSelectedLabelId(found[0].id)
+        }
+    }, [params])
+
+    function onLabelClick(label) {
+        navigate(`/email/${label.name}`)
     }
 
     return (
@@ -19,7 +30,7 @@ export function EmailLabelList({
                     <EmailLabelPreview
                         label={label}
                         isSelected={selectedLabelId === label.id}
-                        onClick={() => onLabelClick(label.id)}
+                        onClick={() => onLabelClick(label)}
                         onEditClick={() => onEditLabelClick(label)}
                         onDeleteClick={() => onDeleteLabelClick(label)}
                     />
