@@ -1,6 +1,7 @@
 import { getAllFolderIds } from '../util.js'
 import { storageService } from './async-storage.service.js'
 import { utilService } from './util.service.js'
+import { labelService } from './label.service.js'
 
 export const emailService = {
     query,
@@ -61,7 +62,30 @@ async function query(filter) {
             emails = emails.sort((e1, e2) => (e1.sentAt < e2.sentAt ? 1 : -1))
         }
     }
+
+    // expand the labelIds per email to also contain the label name
+    let allLabels = await labelService.getAllLabels()
+
+    emails.forEach((e) => {
+        e.labels = []
+        e.labelIds.forEach((labelId) =>
+            e.labels.push({
+                id: labelId,
+                name: getLabelNameById(labelId, allLabels),
+            })
+        )
+        e.labelIds = undefined
+    })
+
     return emails
+}
+
+function getLabelNameById(labelId, allLabels) {
+    const found = allLabels.filter((l) => l.id === labelId)
+    if (found.length === 0) {
+        return null
+    }
+    return found[0].name
 }
 
 function doesEmailBelongInFolder(email, folder) {

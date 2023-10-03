@@ -4,7 +4,6 @@ import { SmallActionButton } from '../cmps/SmallActionButton'
 export function EmailPreview({
     isSelected,
     email,
-    labels,
     folder,
     onEmailClick,
     onUpdateEmail,
@@ -17,14 +16,6 @@ export function EmailPreview({
             [field]: !email[field],
         }
         onUpdateEmail(emailAfterUpdate)
-    }
-
-    function getLabelNameById(labelId) {
-        const found = labels.filter((l) => l.id === labelId)
-        if (found.length === 0) {
-            return null
-        }
-        return found[0].name
     }
 
     return (
@@ -57,19 +48,11 @@ export function EmailPreview({
 
             {/* Labels */}
             <div className="email-preview-labels">
-                {email.labelIds
-                    .map((labelId) => ({
-                        id: labelId,
-                        name: getLabelNameById(labelId),
-                    }))
-                    .sort((l1, l2) =>
-                        l1.name == l2.name ? 0 : l1.name < l2.name ? -1 : 1
-                    )
-                    .map((l) => (
-                        <div key={l.id} className="email-preview-label">
-                            {l.name}
-                        </div>
-                    ))}
+                {email.labels.map((l) => (
+                    <div key={l.id} className="email-preview-label">
+                        {l.name}
+                    </div>
+                ))}
             </div>
 
             {/* First Column (From/To/Draft) */}

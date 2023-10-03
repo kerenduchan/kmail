@@ -420,7 +420,6 @@ export function EmailIndex() {
                         {/* Email list */}
                         <EmailList
                             emailsData={{ ...emailsData, selectedEmailIds }}
-                            labels={labels}
                             onUpdateEmail={onUpdateEmail}
                             onDeleteEmail={(email) =>
                                 deleteEmailsByIds([email.id])

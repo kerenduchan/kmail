@@ -2,12 +2,12 @@ import { EmailPreview } from './EmailPreview'
 
 export function EmailList({
     emailsData,
-    labels,
     onUpdateEmail,
     onDeleteEmail,
     onEmailClick,
     onEmailCheckboxClick,
 }) {
+    console.log(emailsData.emails)
     return (
         <ul className="email-list">
             {emailsData.emails.map((email) => (
@@ -18,7 +18,6 @@ export function EmailList({
                         )}
                         folder={emailsData.folder}
                         email={email}
-                        labels={labels}
                         onUpdateEmail={onUpdateEmail}
                         onDeleteEmail={onDeleteEmail}
                         onEmailClick={onEmailClick}
