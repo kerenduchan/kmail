@@ -123,9 +123,20 @@ export function EmailDetails() {
 
             {/* Email Contents */}
             <section className="email-details-content">
-                {/* Email Subject */}
                 <header className="email-details-header">
+                    {/* Subject */}
                     <div className="email-details-subject">{email.subject}</div>
+
+                    {/* Labels */}
+                    <div className="email-details-labels">
+                        {email.labels.map((l) => (
+                            <div key={l.id} className="email-details-label">
+                                {l.name}
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Sent at */}
                     <div className="email-details-sent-at">{sentAtStr}</div>
                 </header>
                 <table className="email-details-metadata">
