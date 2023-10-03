@@ -131,7 +131,10 @@ export function EmailDetails() {
                     <div className="email-details-labels">
                         {email.labels.map((l) => (
                             <div key={l.id} className="email-details-label">
-                                {l.name}
+                                <div className="email-details-label-name">
+                                    {l.name}
+                                </div>
+                                <button className="email-details-label-delete"></button>
                             </div>
                         ))}
                     </div>
