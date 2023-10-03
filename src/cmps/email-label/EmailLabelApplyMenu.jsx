@@ -10,14 +10,12 @@ export default function EmailLabelApplyMenu({
     // Toggle for showing/hiding the apply labels menu
     const [show, setShow] = useState(false)
 
-    async function onToggleLabel(label, close = false) {
+    async function onToggleLabel(label) {
         // add label if it is applied to none/some, remove label if it is
         // applied to all
         const isAdd = getLabelState(label.id) != 'all'
         await updateLabelsForEmails(emails, [{ label, isAdd }])
-        if (close) {
-            setShow(false)
-        }
+        setShow(false)
     }
 
     function getLabelState(labelId) {
@@ -52,7 +50,7 @@ export default function EmailLabelApplyMenu({
                                 state={getLabelState(label.id)}
                                 onClick={() => onToggleLabel(label)}
                             />
-                            <div onClick={() => onToggleLabel(label, true)}>
+                            <div onClick={() => onToggleLabel(label)}>
                                 {label.name}
                             </div>
                         </div>
