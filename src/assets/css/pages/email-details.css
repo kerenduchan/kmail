@@ -1,7 +1,7 @@
 .email-details-loading {
     flex-grow: 1;
-    background-color: white;
-    z-index: 10;
+    display: flex;
+    justify-content: center;
 }
 
 .email-details {
