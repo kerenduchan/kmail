@@ -152,22 +152,27 @@ async function updateMany(emails) {
 }
 
 // add/remove the given label IDs to/from the given emails
-// label IDs is a map object: key is labelId, value is true (add label)
+// labelInfos is an array containing {label, isAdd}. isAdd is true (add label)
 // or false (remove label)
-async function updateLabelsForEmails(emails, labelIds) {
+async function updateLabelsForEmails(emails, labelInfos) {
+    console.log(labelInfos)
     let emailsToUpdate = null
-    Object.keys(labelIds).forEach((labelId) => {
-        if (labelIds[labelId] === false) {
+    labelInfos.forEach((labelInfo) => {
+        const label = labelInfo.label
+        if (labelInfo.isAdd === false) {
             // remove the label from all emails
             emailsToUpdate = emails.map((e) => ({
                 ...e,
-                labelIds: e.labelIds.filter((lId) => lId != labelId),
+                labelIds: e.labelIds.filter((lId) => lId != label.id),
             }))
         } else {
             // add the label to any emails that don't already have it
             emailsToUpdate = emails
-                .filter((e) => !e.labelIds.includes(labelId))
-                .map((e) => ({ ...e, labelIds: e.labelIds.concat(labelId) }))
+                .filter((e) => !e.labelIds.includes(label.id))
+                .map((e) => ({
+                    ...e,
+                    labelIds: e.labelIds.concat(label.id),
+                }))
         }
     })
     return emailService.updateMany(emailsToUpdate)

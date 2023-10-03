@@ -86,9 +86,15 @@ export function EmailDetails() {
     async function onRemoveLabel(label) {
         hideUserMsg()
         try {
-            await emailService.updateLabelsForEmails([email], {
-                [label.id]: false,
-            })
+            await emailService.updateLabelsForEmails(
+                [email],
+                [
+                    {
+                        label,
+                        isAdd: false,
+                    },
+                ]
+            )
             showSuccessMsg(`Email removed from '${label.name}'.`)
         } catch (e) {
             showErrorMsg(`Failed to remove email from '${label.name}'`)

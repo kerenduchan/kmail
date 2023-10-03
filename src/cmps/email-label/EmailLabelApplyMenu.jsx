@@ -10,11 +10,11 @@ export default function EmailLabelApplyMenu({
     // Toggle for showing/hiding the apply labels menu
     const [show, setShow] = useState(false)
 
-    async function onToggleLabel(labelId, close = false) {
+    async function onToggleLabel(label, close = false) {
         // add label if it is applied to none/some, remove label if it is
         // applied to all
-        const isAddLabel = getLabelState(labelId) != 'all'
-        await updateLabelsForEmails(emails, { [labelId]: isAddLabel })
+        const isAdd = getLabelState(label.id) != 'all'
+        await updateLabelsForEmails(emails, [{ label, isAdd }])
         if (close) {
             setShow(false)
         }
@@ -50,9 +50,9 @@ export default function EmailLabelApplyMenu({
                             {/* Checkbox */}
                             <MultiSelector
                                 state={getLabelState(label.id)}
-                                onClick={() => onToggleLabel(label.id)}
+                                onClick={() => onToggleLabel(label)}
                             />
-                            <div onClick={() => onToggleLabel(label.id, true)}>
+                            <div onClick={() => onToggleLabel(label, true)}>
                                 {label.name}
                             </div>
                         </div>

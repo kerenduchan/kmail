@@ -304,8 +304,19 @@ export function EmailIndex() {
     }
 
     // add/remove the given label IDs to/from the given emails
-    async function updateLabelsForEmails(emails, labelIds) {
-        await emailService.updateLabelsForEmails(emails, labelIds)
+    async function updateLabelsForEmails(emails, labelInfos) {
+        try {
+            await emailService.updateLabelsForEmails(emails, labelInfos)
+            const itemName =
+                (params.folderId == 'drafts' ? 'draft' : 'email') +
+                (emails.length > 1 ? 's' : '')
+            const action = labelInfos[0].isAdd ? 'added to' : 'removed from'
+            const labelName = labelInfos[0].label.name
+            const msg = `${emails.length} ${itemName} ${action} '${labelName}'.`
+            showSuccessMsg(msg)
+        } catch (e) {
+            showErrorMsg('Failed to add/remove labels.', e)
+        }
         loadEmails()
     }
 
