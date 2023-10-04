@@ -40,19 +40,17 @@ export function EmailIndex() {
     // All the emails currently being displayed
     const [emailsData, setEmailsData] = useState(null)
 
-    // Show/hide the sidebar (for mobile only)
-    const [showSidebar, setShowSidebar] = useState(false)
+    // IDs of all selected emails.
+    const [selectedEmailIds, setSelectedEmailIds] = useState([])
 
     /* For the sidebar =======================================================*/
 
-    // Email counts (total, unread) per folder. Needed for the folder counts in
-    // the sidebar.
+    // Email counts (total, unread) per folder.
+    // Needed for the folder counts in the sidebar.
     const [emailCounts, setEmailCounts] = useState(null)
 
-    /* For the top bar =======================================================*/
-
-    // IDs of all selected emails
-    const [selectedEmailIds, setSelectedEmailIds] = useState([])
+    // Show/hide the sidebar (for mobile only)
+    const [showSidebar, setShowSidebar] = useState(false)
 
     /* For the label create/edit dialog ======================================*/
 
