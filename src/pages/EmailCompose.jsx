@@ -1,7 +1,11 @@
 import { useState, useEffect, useRef } from 'react'
 import { emailService } from '../services/email.service'
 import { useInterval } from '../useInterval'
-import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
+import {
+    showErrorMsg,
+    showProgressMsg,
+    showSuccessMsg,
+} from '../services/event-bus.service'
 import { useSearchParams } from 'react-router-dom'
 import { SmallActionButton } from '../cmps/SmallActionButton'
 
@@ -59,7 +63,7 @@ export function EmailCompose({ onCloseClick, onDeleteDraft }) {
     }
 
     async function onSend() {
-        showSuccessMsg('Sending email...')
+        showProgressMsg('Sending email...')
         try {
             email.current = await emailService.sendEmail(email.current)
             onCloseClick()

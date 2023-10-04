@@ -16,6 +16,10 @@
     align-items: center;
 }
 
+.user-msg.progress {
+    font-style: italic;
+}
+
 .user-msg.error {
     background-color: rgb(182, 18, 18);
 }

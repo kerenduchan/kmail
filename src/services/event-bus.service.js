@@ -31,6 +31,10 @@ export function showSuccessMsg(txt) {
     showUserMsg({ txt, type: 'success' })
 }
 
+export function showProgressMsg(txt) {
+    showUserMsg({txt, type: 'progress'})
+}
+
 export function showErrorMsg(txt, err) {
     showUserMsg({ txt, type: 'error' })
     if (err) {
