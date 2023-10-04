@@ -28,8 +28,17 @@ export function EmailDetails() {
     const [{ email, labels, updateEmails, updateLabelsForEmails }] =
         useOutletContext()
 
+    const markAsReadTimeout = useRef(null)
+
     useEffect(() => {
-        loadEmailAndMarkAsRead()
+        // silently mark the email as read if it's been open for over 2 seconds
+        markAsReadTimeout.current = setTimeout(() => {
+            updateEmails([email], 'isRead', true, true)
+        }, 2000)
+
+        return () => {
+            clearTimeout(markAsReadTimeout.current)
+        }
     }, [params.emailId])
 
     useEffect(() => {
@@ -85,6 +94,7 @@ export function EmailDetails() {
     }
 
     async function onMarkEmailAsUnread() {
+        clearTimeout(markAsReadTimeout.current)
         await updateEmails([email], 'isRead', false)
         navigateUp()
     }
@@ -108,18 +118,6 @@ export function EmailDetails() {
             pathname: getContainingFolder(location.pathname),
             search: location.search,
         })
-    }
-
-    async function loadEmailAndMarkAsRead() {
-        try {
-            //            let tmpEmail = await emailService.getById(params.emailId)
-            //            tmpEmail = { ...tmpEmail, isRead: true }
-            //            await emailService.save(tmpEmail)
-            //            setEmail(tmpEmail)
-        } catch (err) {
-            navigateUp()
-            console.error('Had issues loading email or marking it as read', err)
-        }
     }
 
     if (!email) return <div className="email-details-loading">Loading..</div>

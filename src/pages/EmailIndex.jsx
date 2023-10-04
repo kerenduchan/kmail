@@ -308,8 +308,10 @@ export function EmailIndex() {
             field,
             value
         )
-        hideUserMsg()
-        showProgressMsg(progress)
+        if (!silent) {
+            hideUserMsg()
+            showProgressMsg(progress)
+        }
         try {
             await emailService.updateMany(emailsToUpdate)
             await loadEmails()
