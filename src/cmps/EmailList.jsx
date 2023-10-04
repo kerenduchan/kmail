@@ -15,7 +15,7 @@ export function EmailList({
                         isSelected={emailsData.selectedEmailIds.includes(
                             email.id
                         )}
-                        folder={emailsData.folder}
+                        folderId={emailsData.folderId}
                         email={email}
                         updateEmails={updateEmails}
                         onDeleteEmail={onDeleteEmail}

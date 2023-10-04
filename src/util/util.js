@@ -156,7 +156,7 @@ function getEmailFilterFromParams(params, searchParams) {
         isRead: strToNullableBool(searchParams.get('isRead')),
         isStarred: strToNullableBool(searchParams.get('isStarred')),
         searchString: searchString ? searchString : '',
-        folder: params.folderId,
+        folderId: params.folderId,
     }
 }
 

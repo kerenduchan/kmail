@@ -1,21 +1,21 @@
 import { getAllFolders } from '../util/util'
 
 export function EmailFolders({
-    activeFolder,
+    activeFolderId,
     onFolderClick,
     className,
     emailCounts,
-    onClose,
 }) {
-    function getClassName(folder) {
+    function getClassName(folderId) {
         return (
-            `email-folder ${folder}` + (activeFolder == folder ? ' active' : '')
+            `email-folder ${folderId}` +
+            (activeFolderId == folderId ? ' active' : '')
         )
     }
 
-    function getCount(folder) {
-        const counts = emailCounts[folder]
-        return folder == 'drafts' ? counts.total : counts.unread
+    function getCount(folderId) {
+        const counts = emailCounts[folderId]
+        return folderId == 'drafts' ? counts.total : counts.unread
     }
 
     const folders = getAllFolders()

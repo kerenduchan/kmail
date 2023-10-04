@@ -45,7 +45,10 @@ export function EmailIndex() {
     // The emails filter
     const [filter, setFilter] = useState(null)
 
-    // All the emails currently being displayed
+    // All the emails and the ID of the folder currently being displayed.
+    // They are bundled together in one state so that there won't be a flicker
+    // in the first column of the email preview (from/to/draft) when switching
+    // folders.
     const [emailsData, setEmailsData] = useState(null)
 
     // IDs of all selected emails.
@@ -53,7 +56,7 @@ export function EmailIndex() {
 
     /* For the sidebar =======================================================*/
 
-    // Email counts (total, unread) per folder.
+    // Key is folder ID, value is email counts (total, unread) for the folder.
     // Needed for the folder counts in the sidebar.
     const [emailCounts, setEmailCounts] = useState(null)
 
@@ -89,12 +92,12 @@ export function EmailIndex() {
     /* "on" handlers =========================================================*/
 
     // Handle a folder being clicked in the sidebar
-    function onFolderClick(folder) {
+    function onFolderClick(folderId) {
         hideUserMsg()
         // go to the clicked folder, while retaining only the compose part
         // of the search params
         const navigateArgs = {
-            pathname: `/email/${folder}`,
+            pathname: `/email/${folderId}`,
         }
         const composeVal = searchParams.get('compose')
         if (composeVal) {
@@ -275,7 +278,7 @@ export function EmailIndex() {
             ])
             setEmailsData({
                 emails,
-                folder: filter.folder,
+                folderId: filter.folderId,
             })
             setEmailCounts(emailCounts)
             // deselect any emails that have been filtered out
@@ -414,7 +417,7 @@ export function EmailIndex() {
 
                     {/* Folders */}
                     <EmailFolders
-                        activeFolder={params.folderId}
+                        activeFolderId={params.folderId}
                         onFolderClick={onFolderClick}
                         emailCounts={emailCounts}
                         onClose={onHideSidebar}

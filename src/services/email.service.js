@@ -51,7 +51,7 @@ function _doesEmailMatchFilter(email, filter) {
         }
     }
 
-    return _doesEmailBelongInFolder(email, filter.folder)
+    return _doesEmailBelongInFolder(email, filter.folderId)
 }
 
 async function query(filter) {
@@ -59,19 +59,19 @@ async function query(filter) {
     await _expandLabelsOnEmails(emails)
     if (filter) {
         emails = emails.filter((email) => _doesEmailMatchFilter(email, filter))
-        if (filter.folder != 'drafts') {
+        if (filter.folderId != 'drafts') {
             emails = emails.sort((e1, e2) => (e1.sentAt < e2.sentAt ? 1 : -1))
         }
     }
     return emails
 }
 
-function _doesEmailBelongInFolder(email, folder) {
-    if (folder != 'bin' && email.deletedAt !== null) {
+function _doesEmailBelongInFolder(email, folderId) {
+    if (folderId != 'bin' && email.deletedAt !== null) {
         return false
     }
 
-    switch (folder) {
+    switch (folderId) {
         case 'inbox':
             return (
                 email.sentAt !== null &&
@@ -91,8 +91,8 @@ function _doesEmailBelongInFolder(email, folder) {
         case 'bin':
             return email.deletedAt !== null
         default:
-            // folder is actually a label
-            return email.labels.map((l) => l.name).includes(folder)
+            // folderId is actually a label
+            return email.labels.map((l) => l.name).includes(folderId)
     }
     return true
 }
@@ -101,12 +101,12 @@ function _doesEmailBelongInFolder(email, folder) {
 // load all emails (pagination, filtering, etc)
 async function getEmailCountsPerFolder() {
     let emails = await storageService.query(STORAGE_KEY)
-    const folders = getAllFolderIds()
-    const counts = folders.map((folder) => {
+    const folderIds = getAllFolderIds()
+    const counts = folderIds.map((folderId) => {
         let total = 0,
             unread = 0
         emails.forEach((email) => {
-            if (_doesEmailBelongInFolder(email, folder)) {
+            if (_doesEmailBelongInFolder(email, folderId)) {
                 total++
                 if (email.isRead === false) {
                     unread++
@@ -116,7 +116,9 @@ async function getEmailCountsPerFolder() {
         return { total, unread }
     })
 
-    return Object.fromEntries(folders.map((folder, i) => [folder, counts[i]]))
+    return Object.fromEntries(
+        folderIds.map((folderId, i) => [folderId, counts[i]])
+    )
 }
 
 async function getById(id) {
@@ -218,7 +220,7 @@ function getDefaultFilter() {
         isRead: null,
         isStarred: null,
         searchString: '',
-        folder: null,
+        folderId: null,
     }
 }
 

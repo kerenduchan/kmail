@@ -4,7 +4,7 @@ import { SmallActionButton } from '../cmps/SmallActionButton'
 export function EmailPreview({
     isSelected,
     email,
-    folder,
+    folderId,
     onEmailClick,
     updateEmails,
     onDeleteEmail,
@@ -52,7 +52,7 @@ export function EmailPreview({
             </div>
 
             {/* First Column (From/To/Draft) */}
-            <FirstColumn folder={folder} email={email} />
+            <FirstColumn folderId={folderId} email={email} />
 
             {/* Subject */}
             <div className="email-preview-subject">
@@ -61,7 +61,7 @@ export function EmailPreview({
 
             {/* Sent at */}
             <div className="email-preview-sent-at">
-                {folder == 'drafts' ? '' : formatDateConcise(email.sentAt)}
+                {folderId == 'drafts' ? '' : formatDateConcise(email.sentAt)}
             </div>
 
             {/* Actions */}
@@ -82,9 +82,9 @@ export function EmailPreview({
     )
 }
 
-// dynamic component for first column depending on the folder
-function FirstColumn({ folder, email }) {
-    switch (folder) {
+// dynamic component for first column depending on the folder ID
+function FirstColumn({ folderId, email }) {
+    switch (folderId) {
         case 'sent':
             return (
                 <div className="email-preview-first-column">
