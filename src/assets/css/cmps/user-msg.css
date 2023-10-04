@@ -18,6 +18,7 @@
 
 .user-msg.progress {
     font-style: italic;
+    background-color: rgb(124, 126, 130);
 }
 
 .user-msg.error {
