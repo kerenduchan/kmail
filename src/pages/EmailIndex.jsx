@@ -26,6 +26,7 @@ import {
 } from '../services/event-bus.service'
 import { labelService } from '../services/label.service'
 import { getEmailFilterFromParams, sanitizeFilter } from '../util/util'
+import { buildMsgsForUpdateLabelsForEmails } from '../util/msgBuilder'
 
 // The email index - main component for managing emails
 export function EmailIndex() {
@@ -303,17 +304,16 @@ export function EmailIndex() {
 
     // add/remove the given label IDs to/from the given emails
     async function updateLabelsForEmails(emails, labelInfos) {
+        const { success, error } = buildMsgsForUpdateLabelsForEmails(
+            params.folderId,
+            emails,
+            labelInfos
+        )
         try {
-            await emailService.updateLabelsForEmails(emails, labelInfos)
-            const itemName =
-                (params.folderId == 'drafts' ? 'draft' : 'email') +
-                (emails.length > 1 ? 's' : '')
-            const action = labelInfos[0].isAdd ? 'added to' : 'removed from'
-            const labelName = labelInfos[0].label.name
-            const msg = `${emails.length} ${itemName} ${action} '${labelName}'.`
-            showSuccessMsg(msg)
+            await emailService.updateLabelsForEmails1(emails, labelInfos)
+            showSuccessMsg(success)
         } catch (e) {
-            showErrorMsg('Failed to add/remove labels.', e)
+            showErrorMsg(error, e)
         }
         loadEmails()
     }

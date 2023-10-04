@@ -34,7 +34,8 @@ export function showSuccessMsg(txt) {
 export function showErrorMsg(txt, err) {
     showUserMsg({ txt, type: 'error' })
     if (err) {
-        console.error(txt + ': ' + err)
+        console.error(txt)
+        console.error(err)
     }
 }
 
