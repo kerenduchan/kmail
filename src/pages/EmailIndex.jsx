@@ -334,6 +334,7 @@ export function EmailIndex() {
 
     // Delete all the given emails or drafts
     async function deleteEmailsByIds(emailIds) {
+        hideUserMsg()
         if (params.folderId == 'bin') {
             // Delete emails forever
             const { success, error } = buildMsgsForDeleteEmailsForever(
