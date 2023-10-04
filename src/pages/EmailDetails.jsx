@@ -29,17 +29,9 @@ export function EmailDetails() {
         },
     ] = useOutletContext()
 
-    const markAsReadTimeout = useRef(null)
-
     useEffect(() => {
-        // silently mark the email as read if it's been open for over 2 seconds
-        markAsReadTimeout.current = setTimeout(() => {
-            updateEmails([email], 'isRead', true, true)
-        }, 2000)
-
-        return () => {
-            clearTimeout(markAsReadTimeout.current)
-        }
+        // silently mark the email as read
+        updateEmails([email], 'isRead', true, true)
     }, [params.emailId])
 
     useEffect(() => {
@@ -69,7 +61,6 @@ export function EmailDetails() {
     }
 
     async function onMarkEmailAsUnread() {
-        clearTimeout(markAsReadTimeout.current)
         await updateEmails([email], 'isRead', false)
         navigateUp()
     }
