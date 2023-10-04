@@ -1,15 +1,10 @@
 import { useState, useEffect, useRef } from 'react'
 import { emailService } from '../services/email.service'
 import { useInterval } from '../useInterval'
-import {
-    showErrorMsg,
-    showProgressMsg,
-    showSuccessMsg,
-} from '../services/event-bus.service'
 import { useSearchParams } from 'react-router-dom'
 import { SmallActionButton } from '../cmps/SmallActionButton'
 
-export function EmailCompose({ onCloseClick, onDeleteDraft }) {
+export function EmailCompose({ onCloseClick, onDeleteDraft, onSendEmail }) {
     // Two-way binding with the form fields
     const [draft, setDraft] = useState(null)
 
@@ -35,6 +30,7 @@ export function EmailCompose({ onCloseClick, onDeleteDraft }) {
         handleSearchParamsChange()
     }, [searchParams])
 
+    // TODO: debounce - save only when user isn't typing
     useInterval(autoSaveDraft, 5000)
 
     function onMinimizeClick() {
@@ -62,21 +58,15 @@ export function EmailCompose({ onCloseClick, onDeleteDraft }) {
         }
     }
 
-    async function onSend() {
-        showProgressMsg('Sending email...')
-        try {
-            email.current = await emailService.sendEmail(email.current)
-            onCloseClick()
-            showSuccessMsg('Email sent.')
-        } catch (e) {
-            showErrorMsg('Failed to send email.', e)
-        }
-    }
-
     async function onDraftCloseClick() {
         if (isEdited.current) {
             await emailService.updateEmail(email.current)
         }
+        onCloseClick()
+    }
+
+    async function onSendClick() {
+        await onSendEmail(email.current)
         onCloseClick()
     }
 
@@ -212,7 +202,7 @@ export function EmailCompose({ onCloseClick, onDeleteDraft }) {
                         {/* Send */}
                         <button
                             className="strong-action-btn email-compose-action-send"
-                            onClick={onSend}
+                            onClick={onSendClick}
                         >
                             Send
                         </button>

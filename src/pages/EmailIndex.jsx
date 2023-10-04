@@ -31,6 +31,7 @@ import {
     buildMsgsForDeleteEmails,
     buildMsgsForDeleteLabel,
     buildMsgsForSaveLabel,
+    buildMsgsForSendEmail,
     buildMsgsForUpdateEmails,
     buildMsgsForUpdateLabelsForEmails,
 } from '../util/msgBuilder'
@@ -151,6 +152,19 @@ export function EmailIndex() {
             loadEmails()
         }
         onEmailComposeCloseClick()
+    }
+
+    // handle send click from the email compose dialog
+    async function onSendEmail(email) {
+        hideUserMsg()
+        const { progress, success, error } = buildMsgsForSendEmail()
+        showProgressMsg(progress)
+        try {
+            await emailService.sendEmail(email)
+            showSuccessMsg(success)
+        } catch (e) {
+            showErrorMsg(error, e)
+        }
     }
 
     // Handle an email click (show the email details or edit the draft)
@@ -481,6 +495,7 @@ export function EmailIndex() {
                 <EmailCompose
                     onCloseClick={onEmailComposeCloseClick}
                     onDeleteDraft={onDeleteDraft}
+                    onSendEmail={onSendEmail}
                 />
             )}
 

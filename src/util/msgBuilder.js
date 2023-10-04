@@ -1,9 +1,18 @@
 export {
+    buildMsgsForSendEmail,
     buildMsgsForUpdateLabelsForEmails,
     buildMsgsForDeleteEmails,
     buildMsgsForSaveLabel,
     buildMsgsForDeleteLabel,
     buildMsgsForUpdateEmails,
+}
+
+function buildMsgsForSendEmail() {
+    return _addPunctuation({
+        progress: 'Sending email',
+        success: 'Email sent',
+        error: 'Failed to send email',
+    })
 }
 
 function buildMsgsForUpdateLabelsForEmails(folderId, emails, labelInfos) {
