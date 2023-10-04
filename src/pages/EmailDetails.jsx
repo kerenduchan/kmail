@@ -23,14 +23,13 @@ import {
 } from '../util/msgBuilder'
 
 export function EmailDetails() {
-    const [email, setEmail] = useState(null)
     const [sentAtStr, setSentAtStr] = useState('')
     const intervalId = useRef(null)
 
     const params = useParams()
     const navigate = useNavigate()
     const location = useLocation()
-    const [labels] = useOutletContext()
+    const [email, labels, updateEmail, updateLabelsForEmails] = useOutletContext()
 
     useEffect(() => {
         loadEmailAndMarkAsRead()
@@ -110,21 +109,6 @@ export function EmailDetails() {
         )
     }
 
-    async function updateLabelsForEmails(emails, labelInfos) {
-        hideUserMsg()
-        const labelName = labelInfos[0].label.name
-        const isAdd = labelInfos[0].isAdd
-        try {
-            await emailService.updateLabelsForEmails(emails, labelInfos)
-            const action = isAdd ? 'added to' : 'removed from'
-            showSuccessMsg(`Email ${action} '${labelName}'.`)
-        } catch (e) {
-            const action = isAdd ? 'add email to' : 'remove email from'
-            showErrorMsg(`Failed to ${action} '${labelName}'`)
-        }
-        loadEmailAndMarkAsRead()
-    }
-
     // navigate to the containing folder, while retaining the
     // search params
     function navigateUp() {
@@ -136,10 +120,10 @@ export function EmailDetails() {
 
     async function loadEmailAndMarkAsRead() {
         try {
-            let tmpEmail = await emailService.getById(params.emailId)
-            tmpEmail = { ...tmpEmail, isRead: true }
-            await emailService.save(tmpEmail)
-            setEmail(tmpEmail)
+            //            let tmpEmail = await emailService.getById(params.emailId)
+            //            tmpEmail = { ...tmpEmail, isRead: true }
+            //            await emailService.save(tmpEmail)
+            //            setEmail(tmpEmail)
         } catch (err) {
             navigateUp()
             console.error('Had issues loading email or marking it as read', err)

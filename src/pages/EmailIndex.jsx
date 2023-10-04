@@ -375,6 +375,11 @@ export function EmailIndex() {
         return emailsData.emails.filter((e) => emailIds.includes(e.id))
     }
 
+    // get the email for the EmailDetails outlet, based on the URL params
+    function getEmailForDetails() {
+        return emailsData.emails.filter((e) => e.id === params.emailId)[0]
+    }
+
     /* JSX ===================================================================*/
 
     if (!emailsData || !emailCounts) return <div>Loading..</div>
@@ -424,7 +429,13 @@ export function EmailIndex() {
             {/* Main section (email list or email details) */}
             <section className="email-index-main">
                 {params.emailId ? (
-                    <Outlet context={[labels]} />
+                    <Outlet
+                        context={[
+                            getEmailForDetails(),
+                            labels,
+                            updateLabelsForEmails,
+                        ]}
+                    />
                 ) : (
                     <>
                         {/* Top bar for email list */}
