@@ -8,15 +8,9 @@ import {
     getContainingFolder,
 } from '../util/util'
 import { SmallActionButton } from '../cmps/SmallActionButton'
+import EmailLabelApplyMenu from '../cmps/email-label/EmailLabelApplyMenu'
 
 // services
-import { emailService } from '../services/email.service'
-import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
-import EmailLabelApplyMenu from '../cmps/email-label/EmailLabelApplyMenu'
-import {
-    buildMsgsForDeleteEmailsForever,
-    buildMsgsForMoveEmailsToBin,
-} from '../util/msgBuilder'
 
 export function EmailDetails() {
     const [sentAtStr, setSentAtStr] = useState('')
