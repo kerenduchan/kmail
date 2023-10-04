@@ -17,6 +17,10 @@ import {
     showSuccessMsg,
 } from '../services/event-bus.service'
 import EmailLabelApplyMenu from '../cmps/email-label/EmailLabelApplyMenu'
+import {
+    buildMsgsForDeleteEmailsForever,
+    buildMsgsForMoveEmailsToBin,
+} from '../util/msgBuilder'
 
 export function EmailDetails() {
     const [email, setEmail] = useState(null)
@@ -57,21 +61,29 @@ export function EmailDetails() {
         if (email.deletedAt !== null) {
             try {
                 // permanently delete
+                const { success, error } = buildMsgsForDeleteEmailsForever(
+                    params.folderId,
+                    [email]
+                )
                 await emailService.remove(email.id)
                 navigateUp()
-                showSuccessMsg('Email deleted forever.')
-            } catch (err) {
-                showErrorMsg('Failed to delete email forever.')
+                showSuccessMsg(success)
+            } catch (e) {
+                showErrorMsg(error, e)
             }
         } else {
             try {
                 // move to bin
+                const { success, error } = buildMsgsForMoveEmailsToBin(
+                    params.folderId,
+                    [email]
+                )
                 email.deletedAt = Date.now()
                 await emailService.save(email)
                 navigateUp()
-                showSuccessMsg('Email moved to Bin.')
-            } catch (err) {
-                showErrorMsg('Failed to move email to Bin.')
+                showSuccessMsg(success)
+            } catch (e) {
+                showErrorMsg(error, e)
             }
         }
     }

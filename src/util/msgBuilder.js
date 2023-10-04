@@ -26,7 +26,7 @@ function buildMsgsForUpdateLabelsForEmails(folderId, emails, labelInfos) {
 
 function buildMsgsForDeleteEmailsForever(folderId, emailIds) {
     const subject = _getItemDescription(folderId, emailIds)
-    const success = `${subject} deleted forever`
+    const success = _uppercaseFirstLetter(`${subject} deleted forever`)
     const error = `Failed to delete ${subject} forever`
     return _addFullStop({ success, error })
 }
