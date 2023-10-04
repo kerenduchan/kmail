@@ -25,8 +25,15 @@ export function EmailDetails() {
     const params = useParams()
     const navigate = useNavigate()
     const location = useLocation()
-    const [{ email, labels, updateEmails, updateLabelsForEmails }] =
-        useOutletContext()
+    const [
+        {
+            email,
+            labels,
+            updateEmails,
+            deleteEmailsByIds,
+            updateLabelsForEmails,
+        },
+    ] = useOutletContext()
 
     const markAsReadTimeout = useRef(null)
 
@@ -63,34 +70,8 @@ export function EmailDetails() {
     // Either move the email to the bin or delete it forever if it's already
     // in the bin.
     async function onDeleteEmail() {
-        if (email.deletedAt !== null) {
-            const { success, error } = buildMsgsForDeleteEmailsForever(
-                params.folderId,
-                [email]
-            )
-            try {
-                // permanently delete
-                await emailService.remove(email.id)
-                navigateUp()
-                showSuccessMsg(success)
-            } catch (e) {
-                showErrorMsg(error, e)
-            }
-        } else {
-            const { success, error } = buildMsgsForMoveEmailsToBin(
-                params.folderId,
-                [email]
-            )
-            try {
-                // move to bin
-                email.deletedAt = Date.now()
-                await emailService.save(email)
-                navigateUp()
-                showSuccessMsg(success)
-            } catch (e) {
-                showErrorMsg(error, e)
-            }
-        }
+        await deleteEmailsByIds([email.id])
+        navigateUp()
     }
 
     async function onMarkEmailAsUnread() {

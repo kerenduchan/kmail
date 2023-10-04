@@ -350,6 +350,7 @@ export function EmailIndex() {
             )
             try {
                 await emailService.deleteEmailsByIds(emailIds)
+                await loadEmails()
                 showSuccessMsg(success)
             } catch (err) {
                 showErrorMsg(error)
@@ -366,12 +367,12 @@ export function EmailIndex() {
                     e.deletedAt = Date.now()
                 })
                 await emailService.updateMany(emails)
+                await loadEmails()
                 showSuccessMsg(success)
             } catch (err) {
                 showErrorMsg(error)
             }
         }
-        await loadEmails()
     }
 
     // Get emails by IDs
@@ -442,6 +443,7 @@ export function EmailIndex() {
                                 email: getEmailForDetails(),
                                 labels,
                                 updateEmails,
+                                deleteEmailsByIds,
                                 updateLabelsForEmails,
                             },
                         ]}
