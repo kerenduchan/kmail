@@ -446,6 +446,7 @@ export function EmailIndex() {
                                 updateEmails,
                                 deleteEmailsByIds,
                                 updateLabelsForEmails,
+                                onLabelClick,
                             },
                         ]}
                     />

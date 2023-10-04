@@ -26,6 +26,7 @@ export function EmailDetails() {
             updateEmails,
             deleteEmailsByIds,
             updateLabelsForEmails,
+            onLabelClick,
         },
     ] = useOutletContext()
 
@@ -65,7 +66,7 @@ export function EmailDetails() {
         navigateUp()
     }
 
-    async function onRemoveLabel(label) {
+    async function onRemoveLabelClick(label) {
         await updateLabelsForEmails(
             [email],
             [
@@ -125,12 +126,15 @@ export function EmailDetails() {
                     <div className="email-details-labels">
                         {email.labels.map((l) => (
                             <div key={l.id} className="email-details-label">
-                                <div className="email-details-label-name">
+                                <button
+                                    className="email-details-label-name"
+                                    onClick={() => onLabelClick(l)}
+                                >
                                     {l.name}
-                                </div>
+                                </button>
                                 <button
                                     className="email-details-label-delete"
-                                    onClick={() => onRemoveLabel(l)}
+                                    onClick={() => onRemoveLabelClick(l)}
                                 ></button>
                             </div>
                         ))}
