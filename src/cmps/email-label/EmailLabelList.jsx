@@ -4,12 +4,12 @@ import { useNavigate, useParams } from 'react-router'
 
 export function EmailLabelList({
     labels,
+    onLabelClick,
     onDeleteLabelClick,
     onEditLabelClick,
 }) {
     const [selectedLabelId, setSelectedLabelId] = useState(null)
     const params = useParams()
-    const navigate = useNavigate()
 
     useEffect(() => {
         const found = labels.filter((l) => l.name == params.folderId)
@@ -18,10 +18,6 @@ export function EmailLabelList({
             setSelectedLabelId(found[0].id)
         }
     }, [params])
-
-    function onLabelClick(label) {
-        navigate(`/email/${label.name}`)
-    }
 
     return (
         <ul className="email-label-list">

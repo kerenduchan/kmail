@@ -51,23 +51,22 @@ function _doesEmailMatchFilter(email, filter) {
         }
     }
 
-    return doesEmailBelongInFolder(email, filter.folder)
+    return _doesEmailBelongInFolder(email, filter.folder)
 }
 
 async function query(filter) {
     let emails = await storageService.query(STORAGE_KEY)
+    await _expandLabelsOnEmails(emails)
     if (filter) {
         emails = emails.filter((email) => _doesEmailMatchFilter(email, filter))
         if (filter.folder != 'drafts') {
             emails = emails.sort((e1, e2) => (e1.sentAt < e2.sentAt ? 1 : -1))
         }
     }
-
-    await _expandLabelsOnEmails(emails)
     return emails
 }
 
-function doesEmailBelongInFolder(email, folder) {
+function _doesEmailBelongInFolder(email, folder) {
     if (folder != 'bin' && email.deletedAt !== null) {
         return false
     }
@@ -91,6 +90,9 @@ function doesEmailBelongInFolder(email, folder) {
             return email.sentAt != null
         case 'bin':
             return email.deletedAt !== null
+        default:
+            // folder is actually a label
+            return email.labels.map((l) => l.name).includes(folder)
     }
     return true
 }
@@ -104,7 +106,7 @@ async function getEmailCountsPerFolder() {
         let total = 0,
             unread = 0
         emails.forEach((email) => {
-            if (doesEmailBelongInFolder(email, folder)) {
+            if (_doesEmailBelongInFolder(email, folder)) {
                 total++
                 if (email.isRead === false) {
                     unread++

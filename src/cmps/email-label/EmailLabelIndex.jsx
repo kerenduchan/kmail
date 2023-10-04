@@ -3,7 +3,8 @@ import { EmailLabelList } from './EmailLabelList'
 
 export function EmailLabelIndex({
     labels,
-    onCreateClick,
+    onLabelClick,
+    onCreateLabelClick,
     onDeleteLabelClick,
     onEditLabelClick,
 }) {
@@ -13,12 +14,13 @@ export function EmailLabelIndex({
             <div className="email-label-index-actions">
                 <SmallActionButton
                     type="create"
-                    onClick={onCreateClick}
+                    onClick={onCreateLabelClick}
                     title="Create new label"
                 />
             </div>
             <EmailLabelList
                 labels={labels}
+                onLabelClick={onLabelClick}
                 onDeleteLabelClick={onDeleteLabelClick}
                 onEditLabelClick={onEditLabelClick}
             />

@@ -227,6 +227,11 @@ export function EmailIndex() {
         onHideCreateLabelDialog()
     }
 
+    // Handle a click on the given label
+    async function onLabelClick(label) {
+        navigate(`/email/${label.name}`)
+    }
+
     // Handle a click on the delete label button for the given label
     async function onDeleteLabelClick(label) {
         hideUserMsg()
@@ -418,7 +423,8 @@ export function EmailIndex() {
                     {/* Labels */}
                     <EmailLabelIndex
                         labels={labels}
-                        onCreateClick={() => onShowCreateLabelDialog()}
+                        onLabelClick={onLabelClick}
+                        onCreateLabelClick={() => onShowCreateLabelDialog()}
                         onDeleteLabelClick={onDeleteLabelClick}
                         onEditLabelClick={onEditLabelClick}
                     />
