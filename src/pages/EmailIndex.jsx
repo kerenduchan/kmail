@@ -29,6 +29,7 @@ import { getEmailFilterFromParams, sanitizeFilter } from '../util/util'
 import {
     buildMsgsForDeleteEmailsForever,
     buildMsgsForMoveEmailsToBin,
+    buildMsgsForSaveLabel,
     buildMsgsForUpdateLabelsForEmails,
 } from '../util/msgBuilder'
 
@@ -220,16 +221,19 @@ export function EmailIndex() {
 
     // Handle a click on the create/save button in the label create/edit dialog
     async function onSaveLabelClick(label) {
-        if (label.id) {
-            await labelService.updateLabel(label)
-        } else {
-            await labelService.createLabel(label)
+        const { success, error } = buildMsgsForSaveLabel(label)
+        try {
+            if (label.id) {
+                await labelService.updateLabel(label)
+            } else {
+                await labelService.createLabel(label)
+            }
+            await loadLabels()
+            showSuccessMsg(success)
+        } catch (e) {
+            showErrorMsg(error, e)
         }
         onHideCreateLabelDialog()
-        await loadLabels()
-        showSuccessMsg(
-            `Label '${label.name}' ` + (label.id ? 'updated.' : 'created.')
-        )
     }
 
     // Handle a click on the delete label button for the given label
