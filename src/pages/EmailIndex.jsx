@@ -26,7 +26,11 @@ import {
 } from '../services/event-bus.service'
 import { labelService } from '../services/label.service'
 import { getEmailFilterFromParams, sanitizeFilter } from '../util/util'
-import { buildMsgsForUpdateLabelsForEmails } from '../util/msgBuilder'
+import {
+    buildMsgsForDeleteEmailsForever,
+    buildMsgsForMoveEmailsToBin,
+    buildMsgsForUpdateLabelsForEmails,
+} from '../util/msgBuilder'
 
 // The email index - main component for managing emails
 export function EmailIndex() {
@@ -273,7 +277,7 @@ export function EmailIndex() {
                 )
             )
         } catch (err) {
-            showErrorMsg('Error loading emails' + err)
+            showErrorMsg('Error loading emails', err)
         }
     }
 
@@ -283,7 +287,7 @@ export function EmailIndex() {
             const labels = await labelService.getAllLabels()
             setLabels(labels)
         } catch (err) {
-            showErrorMsg('Error loading labels' + err)
+            showErrorMsg('Error loading labels', err)
         }
     }
 
@@ -320,35 +324,33 @@ export function EmailIndex() {
 
     // Delete all the given emails or drafts
     async function deleteEmailsByIds(emailIds) {
-        const suffix = emailIds.length === 1 ? '' : 's'
-
         if (params.folderId == 'bin') {
             // Delete emails forever
+            const { success, error } = buildMsgsForDeleteEmailsForever(
+                params.folderId,
+                emailIds
+            )
             try {
                 await emailService.deleteEmailsByIds(emailIds)
-                showSuccessMsg(`Email${suffix} deleted forever.`)
+                showSuccessMsg(success)
             } catch (err) {
-                showErrorMsg(`Failed to delete email${suffix} forever.`)
+                showErrorMsg(error)
             }
         } else {
             // Move emails to bin
+            const { success, error } = buildMsgsForMoveEmailsToBin(
+                params.folderId,
+                emailIds
+            )
             try {
                 const emails = getEmailsByIds(emailIds)
                 emails.forEach((e) => {
                     e.deletedAt = Date.now()
                 })
                 await emailService.updateMany(emails)
-                showSuccessMsg(
-                    filter.folder == 'drafts'
-                        ? `Draft${suffix} discarded.`
-                        : `Email${suffix} moved to Bin.`
-                )
+                showSuccessMsg(success)
             } catch (err) {
-                showErrorMsg(
-                    filter.folder == 'drafts'
-                        ? `Failed to discard draft${suffix}.`
-                        : `Failed to move email${suffix} to Bin.`
-                )
+                showErrorMsg(error)
             }
         }
         await loadEmails()

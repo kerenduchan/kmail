@@ -1,4 +1,8 @@
-export { buildMsgsForUpdateLabelsForEmails }
+export {
+    buildMsgsForUpdateLabelsForEmails,
+    buildMsgsForDeleteEmailsForever,
+    buildMsgsForMoveEmailsToBin,
+}
 
 function buildMsgsForUpdateLabelsForEmails(folderId, emails, labelInfos) {
     const subject = _getItemDescription(folderId, emails)
@@ -16,6 +20,29 @@ function buildMsgsForUpdateLabelsForEmails(folderId, emails, labelInfos) {
 
     return { success, error }
 }
+
+function buildMsgsForDeleteEmailsForever(folderId, emailIds) {
+    const subject = _getItemDescription(folderId, emailIds)
+    const success = `${subject} deleted forever.`
+    const error = `Failed to delete ${subject} forever.`
+    return { success, error }
+}
+
+function buildMsgsForMoveEmailsToBin(folderId, emailIds) {
+    const subject = _getItemDescription(folderId, emailIds)
+
+    // success message
+    const action = folderId == 'drafts' ? 'discarded' : 'moved to Bin'
+    const success = `${subject} ${action}.`
+
+    // error message
+    const failedAction =
+        folderId == 'drafts' ? `discard ${subject}` : `move ${subject} to Bin`
+    const error = `Failed to ${failedAction}`
+    return { success, error }
+}
+
+// helper functions
 
 function _getItemDescription(folderId, emails) {
     const suffix = emails.length > 1 ? 's' : ''
