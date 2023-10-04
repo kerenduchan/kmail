@@ -22,6 +22,7 @@ import { emailService } from '../services/email.service'
 import {
     hideUserMsg,
     showErrorMsg,
+    showProgressMsg,
     showSuccessMsg,
 } from '../services/event-bus.service'
 import { labelService } from '../services/label.service'
@@ -301,21 +302,22 @@ export function EmailIndex() {
             ...e,
             [field]: value,
         }))
-        const msgs = buildMsgsForUpdateEmails(
+        const { progress, success, error } = buildMsgsForUpdateEmails(
             params.folderId,
             emailsToUpdate,
             field,
             value
         )
         hideUserMsg()
+        showProgressMsg(progress)
         try {
             await emailService.updateMany(emailsToUpdate)
-            if (!silent) {
-                showSuccessMsg(msgs.success)
-            }
             await loadEmails()
+            if (!silent) {
+                showSuccessMsg(success)
+            }
         } catch (e) {
-            showErrorMsg(msgs.error, e)
+            showErrorMsg(error, e)
         }
     }
 
@@ -434,9 +436,12 @@ export function EmailIndex() {
                 {params.emailId ? (
                     <Outlet
                         context={[
-                            getEmailForDetails(),
-                            labels,
-                            updateLabelsForEmails,
+                            {
+                                email: getEmailForDetails(),
+                                labels,
+                                updateEmails,
+                                updateLabelsForEmails,
+                            },
                         ]}
                     />
                 ) : (

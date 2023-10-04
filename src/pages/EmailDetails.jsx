@@ -11,11 +11,7 @@ import { SmallActionButton } from '../cmps/SmallActionButton'
 
 // services
 import { emailService } from '../services/email.service'
-import {
-    hideUserMsg,
-    showErrorMsg,
-    showSuccessMsg,
-} from '../services/event-bus.service'
+import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 import EmailLabelApplyMenu from '../cmps/email-label/EmailLabelApplyMenu'
 import {
     buildMsgsForDeleteEmailsForever,
@@ -29,7 +25,8 @@ export function EmailDetails() {
     const params = useParams()
     const navigate = useNavigate()
     const location = useLocation()
-    const [email, labels, updateEmail, updateLabelsForEmails] = useOutletContext()
+    const [{ email, labels, updateEmails, updateLabelsForEmails }] =
+        useOutletContext()
 
     useEffect(() => {
         loadEmailAndMarkAsRead()
@@ -88,13 +85,8 @@ export function EmailDetails() {
     }
 
     async function onMarkEmailAsUnread() {
-        try {
-            let updatedEmail = { ...email, isRead: false }
-            await emailService.save(updatedEmail)
-            navigateUp()
-        } catch (err) {
-            console.log('Had issues marking email as unread', err)
-        }
+        await updateEmails([email], 'isRead', false)
+        navigateUp()
     }
 
     async function onRemoveLabel(label) {
