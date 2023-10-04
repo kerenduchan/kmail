@@ -2,13 +2,11 @@ import { useEffect, useState } from 'react'
 import { MultiSelector } from './MultiSelector'
 import { SmallActionButton } from './SmallActionButton'
 import EmailLabelApplyMenu from './email-label/EmailLabelApplyMenu'
-import { buildMsgsForUpdateEmails } from '../util/msgBuilder'
 
 export function EmailListTopbar({
     emails,
     selectedEmailIds,
     labels,
-    folderId,
     onMultiSelectorChange,
     onDeleteClick,
     updateEmails,
@@ -49,12 +47,12 @@ export function EmailListTopbar({
 
     // Handle a click on the read/unread button
     async function onReadOrUnreadClick() {
-        onUpdateSelectedEmails('isRead', !areAllRead)
+        updateEmails(getSelectedEmails(), 'isRead', !areAllRead)
     }
 
     // Handle a click on the star/unstar button
     async function onStarOrUnstarClick() {
-        onUpdateSelectedEmails('isStarred', !areAllStarred)
+        updateEmails(getSelectedEmails(), 'isStarred', !areAllStarred)
     }
 
     function onCheckboxClick() {
@@ -67,22 +65,6 @@ export function EmailListTopbar({
                 onMultiSelectorChange('all')
                 break
         }
-    }
-
-    // Handle a click on the read/starred buttons - update all
-    // the selected emails accordingly.
-    async function onUpdateSelectedEmails(field, value) {
-        const emailsToUpdate = getSelectedEmails().map((e) => ({
-            ...e,
-            [field]: value,
-        }))
-        const msgs = buildMsgsForUpdateEmails(
-            folderId,
-            emailsToUpdate,
-            field,
-            value
-        )
-        updateEmails(emailsToUpdate, msgs)
     }
 
     function getSelectedEmails() {

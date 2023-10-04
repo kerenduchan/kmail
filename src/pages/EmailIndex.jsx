@@ -31,6 +31,7 @@ import {
     buildMsgsForDeleteLabel,
     buildMsgsForMoveEmailsToBin,
     buildMsgsForSaveLabel,
+    buildMsgsForUpdateEmails,
     buildMsgsForUpdateLabelsForEmails,
 } from '../util/msgBuilder'
 
@@ -304,12 +305,25 @@ export function EmailIndex() {
         }
     }
 
-    // Update all the given emails
-    async function updateEmails(emails, msgs) {
+    // Update all the given emails -
+    // Change the given field to be the given value
+    async function updateEmails(emails, field, value, silent = false) {
+        const emailsToUpdate = emails.map((e) => ({
+            ...e,
+            [field]: value,
+        }))
+        const msgs = buildMsgsForUpdateEmails(
+            params.folderId,
+            emailsToUpdate,
+            field,
+            value
+        )
         hideUserMsg()
         try {
-            await emailService.updateMany(emails)
-            showSuccessMsg(msgs.success)
+            await emailService.updateMany(emailsToUpdate)
+            if (!silent) {
+                showSuccessMsg(msgs.success)
+            }
             await loadEmails()
         } catch (e) {
             showErrorMsg(msgs.error, e)
@@ -443,7 +457,6 @@ export function EmailIndex() {
                             emails={emailsData.emails}
                             selectedEmailIds={selectedEmailIds}
                             labels={labels}
-                            folderId={params.folderId}
                             onMultiSelectorChange={onMultiSelectorChange}
                             onDeleteClick={onDeleteSelectedEmailsClick}
                             updateEmails={updateEmails}
