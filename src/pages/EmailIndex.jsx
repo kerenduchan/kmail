@@ -28,9 +28,8 @@ import {
 import { labelService } from '../services/label.service'
 import { getEmailFilterFromParams, sanitizeFilter } from '../util/util'
 import {
-    buildMsgsForDeleteEmailsForever,
+    buildMsgsForDeleteEmails,
     buildMsgsForDeleteLabel,
-    buildMsgsForMoveEmailsToBin,
     buildMsgsForSaveLabel,
     buildMsgsForUpdateEmails,
     buildMsgsForUpdateLabelsForEmails,
@@ -341,37 +340,29 @@ export function EmailIndex() {
 
     // Delete all the given emails or drafts
     async function deleteEmailsByIds(emailIds) {
+        const { progress, success, error } = buildMsgsForDeleteEmails(
+            params.folderId,
+            emailIds
+        )
         hideUserMsg()
-        if (params.folderId == 'bin') {
-            // Delete emails forever
-            const { success, error } = buildMsgsForDeleteEmailsForever(
-                params.folderId,
-                emailIds
-            )
-            try {
+        showProgressMsg(progress)
+
+        try {
+            if (params.folderId == 'bin') {
+                // Delete emails forever
                 await emailService.deleteEmailsByIds(emailIds)
-                await loadEmails()
-                showSuccessMsg(success)
-            } catch (err) {
-                showErrorMsg(error)
-            }
-        } else {
-            // Move emails to bin
-            const { success, error } = buildMsgsForMoveEmailsToBin(
-                params.folderId,
-                emailIds
-            )
-            try {
+            } else {
+                // Move emails to bin
                 const emails = getEmailsByIds(emailIds)
                 emails.forEach((e) => {
                     e.deletedAt = Date.now()
                 })
                 await emailService.updateMany(emails)
-                await loadEmails()
-                showSuccessMsg(success)
-            } catch (err) {
-                showErrorMsg(error)
             }
+            await loadEmails()
+            showSuccessMsg(success)
+        } catch (e) {
+            showErrorMsg(error, e)
         }
     }
 

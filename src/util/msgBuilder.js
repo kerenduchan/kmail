@@ -1,7 +1,6 @@
 export {
     buildMsgsForUpdateLabelsForEmails,
-    buildMsgsForDeleteEmailsForever,
-    buildMsgsForMoveEmailsToBin,
+    buildMsgsForDeleteEmails,
     buildMsgsForSaveLabel,
     buildMsgsForDeleteLabel,
     buildMsgsForUpdateEmails,
@@ -24,25 +23,35 @@ function buildMsgsForUpdateLabelsForEmails(folderId, emails, labelInfos) {
     return _addPunctuation({ success, error })
 }
 
-function buildMsgsForDeleteEmailsForever(folderId, emailIds) {
-    const subject = _getItemDescription(folderId, emailIds)
-    const success = _uppercaseFirstLetter(`${subject} deleted forever`)
-    const error = `Failed to delete ${subject} forever`
-    return _addPunctuation({ success, error })
-}
+function buildMsgsForDeleteEmails(folderId, emailIds) {
+    let progress, success, error
+    if (folderId == 'bin') {
+        // delete forever
+        const subject = _getItemDescription(folderId, emailIds)
+        progress = `Deleting ${subject} forever`
+        success = _uppercaseFirstLetter(`${subject} deleted forever`)
+        error = `Failed to delete ${subject} forever`
+    } else {
+        // move to bin
+        const subject = _getItemDescription(folderId, emailIds)
 
-function buildMsgsForMoveEmailsToBin(folderId, emailIds) {
-    const subject = _getItemDescription(folderId, emailIds)
+        // success message
+        const action = folderId == 'drafts' ? 'discarded' : 'moved to Bin'
+        progress =
+            folderId == 'drafts'
+                ? `Discarding ${subject}`
+                : `Moving ${subject} to Bin`
+        success = _uppercaseFirstLetter(`${subject} ${action}`)
 
-    // success message
-    const action = folderId == 'drafts' ? 'discarded' : 'moved to Bin'
-    const success = _uppercaseFirstLetter(`${subject} ${action}`)
+        // error message
+        const failedAction =
+            folderId == 'drafts'
+                ? `discard ${subject}`
+                : `move ${subject} to Bin`
+        error = `Failed to ${failedAction}`
+    }
 
-    // error message
-    const failedAction =
-        folderId == 'drafts' ? `discard ${subject}` : `move ${subject} to Bin`
-    const error = `Failed to ${failedAction}`
-    return _addPunctuation({ success, error })
+    return _addPunctuation({ progress, success, error })
 }
 
 function buildMsgsForSaveLabel(label) {
