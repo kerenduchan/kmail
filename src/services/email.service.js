@@ -148,7 +148,12 @@ function save(email) {
 }
 
 async function updateMany(emails) {
-    return storageService.putMany(STORAGE_KEY, emails)
+    // remove expanded labels field
+    const emailsToSave = emails.map((e) => {
+        delete e.labels
+        return e
+    })
+    return storageService.putMany(STORAGE_KEY, emailsToSave)
 }
 
 // add/remove the given label IDs to/from the given emails
