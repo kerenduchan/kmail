@@ -6,7 +6,7 @@
         'header         search'
         'compose-button main'
         'sidebar        main';
-    grid-template-rows: auto auto auto 1fr;
+    grid-template-rows: auto auto 1fr;
     grid-template-columns: 256px 1fr;
 }
 
