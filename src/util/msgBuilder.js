@@ -3,6 +3,7 @@ export {
     buildMsgsForDeleteEmailsForever,
     buildMsgsForMoveEmailsToBin,
     buildMsgsForSaveLabel,
+    buildMsgsForDeleteLabel,
 }
 
 function buildMsgsForUpdateLabelsForEmails(folderId, emails, labelInfos) {
@@ -46,14 +47,24 @@ function buildMsgsForMoveEmailsToBin(folderId, emailIds) {
 }
 
 function buildMsgsForSaveLabel(label) {
+    return _buildMsgsForSaveOrDeleteLabel(label, false)
+}
+
+function buildMsgsForDeleteLabel(label) {
+    return _buildMsgsForSaveOrDeleteLabel(label, true)
+}
+
+// `Label '${label.name}' deleted.`)
+
+function _buildMsgsForSaveOrDeleteLabel(label, isDelete) {
     const subject = 'label' + (label.name.length ? ` '${label.name}'` : '')
 
     // success message
-    const action = label.id ? 'updated' : 'created'
+    const action = isDelete ? 'deleted' : label.id ? 'updated' : 'created'
     const success = _uppercaseFirstLetter(`${subject} ${action}.`)
 
     // error message
-    const failedAction = label.id ? 'update' : 'create'
+    const failedAction = isDelete ? 'delete' : label.id ? 'update' : 'create'
     const error = `Failed to ${failedAction} ${subject}.`
 
     return { success, error }

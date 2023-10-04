@@ -28,6 +28,7 @@ import { labelService } from '../services/label.service'
 import { getEmailFilterFromParams, sanitizeFilter } from '../util/util'
 import {
     buildMsgsForDeleteEmailsForever,
+    buildMsgsForDeleteLabel,
     buildMsgsForMoveEmailsToBin,
     buildMsgsForSaveLabel,
     buildMsgsForUpdateLabelsForEmails,
@@ -238,12 +239,16 @@ export function EmailIndex() {
 
     // Handle a click on the delete label button for the given label
     async function onDeleteLabelClick(label) {
-        await emailService.removeLabelFromAllEmails(label.id)
-        await loadEmails()
-        // delete the label from the list of labels
-        await labelService.deleteLabel(label.id)
-        await loadLabels()
-        showSuccessMsg(`Label '${label.name}' deleted.`)
+        const { success, error } = buildMsgsForDeleteLabel(label)
+        try {
+            await emailService.removeLabelFromAllEmails(label.id)
+            await loadEmails()
+            await labelService.deleteLabel(label.id)
+            await loadLabels()
+            showSuccessMsg(success)
+        } catch (e) {
+            showErrorMsg(error, e)
+        }
     }
 
     // Handle a click on the edit label button for the given label
