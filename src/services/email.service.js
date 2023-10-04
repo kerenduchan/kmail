@@ -1,4 +1,4 @@
-import { getAllFolderIds } from '../util.js'
+import { getAllFolderIds } from '../util/util.js'
 import { storageService } from './async-storage.service.js'
 import { utilService } from './util.service.js'
 import { labelService } from './label.service.js'

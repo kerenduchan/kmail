@@ -6,7 +6,7 @@ import {
     formatDateVerbose,
     getFolderNameById,
     getContainingFolder,
-} from '../util'
+} from '../util/util'
 import { SmallActionButton } from '../cmps/SmallActionButton'
 
 // services

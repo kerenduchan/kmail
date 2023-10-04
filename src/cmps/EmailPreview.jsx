@@ -1,4 +1,4 @@
-import { formatDateConcise } from '../util'
+import { formatDateConcise } from '../util/util'
 import { SmallActionButton } from '../cmps/SmallActionButton'
 
 export function EmailPreview({

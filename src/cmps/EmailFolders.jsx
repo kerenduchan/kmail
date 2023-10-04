@@ -1,4 +1,4 @@
-import { getAllFolders } from '../util'
+import { getAllFolders } from '../util/util'
 
 export function EmailFolders({
     activeFolder,

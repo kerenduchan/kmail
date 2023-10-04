@@ -25,7 +25,7 @@ import {
     showSuccessMsg,
 } from '../services/event-bus.service'
 import { labelService } from '../services/label.service'
-import { getEmailFilterFromParams, sanitizeFilter } from '../util'
+import { getEmailFilterFromParams, sanitizeFilter } from '../util/util'
 
 // The email index - main component for managing emails
 export function EmailIndex() {

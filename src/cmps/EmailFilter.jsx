@@ -1,4 +1,4 @@
-import { strToNullableBool } from '../util'
+import { strToNullableBool } from '../util/util'
 export function EmailFilter({ filter, onChange }) {
     function handleChange(ev) {
         let { value, name: field, type } = ev.target
