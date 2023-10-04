@@ -140,6 +140,11 @@ function save(email) {
     const emailToSave = { ...email }
     delete emailToSave.labels
 
+    // make sure there's a labelIds field
+    if (email.labelIds === undefined) {
+        email.labelIds = []
+    }
+
     if (email.id) {
         return storageService.put(STORAGE_KEY, email)
     } else {
