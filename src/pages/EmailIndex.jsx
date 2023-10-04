@@ -304,17 +304,14 @@ export function EmailIndex() {
     }
 
     // Update all the given emails
-    async function updateEmails(emails, msg) {
+    async function updateEmails(emails, msgs) {
         hideUserMsg()
         try {
             await emailService.updateMany(emails)
-            showSuccessMsg(msg)
+            showSuccessMsg(msgs.success)
             await loadEmails()
-        } catch (err) {
-            showErrorMsg(
-                `Failed to update email${emails.length === 1 ? '' : 's'}`,
-                err
-            )
+        } catch (e) {
+            showErrorMsg(msgs.error, e)
         }
     }
 

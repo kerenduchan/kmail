@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { MultiSelector } from './MultiSelector'
 import { SmallActionButton } from './SmallActionButton'
 import EmailLabelApplyMenu from './email-label/EmailLabelApplyMenu'
+import { buildMsgsForUpdateEmails } from '../util/msgBuilder'
 
 export function EmailListTopbar({
     emails,
@@ -71,25 +72,17 @@ export function EmailListTopbar({
     // Handle a click on the read/starred buttons - update all
     // the selected emails accordingly.
     async function onUpdateSelectedEmails(field, value) {
-        let msg = ''
-        if (selectedEmailIds.length === 1) {
-            msg = folderId == 'drafts' ? 'Draft' : 'Email'
-        } else {
-            msg =
-                `${selectedEmailIds.length} ` +
-                (folderId == 'drafts' ? 'drafts' : 'emails')
-        }
-        if (field == 'isRead') {
-            msg += ' marked as ' + (value ? 'read' : 'unread') + '.'
-        } else if (field == 'isStarred') {
-            msg += ` ${value ? 'starred' : 'unstarred'}.`
-        }
-
         const emailsToUpdate = getSelectedEmails().map((e) => ({
             ...e,
             [field]: value,
         }))
-        updateEmails(emailsToUpdate, msg)
+        const msgs = buildMsgsForUpdateEmails(
+            folderId,
+            emailsToUpdate,
+            field,
+            value
+        )
+        updateEmails(emailsToUpdate, msgs)
     }
 
     function getSelectedEmails() {
