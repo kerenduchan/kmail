@@ -6,16 +6,12 @@ export function EmailPreview({
     email,
     folder,
     onEmailClick,
-    onUpdateEmail,
+    updateEmails,
     onDeleteEmail,
     onEmailCheckboxClick,
 }) {
     function onToggleField(field) {
-        const emailAfterUpdate = {
-            ...email,
-            [field]: !email[field],
-        }
-        onUpdateEmail(emailAfterUpdate)
+        updateEmails([email], field, !email[field])
     }
 
     return (

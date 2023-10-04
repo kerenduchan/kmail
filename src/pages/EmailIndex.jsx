@@ -126,17 +126,6 @@ export function EmailIndex() {
         })
     }
 
-    // Handle a change in the email, such as mark as read (save the email)
-    async function onUpdateEmail(email) {
-        hideUserMsg()
-        try {
-            await emailService.save(email)
-            await loadEmails()
-        } catch (err) {
-            showErrorMsg('Failed to update email', err)
-        }
-    }
-
     // Handle the compose email dialog being closed
     function onEmailComposeCloseClick() {
         // close the compose dialog
@@ -466,7 +455,7 @@ export function EmailIndex() {
                         {/* Email list */}
                         <EmailList
                             emailsData={{ ...emailsData, selectedEmailIds }}
-                            onUpdateEmail={onUpdateEmail}
+                            updateEmails={updateEmails}
                             onDeleteEmail={(email) =>
                                 deleteEmailsByIds([email.id])
                             }
