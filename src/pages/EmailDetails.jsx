@@ -59,12 +59,12 @@ export function EmailDetails() {
     // in the bin.
     async function onDeleteEmail() {
         if (email.deletedAt !== null) {
+            const { success, error } = buildMsgsForDeleteEmailsForever(
+                params.folderId,
+                [email]
+            )
             try {
                 // permanently delete
-                const { success, error } = buildMsgsForDeleteEmailsForever(
-                    params.folderId,
-                    [email]
-                )
                 await emailService.remove(email.id)
                 navigateUp()
                 showSuccessMsg(success)
@@ -72,12 +72,12 @@ export function EmailDetails() {
                 showErrorMsg(error, e)
             }
         } else {
+            const { success, error } = buildMsgsForMoveEmailsToBin(
+                params.folderId,
+                [email]
+            )
             try {
                 // move to bin
-                const { success, error } = buildMsgsForMoveEmailsToBin(
-                    params.folderId,
-                    [email]
-                )
                 email.deletedAt = Date.now()
                 await emailService.save(email)
                 navigateUp()
