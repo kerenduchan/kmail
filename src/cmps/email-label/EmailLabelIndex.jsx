@@ -3,6 +3,7 @@ import { EmailLabelList } from './EmailLabelList'
 
 export function EmailLabelIndex({
     labels,
+    activeFolderId,
     onLabelClick,
     onCreateLabelClick,
     onDeleteLabelClick,
@@ -20,6 +21,7 @@ export function EmailLabelIndex({
             </div>
             <EmailLabelList
                 labels={labels}
+                activeFolderId={activeFolderId}
                 onLabelClick={onLabelClick}
                 onDeleteLabelClick={onDeleteLabelClick}
                 onEditLabelClick={onEditLabelClick}

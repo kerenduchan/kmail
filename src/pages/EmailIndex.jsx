@@ -426,6 +426,7 @@ export function EmailIndex() {
                     {/* Labels */}
                     <EmailLabelIndex
                         labels={labels}
+                        activeFolderId={params.folderId}
                         onLabelClick={onLabelClick}
                         onCreateLabelClick={() => onShowCreateLabelDialog()}
                         onDeleteLabelClick={onDeleteLabelClick}

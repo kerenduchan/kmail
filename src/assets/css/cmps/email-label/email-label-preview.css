@@ -14,6 +14,7 @@
 
 .email-label-preview.selected {
     background-color: rgb(225, 227, 225);
+    font-weight: bold;
 }
 
 .email-label-icon::before {
