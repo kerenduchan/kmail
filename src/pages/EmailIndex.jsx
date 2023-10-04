@@ -239,6 +239,7 @@ export function EmailIndex() {
 
     // Handle a click on the delete label button for the given label
     async function onDeleteLabelClick(label) {
+        hideUserMsg()
         const { success, error } = buildMsgsForDeleteLabel(label)
         try {
             await emailService.removeLabelFromAllEmails(label.id)
