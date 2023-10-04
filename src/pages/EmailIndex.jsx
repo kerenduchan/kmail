@@ -310,7 +310,7 @@ export function EmailIndex() {
             labelInfos
         )
         try {
-            await emailService.updateLabelsForEmails1(emails, labelInfos)
+            await emailService.updateLabelsForEmails(emails, labelInfos)
             showSuccessMsg(success)
         } catch (e) {
             showErrorMsg(error, e)
