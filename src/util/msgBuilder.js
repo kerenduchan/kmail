@@ -10,7 +10,9 @@ function buildMsgsForUpdateLabelsForEmails(folderId, emails, labelInfos) {
 
     // success message
     const action = labelInfos[0].isAdd ? 'added to' : 'removed from'
-    const success = `${subject} ${action} '${labelName}'.`
+    const success = _uppercaseFirstLetter(
+        `${subject} ${action} '${labelName}'.`
+    )
 
     // error message
     const failedAction = labelInfos[0].isAdd
@@ -33,12 +35,12 @@ function buildMsgsForMoveEmailsToBin(folderId, emailIds) {
 
     // success message
     const action = folderId == 'drafts' ? 'discarded' : 'moved to Bin'
-    const success = `${subject} ${action}.`
+    const success = _uppercaseFirstLetter(`${subject} ${action}.`)
 
     // error message
     const failedAction =
         folderId == 'drafts' ? `discard ${subject}` : `move ${subject} to Bin`
-    const error = `Failed to ${failedAction}`
+    const error = `Failed to ${failedAction}.`
     return { success, error }
 }
 
@@ -48,7 +50,7 @@ function _getItemDescription(folderId, emails) {
     const suffix = emails.length > 1 ? 's' : ''
     const noun = folderId == 'drafts' ? 'draft' : 'email'
     if (emails.length == 1) {
-        return _uppercaseFirstLetter(`${noun}${suffix}`)
+        return `${noun}${suffix}`
     }
     return `${emails.length} ${noun}${suffix}`
 }

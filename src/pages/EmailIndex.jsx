@@ -145,12 +145,15 @@ export function EmailIndex() {
 
     // Handle a draft being deleted from within the compose dialog
     async function onDeleteDraft(emailId) {
+        const { success, error } = buildMsgsForMoveEmailsToBin('drafts', [
+            emailId,
+        ])
         if (emailId !== null) {
             try {
                 await emailService.remove(emailId)
-                showSuccessMsg('Draft discarded.')
+                showSuccessMsg(success)
             } catch (err) {
-                showErrorMsg('Failed to discard draft.')
+                showErrorMsg(error)
             }
             loadEmails()
         }
