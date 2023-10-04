@@ -69,13 +69,13 @@ export function EmailCompose({ onCloseClick, onDeleteDraft }) {
             onCloseClick()
             showSuccessMsg('Email sent.')
         } catch (e) {
-            showErrorMsg('Failed to send email.')
+            showErrorMsg('Failed to send email.', e)
         }
     }
 
     async function onDraftCloseClick() {
         if (isEdited.current) {
-            await emailService.save(email.current)
+            await emailService.updateEmail(email.current)
         }
         onCloseClick()
     }
@@ -85,7 +85,7 @@ export function EmailCompose({ onCloseClick, onDeleteDraft }) {
             return
         }
         const prevId = email.current.id
-        email.current = await emailService.save(email.current)
+        email.current = await emailService.updateEmail(email.current)
         if (prevId === null) {
             setSearchParams((prev) => ({ ...prev, compose: email.current.id }))
         }
@@ -104,7 +104,7 @@ export function EmailCompose({ onCloseClick, onDeleteDraft }) {
             }))
 
             if (isEdited.current) {
-                await emailService.save(email.current)
+                await emailService.updateEmail(email.current)
             }
         }
 
@@ -119,7 +119,7 @@ export function EmailCompose({ onCloseClick, onDeleteDraft }) {
     }
 
     async function loadEmail(emailId) {
-        email.current = await emailService.getById(emailId)
+        email.current = await emailService.getEmailById(emailId)
         email.current.isRead = true
         setDraft(email.current)
         setTitle(

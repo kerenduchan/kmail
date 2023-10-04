@@ -4,13 +4,13 @@ import { utilService } from './util.service.js'
 import { labelService } from './label.service.js'
 
 export const emailService = {
-    query,
-    save,
-    updateMany,
+    getEmailById,
+    getEmails,
+    updateEmail,
+    updateEmails,
     sendEmail,
-    remove,
+    deleteEmail,
     deleteEmailsByIds,
-    getById,
     createEmail,
     getDefaultFilter,
     getLoggedInUser,
@@ -54,7 +54,7 @@ function _doesEmailMatchFilter(email, filter) {
     return _doesEmailBelongInFolder(email, filter.folderId)
 }
 
-async function query(filter) {
+async function getEmails(filter) {
     let emails = await storageService.query(STORAGE_KEY)
     await _expandLabelsOnEmails(emails)
     if (filter) {
@@ -121,13 +121,13 @@ async function getEmailCountsPerFolder() {
     )
 }
 
-async function getById(id) {
+async function getEmailById(id) {
     const email = await storageService.get(STORAGE_KEY, id)
     await _expandLabelsOnEmails([email])
     return email
 }
 
-function remove(id) {
+function deleteEmail(id) {
     return storageService.remove(STORAGE_KEY, id)
 }
 
@@ -136,10 +136,10 @@ function deleteEmailsByIds(ids) {
 }
 
 function sendEmail(email) {
-    return save({ ...email, sentAt: Date.now() })
+    return updateEmail({ ...email, sentAt: Date.now() })
 }
 
-function save(email) {
+function updateEmail(email) {
     // remove expanded labels field
     const emailToSave = { ...email }
     delete emailToSave.labels
@@ -156,7 +156,7 @@ function save(email) {
     }
 }
 
-async function updateMany(emails) {
+async function updateEmails(emails) {
     // remove expanded labels field
     const emailsToSave = emails.map((e) => {
         delete e.labels
@@ -188,17 +188,17 @@ async function updateLabelsForEmails(emails, labelInfos) {
                 }))
         }
     })
-    return emailService.updateMany(emailsToUpdate)
+    return emailService.updateEmails(emailsToUpdate)
 }
 
 // Remove the given label ID from all emails. Needs to be done as part of
 // deleting a label.
 async function removeLabelFromAllEmails(labelId) {
-    const allEmails = await emailService.query()
+    const allEmails = await emailService.getEmails()
     allEmails.forEach(
         (e) => (e.labelIds = e.labelIds.filter((lId) => lId !== labelId))
     )
-    return updateMany(allEmails)
+    return updateEmails(allEmails)
 }
 
 function createEmail() {

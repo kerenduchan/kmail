@@ -140,12 +140,10 @@ export function EmailIndex() {
 
     // Handle a draft being deleted from within the compose dialog
     async function onDeleteDraft(emailId) {
-        const { success, error } = buildMsgsForMoveEmailsToBin('drafts', [
-            emailId,
-        ])
+        const { success, error } = buildMsgsForDeleteEmails('drafts', [emailId])
         if (emailId !== null) {
             try {
-                await emailService.remove(emailId)
+                await emailService.deleteEmail(emailId)
                 showSuccessMsg(success)
             } catch (err) {
                 showErrorMsg(error)
@@ -274,7 +272,7 @@ export function EmailIndex() {
         try {
             let [emailCounts, emails] = await Promise.all([
                 emailService.getEmailCountsPerFolder(),
-                emailService.query(filter),
+                emailService.getEmails(filter),
             ])
             setEmailsData({
                 emails,
@@ -320,7 +318,7 @@ export function EmailIndex() {
             showProgressMsg(progress)
         }
         try {
-            await emailService.updateMany(emailsToUpdate)
+            await emailService.updateEmails(emailsToUpdate)
             await loadEmails()
             if (!silent) {
                 showSuccessMsg(success)
@@ -365,7 +363,7 @@ export function EmailIndex() {
                 emails.forEach((e) => {
                     e.deletedAt = Date.now()
                 })
-                await emailService.updateMany(emails)
+                await emailService.updateEmails(emails)
             }
             await loadEmails()
             showSuccessMsg(success)
