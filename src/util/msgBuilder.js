@@ -92,17 +92,29 @@ function buildMsgsForUpdateEmails(folderId, emails, field, value) {
 }
 
 function _buildMsgsForSaveOrDeleteLabel(label, isDelete) {
-    const subject = 'label' + (label.name.length ? ` '${label.name}'` : '')
+    const subject = `label '${label.name}'`
+
+    // progress message
+    const progressAction = isDelete
+        ? 'Deleting'
+        : label.id
+        ? 'Updating'
+        : 'Creating'
+    const progress = `${progressAction} ${subject}`
 
     // success message
-    const action = isDelete ? 'deleted' : label.id ? 'updated' : 'created'
-    const success = _uppercaseFirstLetter(`${subject} ${action}`)
+    const successAction = isDelete
+        ? 'deleted'
+        : label.id
+        ? 'updated'
+        : 'created'
+    const success = _uppercaseFirstLetter(`${subject} ${successAction}`)
 
     // error message
     const failedAction = isDelete ? 'delete' : label.id ? 'update' : 'create'
     const error = `Failed to ${failedAction} ${subject}`
 
-    return _addPunctuation({ success, error })
+    return _addPunctuation({ progress, success, error })
 }
 
 // helper functions

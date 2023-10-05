@@ -227,7 +227,10 @@ export function EmailIndex() {
 
     // Handle a click on the create/save button in the label create/edit dialog
     async function onSaveLabelClick(label) {
-        const { success, error } = buildMsgsForSaveLabel(label)
+        const { progress, success, error } = buildMsgsForSaveLabel(label)
+        onHideCreateLabelDialog()
+        hideUserMsg()
+        showProgressMsg(progress)
         try {
             if (label.id) {
                 await labelService.updateLabel(label)
@@ -239,7 +242,6 @@ export function EmailIndex() {
         } catch (e) {
             showErrorMsg(error, e)
         }
-        onHideCreateLabelDialog()
     }
 
     // Handle a click on the given label
@@ -249,8 +251,9 @@ export function EmailIndex() {
 
     // Handle a click on the delete label button for the given label
     async function onDeleteLabelClick(label) {
+        const { progress, success, error } = buildMsgsForDeleteLabel(label)
         hideUserMsg()
-        const { success, error } = buildMsgsForDeleteLabel(label)
+        showProgressMsg(progress)
         try {
             await emailService.removeLabelFromAllEmails(label.id)
             await loadEmails()
