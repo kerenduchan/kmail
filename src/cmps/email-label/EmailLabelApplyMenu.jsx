@@ -38,7 +38,9 @@ export default function EmailLabelApplyMenu({
             <SmallActionButton type="label" onClick={toggleShow} />
 
             <div className={`email-label-apply-menu${show ? ' visible' : ''}`}>
-                <div className="email-label-apply-menu-title">Label as:</div>
+                <div className="email-label-apply-menu-title">
+                    {labels.length ? 'Label as:' : 'Create some labels first.'}
+                </div>
                 {labels.map((label) => {
                     return (
                         <div
