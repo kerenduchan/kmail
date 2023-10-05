@@ -1,13 +1,13 @@
 import { useState, useEffect, useRef } from 'react'
+import { Formik, Form, Field, useFormikContext } from 'formik'
+import { getEmailValidationSchema } from '../util/validation/emailValidation'
+
 import { emailService } from '../services/email.service'
 import { useInterval } from '../useInterval'
 import { useSearchParams } from 'react-router-dom'
 import { SmallActionButton } from '../cmps/SmallActionButton'
 
 export function EmailCompose({ onCloseClick, onDeleteDraft, onSendEmail }) {
-    // Two-way binding with the form fields
-    const [draft, setDraft] = useState(null)
-
     // Topbar title
     const [title, setTitle] = useState('New Message')
 
@@ -19,19 +19,15 @@ export function EmailCompose({ onCloseClick, onDeleteDraft, onSendEmail }) {
 
     const [searchParams, setSearchParams] = useSearchParams()
 
-    // The full email, including id, isRead, etc. Not part of the state for
-    // synchronicity.
+    // The full email, including id, isRead, etc.
     const email = useRef(null)
-
-    // Whether the email was edited since it was loaded
-    const isEdited = useRef(false)
 
     useEffect(() => {
         handleSearchParamsChange()
     }, [searchParams])
 
     // TODO: debounce - save only when user isn't typing
-    useInterval(autoSaveDraft, 5000)
+    // useInterval(autoSaveDraft, 5000)
 
     function onMinimizeClick() {
         setDisplayState((prev) => {
@@ -48,38 +44,15 @@ export function EmailCompose({ onCloseClick, onDeleteDraft, onSendEmail }) {
         })
     }
 
-    function onChange(ev) {
-        isEdited.current = true
-        let { value, name: field } = ev.target
-        email.current[field] = value
-        setDraft((prev) => ({ ...prev, [field]: value }))
-        if (field == 'subject') {
-            setTitle(value == '' ? 'New Message' : value)
-        }
-    }
-
-    async function onDraftCloseClick() {
-        if (isEdited.current) {
-            await emailService.updateEmail(email.current)
-        }
+    async function onDraftCloseClick(draft) {
+        console.log({ ...email.current, draft })
+        await emailService.updateEmail({ ...email.current, ...draft })
         onCloseClick()
     }
 
-    async function onSendClick() {
-        await onSendEmail(email.current)
+    async function onFormSubmit(draft) {
+        await onSendEmail({ ...email.current, ...draft })
         onCloseClick()
-    }
-
-    async function autoSaveDraft() {
-        if (isEdited.current === false) {
-            return
-        }
-        const prevId = email.current.id
-        email.current = await emailService.updateEmail(email.current)
-        if (prevId === null) {
-            setSearchParams((prev) => ({ ...prev, compose: email.current.id }))
-        }
-        setTitle('Draft saved')
     }
 
     async function handleSearchParamsChange() {
@@ -93,15 +66,12 @@ export function EmailCompose({ onCloseClick, onDeleteDraft, onSendEmail }) {
                 isMinimized: false,
             }))
 
-            if (isEdited.current) {
-                await emailService.updateEmail(email.current)
-            }
+            // TODO await emailService.updateEmail(email.current)
         }
 
         if (id == null) {
             email.current = emailService.createEmail()
             email.current.isRead = true
-            setDraft(email.current)
         } else {
             // This is an attempt to edit an existing draft
             loadEmail(id)
@@ -111,13 +81,25 @@ export function EmailCompose({ onCloseClick, onDeleteDraft, onSendEmail }) {
     async function loadEmail(emailId) {
         email.current = await emailService.getEmailById(emailId)
         email.current.isRead = true
-        setDraft(email.current)
         setTitle(
             email.current.subject == '' ? 'New Message' : email.current.subject
         )
     }
 
-    if (!draft) return <></>
+    function Input(props) {
+        return (
+            <>
+                <label htmlFor={props.id}>{props.label}</label>
+                <input autoFocus {...props} />
+            </>
+        )
+    }
+
+    function TextArea(props) {
+        return <textarea {...props} />
+    }
+
+    if (!email.current) return <></>
 
     return (
         <div
@@ -130,90 +112,96 @@ export function EmailCompose({ onCloseClick, onDeleteDraft, onSendEmail }) {
             }
         >
             <div className="email-compose">
-                {/* Topbar */}
-                <div className="email-compose-topbar">
-                    <div
-                        className="email-compose-topbar-title"
-                        onClick={onMinimizeClick}
-                    >
-                        {title}
-                    </div>
-                    <div className="email-compose-topbar-actions">
-                        <div
-                            className="email-compose-topbar-action minimize"
-                            onClick={onMinimizeClick}
-                        />
-                        <div
-                            className={
-                                'email-compose-topbar-action ' +
-                                (displayState.isFullscreen
-                                    ? 'exit-fullscreen'
-                                    : 'fullscreen')
-                            }
-                            onClick={onFullscreenClick}
-                        />
-                        <div
-                            className="email-compose-topbar-action close"
-                            onClick={onDraftCloseClick}
-                        />
-                    </div>
-                </div>
-
-                {/* Form */}
-                <form
-                    className="email-compose-form"
-                    onSubmit={(ev) => ev.preventDefault()}
+                {/* Formik form must encompass topbar in order for form values 
+                to be accessible to onCloseClick*/}
+                <Formik
+                    initialValues={{
+                        to: email.current ? email.current.to : '',
+                        subject: email.current ? email.current.subject : '',
+                        body: email.current ? email.current.body : '',
+                    }}
+                    validationSchema={getEmailValidationSchema()}
+                    onSubmit={onFormSubmit}
                 >
-                    {/* To */}
-                    <div className="email-compose-field">
-                        <label htmlFor="email-compose-to">To:</label>
-                        <input
-                            type="text"
-                            id="email-compose-to"
-                            name="to"
-                            onChange={onChange}
-                            value={draft.to}
-                        />
-                    </div>
+                    {({ errors, touched, values }) => (
+                        <Form className="email-compose-form">
+                            {/* Topbar */}
+                            <div className="email-compose-topbar">
+                                <div
+                                    className="email-compose-topbar-title"
+                                    onClick={onMinimizeClick}
+                                >
+                                    {title}
+                                </div>
+                                <div className="email-compose-topbar-actions">
+                                    <div
+                                        className="email-compose-topbar-action minimize"
+                                        onClick={onMinimizeClick}
+                                    />
+                                    <div
+                                        className={
+                                            'email-compose-topbar-action ' +
+                                            (displayState.isFullscreen
+                                                ? 'exit-fullscreen'
+                                                : 'fullscreen')
+                                        }
+                                        onClick={onFullscreenClick}
+                                    />
+                                    <div
+                                        className="email-compose-topbar-action close"
+                                        onClick={() =>
+                                            onDraftCloseClick(values)
+                                        }
+                                    />
+                                </div>
+                            </div>
+                            {/* To */}
+                            <div className="email-compose-field">
+                                <Field
+                                    as={Input}
+                                    name="to"
+                                    id="email-compose-to"
+                                    label="To:"
+                                />
+                            </div>
+                            {/* Subject */}
+                            <div className="email-compose-field">
+                                <Field
+                                    as={Input}
+                                    name="subject"
+                                    id="email-compose-subject"
+                                    label="Subject:"
+                                />
+                            </div>
+                            {/* Body */}
+                            <div className="email-compose-field body">
+                                <Field
+                                    as={TextArea}
+                                    name="body"
+                                    id="email-compose-body"
+                                />
+                            </div>
 
-                    {/* Subject */}
-                    <div className="email-compose-field">
-                        <label htmlFor="email-compose-subject">Subject:</label>
-                        <input
-                            type="text"
-                            id="email-compose-subject"
-                            name="subject"
-                            onChange={onChange}
-                            value={draft.subject}
-                        />
-                    </div>
+                            <div className="email-compose-actions">
+                                {/* Send */}
+                                <button
+                                    type="submit"
+                                    className="strong-action-btn email-compose-action-send"
+                                >
+                                    Send
+                                </button>
 
-                    {/* Body */}
-                    <div className="email-compose-field body">
-                        <textarea
-                            id="email-compose-body"
-                            name="body"
-                            onChange={onChange}
-                            value={draft.body}
-                        />
-                    </div>
-
-                    <div className="email-compose-actions">
-                        {/* Send */}
-                        <button
-                            className="strong-action-btn email-compose-action-send"
-                            onClick={onSendClick}
-                        >
-                            Send
-                        </button>
-
-                        {/* Delete */}
-                        <SmallActionButton
-                            type="delete"
-                            onClick={() => onDeleteDraft(draft.id)}
-                        />
-                    </div>
-                </form>
+                                {/* Delete */}
+                                <SmallActionButton
+                                    type="delete"
+                                    onClick={() =>
+                                        onDeleteDraft(email.current.id)
+                                    }
+                                />
+                            </div>
+                        </Form>
+                    )}
+                </Formik>
             </div>
         </div>
     )
