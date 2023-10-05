@@ -17,7 +17,8 @@
     padding: 10px;
     display: flex;
     gap: 10px;
-    align-items: center;
+    align-items: start;
+    height: 60px;
 }
 
 .email-details-content {
@@ -34,7 +35,7 @@
     display: grid;
     grid-template-columns: auto 1fr auto;
     align-items: center;
-    padding: 20px 0;
+    padding-bottom: 20px;
 }
 
 .email-details-subject {

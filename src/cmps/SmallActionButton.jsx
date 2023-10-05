@@ -1,4 +1,10 @@
-export function SmallActionButton({ type, onClick, className }) {
+import { forwardRef } from 'react'
+import { Tooltip } from './Tooltip'
+
+export const SmallActionButton = forwardRef(function (
+    { type, onClick, className },
+    ref
+) {
     const types = {
         hamburger: 'imgs/hamburger-menu.svg',
         edit: 'imgs/edit.svg',
@@ -28,19 +34,24 @@ export function SmallActionButton({ type, onClick, className }) {
                 return 'Close'
             case 'edit':
                 return 'Edit'
+            case 'label':
+                return 'Labels'
         }
         return ''
     }
 
     return (
-        <button
-            type="button"
-            className={`small-action-btn small-action-btn-${type} ${
-                className ? ` ${className}` : ''
-            }`}
-            onClick={onClick}
-        >
-            <img className={`icon-${type}`} src={types[type]} />
-        </button>
+        <Tooltip label={getTitleByType(type)}>
+            <button
+                ref={ref}
+                type="button"
+                className={`small-action-btn small-action-btn-${type} ${
+                    className ? ` ${className}` : ''
+                }`}
+                onClick={onClick}
+            >
+                <img className={`icon-${type}`} src={types[type]} />
+            </button>
+        </Tooltip>
     )
-}
+})

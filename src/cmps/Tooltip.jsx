@@ -1,8 +1,16 @@
-export function Tooltip({ children, text }) {
+import { Tooltip as ChakraTooltip } from '@chakra-ui/react'
+
+export function Tooltip({ children, label }) {
     return (
-        <div className="tooltip">
+        <ChakraTooltip
+            label={label}
+            background="rgb(60, 64, 67)"
+            color="white"
+            padding="4px 8px"
+            borderRadius="4px"
+            fontSize="12px"
+        >
             {children}
-            <span className="tooltip-text">{text}</span>
-        </div>
+        </ChakraTooltip>
     )
 }
