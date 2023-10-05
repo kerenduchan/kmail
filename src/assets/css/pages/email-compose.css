@@ -62,6 +62,10 @@
     display: flex;
 }
 
+.email-compose-field.errors > .errors {
+    color: rgb(221, 75, 57);
+}
+
 .email-compose-field > label {
     padding-inline-end: 6px;
 }

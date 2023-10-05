@@ -3,7 +3,6 @@ import { Formik, Form, Field, useFormikContext } from 'formik'
 import { getEmailValidationSchema } from '../util/validation/emailValidation'
 
 import { emailService } from '../services/email.service'
-import { useInterval } from '../useInterval'
 import { useSearchParams } from 'react-router-dom'
 import { SmallActionButton } from '../cmps/SmallActionButton'
 
@@ -113,7 +112,7 @@ export function EmailCompose({ onCloseClick, onDeleteDraft, onSendEmail }) {
         >
             <div className="email-compose">
                 {/* Formik form must encompass topbar in order for form values 
-                to be accessible to onCloseClick*/}
+                to be accessible to onCloseClick */}
                 <Formik
                     initialValues={{
                         to: email.current ? email.current.to : '',
@@ -156,13 +155,20 @@ export function EmailCompose({ onCloseClick, onDeleteDraft, onSendEmail }) {
                                 </div>
                             </div>
                             {/* To */}
-                            <div className="email-compose-field">
+                            <div
+                                className={`email-compose-field ${
+                                    errors.to && touched.to ? 'errors' : ''
+                                }`}
+                            >
                                 <Field
                                     as={Input}
                                     name="to"
                                     id="email-compose-to"
                                     label="To:"
                                 />
+
+                                {/* Errors */}
+                                <div className="errors">{errors.to}</div>
                             </div>
                             {/* Subject */}
                             <div className="email-compose-field">
