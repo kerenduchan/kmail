@@ -94,7 +94,6 @@ function _doesEmailBelongInFolder(email, folderId) {
             // folderId is actually a label
             return email.labels.map((l) => l.name).includes(folderId)
     }
-    return true
 }
 
 // This should be server-side logic, since the frontend should not
