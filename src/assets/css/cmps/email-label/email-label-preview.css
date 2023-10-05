@@ -3,7 +3,6 @@
     grid-template-columns: auto 1fr auto;
     align-items: center;
     grid-template-rows: 24px;
-    margin-inline-end: 16px;
     border-top-right-radius: 12px;
     border-bottom-right-radius: 12px;
 }
