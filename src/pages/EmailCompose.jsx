@@ -7,6 +7,8 @@ import { useSearchParams } from 'react-router-dom'
 import { SmallActionButton } from '../cmps/SmallActionButton'
 
 export function EmailCompose({ onCloseClick, onDeleteDraft, onSendEmail }) {
+    const [draft, setDraft] = useState({ to: '', subject: '', body: '' })
+
     // Topbar title
     const [title, setTitle] = useState('New Message')
 
@@ -43,14 +45,13 @@ export function EmailCompose({ onCloseClick, onDeleteDraft, onSendEmail }) {
         })
     }
 
-    async function onDraftCloseClick(draft) {
-        console.log({ ...email.current, draft })
-        await emailService.updateEmail({ ...email.current, ...draft })
+    async function onDraftCloseClick(values) {
+        await emailService.updateEmail({ ...email.current, ...values })
         onCloseClick()
     }
 
-    async function onFormSubmit(draft) {
-        await onSendEmail({ ...email.current, ...draft })
+    async function onFormSubmit(values) {
+        await onSendEmail({ ...email.current, ...values })
         onCloseClick()
     }
 
@@ -83,6 +84,7 @@ export function EmailCompose({ onCloseClick, onDeleteDraft, onSendEmail }) {
         setTitle(
             email.current.subject == '' ? 'New Message' : email.current.subject
         )
+        setDraft(email.current)
     }
 
     function Input(props) {
@@ -114,11 +116,8 @@ export function EmailCompose({ onCloseClick, onDeleteDraft, onSendEmail }) {
                 {/* Formik form must encompass topbar in order for form values 
                 to be accessible to onCloseClick */}
                 <Formik
-                    initialValues={{
-                        to: email.current ? email.current.to : '',
-                        subject: email.current ? email.current.subject : '',
-                        body: email.current ? email.current.body : '',
-                    }}
+                    initialValues={draft}
+                    enableReinitialize
                     validationSchema={getEmailValidationSchema()}
                     onSubmit={onFormSubmit}
                 >
