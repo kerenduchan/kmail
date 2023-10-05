@@ -1,6 +1,6 @@
-import { useState } from 'react'
 import { MultiSelector } from '../MultiSelector'
 import { SmallActionButton } from '../SmallActionButton'
+import useToggle from '../../util/useToggle'
 
 export default function EmailLabelApplyMenu({
     labels,
@@ -8,7 +8,7 @@ export default function EmailLabelApplyMenu({
     updateLabelsForEmails,
 }) {
     // Toggle for showing/hiding the apply labels menu
-    const [show, setShow] = useState(false)
+    const [show, toggleShow, setShow] = useToggle(false)
 
     async function onToggleLabel(label) {
         // add label if it is applied to none/some, remove label if it is
@@ -26,11 +26,6 @@ export default function EmailLabelApplyMenu({
             return 'some'
         }
         return 'none'
-    }
-
-    // Show/hide the apply label menu in the top bar
-    function toggleShow() {
-        setShow((prev) => !prev)
     }
 
     return (
