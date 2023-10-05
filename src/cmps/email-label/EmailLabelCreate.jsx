@@ -4,9 +4,9 @@ import * as Yup from 'yup'
 import { getAllFolderIds } from '../../util/util'
 
 // Dialog for creating an email label
-export function EmailLabelCreate({ label, onCloseClick, onSaveClick }) {
+export function EmailLabelCreate({ label, labels, onCloseClick, onSaveClick }) {
     function onFormSubmit(values) {
-        onSaveClick({ ...label, name: values.labelName })
+        onSaveClick({ ...label, name: values.labelName.trim() })
     }
 
     const validationSchema = Yup.object().shape({
@@ -16,6 +16,15 @@ export function EmailLabelCreate({ label, onCloseClick, onSaveClick }) {
                 'This is a reserved name. Choose another name.',
                 function (value) {
                     return !getAllFolderIds().includes(value.toLowerCase())
+                }
+            )
+            .test(
+                'alreadyExists',
+                'A label with this name already exists. Choose another name.',
+                function (value) {
+                    return !labels.some(
+                        (l) => l.name.toLowerCase() == value.toLowerCase()
+                    )
                 }
             )
             .required('Cannot be empty'),

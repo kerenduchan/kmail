@@ -503,6 +503,7 @@ export function EmailIndex() {
             {showCreateLabelDialog && (
                 <EmailLabelCreate
                     label={selectedLabel}
+                    labels={labels}
                     onCloseClick={onHideCreateLabelDialog}
                     onSaveClick={onSaveLabelClick}
                 />
