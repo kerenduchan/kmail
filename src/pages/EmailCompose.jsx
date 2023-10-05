@@ -123,7 +123,7 @@ export function EmailCompose({ onCloseClick, onDeleteDraft, onSendEmail }) {
                     onSubmit={onFormSubmit}
                 >
                     {({ errors, touched, values }) => (
-                        <Form className="email-compose-form">
+                        <Form className="email-compose-formik-form">
                             {/* Topbar */}
                             <div className="email-compose-topbar">
                                 <div
@@ -154,56 +154,57 @@ export function EmailCompose({ onCloseClick, onDeleteDraft, onSendEmail }) {
                                     />
                                 </div>
                             </div>
-                            {/* To */}
-                            <div
-                                className={`email-compose-field ${
-                                    errors.to && touched.to ? 'errors' : ''
-                                }`}
-                            >
-                                <Field
-                                    as={Input}
-                                    name="to"
-                                    id="email-compose-to"
-                                    label="To:"
-                                />
-
-                                {/* Errors */}
-                                <div className="errors">{errors.to}</div>
-                            </div>
-                            {/* Subject */}
-                            <div className="email-compose-field">
-                                <Field
-                                    as={Input}
-                                    name="subject"
-                                    id="email-compose-subject"
-                                    label="Subject:"
-                                />
-                            </div>
-                            {/* Body */}
-                            <div className="email-compose-field body">
-                                <Field
-                                    as={TextArea}
-                                    name="body"
-                                    id="email-compose-body"
-                                />
-                            </div>
-
-                            <div className="email-compose-actions">
-                                {/* Send */}
-                                <button
-                                    type="submit"
-                                    className="strong-action-btn email-compose-action-send"
+                            <div className="email-compose-form">
+                                {/* To */}
+                                <div
+                                    className={`email-compose-field ${
+                                        errors.to && touched.to ? 'errors' : ''
+                                    }`}
                                 >
-                                    Send
-                                </button>
+                                    <Field
+                                        as={Input}
+                                        name="to"
+                                        id="email-compose-to"
+                                        label="To:"
+                                    />
 
-                                {/* Delete */}
-                                <SmallActionButton
-                                    type="delete"
-                                    onClick={() =>
-                                        onDeleteDraft(email.current.id)
-                                    }
-                                />
+                                    {/* Errors */}
+                                    <div className="errors">{errors.to}</div>
+                                </div>
+                                {/* Subject */}
+                                <div className="email-compose-field">
+                                    <Field
+                                        as={Input}
+                                        name="subject"
+                                        id="email-compose-subject"
+                                        label="Subject:"
+                                    />
+                                </div>
+                                {/* Body */}
+                                <div className="email-compose-field body">
+                                    <Field
+                                        as={TextArea}
+                                        name="body"
+                                        id="email-compose-body"
+                                    />
+                                </div>
+                                <div className="email-compose-actions">
+                                    {/* Send */}
+                                    <button
+                                        type="submit"
+                                        className="strong-action-btn email-compose-action-send"
+                                    >
+                                        Send
+                                    </button>
+
+                                    {/* Delete */}
+                                    <SmallActionButton
+                                        type="delete"
+                                        onClick={() =>
+                                            onDeleteDraft(email.current.id)
+                                        }
+                                    />
+                                </div>
                             </div>
                         </Form>
                     )}
