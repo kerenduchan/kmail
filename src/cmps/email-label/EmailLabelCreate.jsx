@@ -1,7 +1,7 @@
-import { useState } from 'react'
 import { Dialog } from '../Dialog'
 import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
+import { getAllFolderIds } from '../../util/util'
 
 // Dialog for creating an email label
 export function EmailLabelCreate({ label, onCloseClick, onSaveClick }) {
@@ -10,7 +10,15 @@ export function EmailLabelCreate({ label, onCloseClick, onSaveClick }) {
     }
 
     const validationSchema = Yup.object().shape({
-        labelName: Yup.string().required('Cannot be empty'),
+        labelName: Yup.string()
+            .test(
+                'isNotReservedName',
+                'This is a reserved name. Choose another name.',
+                function (value) {
+                    return !getAllFolderIds().includes(value.toLowerCase())
+                }
+            )
+            .required('Cannot be empty'),
     })
 
     function Input(props) {
