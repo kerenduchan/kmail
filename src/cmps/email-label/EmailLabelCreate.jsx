@@ -1,34 +1,12 @@
 import { Dialog } from '../Dialog'
 import { Formik, Form, Field } from 'formik'
-import * as Yup from 'yup'
-import { getAllFolderIds } from '../../util/util'
+import { getLabelValidationSchema } from '../../util/validation/labelValidation'
 
 // Dialog for creating an email label
 export function EmailLabelCreate({ label, labels, onCloseClick, onSaveClick }) {
     function onFormSubmit(values) {
         onSaveClick({ ...label, name: values.labelName.trim() })
     }
-
-    const validationSchema = Yup.object().shape({
-        labelName: Yup.string()
-            .test(
-                'isNotReservedName',
-                'This is a reserved name. Choose another name.',
-                function (value) {
-                    return !getAllFolderIds().includes(value.toLowerCase())
-                }
-            )
-            .test(
-                'alreadyExists',
-                'A label with this name already exists. Choose another name.',
-                function (value) {
-                    return !labels.some(
-                        (l) => l.name.toLowerCase() == value.toLowerCase()
-                    )
-                }
-            )
-            .required('Cannot be empty'),
-    })
 
     function Input(props) {
         return (
@@ -48,7 +26,7 @@ export function EmailLabelCreate({ label, labels, onCloseClick, onSaveClick }) {
                 initialValues={{
                     labelName: label ? label.name : '',
                 }}
-                validationSchema={validationSchema}
+                validationSchema={getLabelValidationSchema(labels)}
                 onSubmit={onFormSubmit}
             >
                 {({ errors, touched }) => (
