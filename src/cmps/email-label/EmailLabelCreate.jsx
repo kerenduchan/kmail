@@ -10,7 +10,7 @@ export function EmailLabelCreate({ label, onCloseClick, onSaveClick }) {
     }
 
     const validationSchema = Yup.object().shape({
-        labelName: Yup.string().required('Required'),
+        labelName: Yup.string().required('Cannot be empty'),
     })
 
     function Input(props) {

@@ -23,6 +23,7 @@
     opacity: 0;
     height: 14px;
     color: rgb(221, 75, 57);
+    transition: opacity 0.2s;
 }
 
 .email-label-create-form-field-errors.visible {
