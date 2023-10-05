@@ -5,16 +5,8 @@ import * as Yup from 'yup'
 
 // Dialog for creating an email label
 export function EmailLabelCreate({ label, onCloseClick, onSaveClick }) {
-    // the about-to-be created label's name
-    const [draft, setDraft] = useState(label || { name: '' })
-
-    function onFormSubmit(ev) {
-        ev.preventDefault()
-        onSaveClick(draft)
-    }
-
-    function onNameChange(ev) {
-        setDraft((prev) => ({ ...prev, name: ev.target.value }))
+    function onFormSubmit(values) {
+        onSaveClick({ ...label, name: values.labelName })
     }
 
     const validationSchema = Yup.object().shape({
@@ -40,10 +32,7 @@ export function EmailLabelCreate({ label, onCloseClick, onSaveClick }) {
                     labelName: label ? label.name : '',
                 }}
                 validationSchema={validationSchema}
-                onSubmit={(values) => {
-                    // same shape as initial values
-                    console.log(values)
-                }}
+                onSubmit={onFormSubmit}
             >
                 {({ errors, touched }) => (
                     <Form className="email-label-create-form">
