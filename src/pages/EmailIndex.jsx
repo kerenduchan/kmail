@@ -35,6 +35,7 @@ import {
     buildMsgsForUpdateEmails,
     buildMsgsForUpdateLabelsForEmails,
 } from '../util/msgBuilder'
+import useToggle from '../util/useToggle'
 
 // The email index - main component for managing emails
 export function EmailIndex() {
@@ -62,7 +63,7 @@ export function EmailIndex() {
     const [emailCounts, setEmailCounts] = useState(null)
 
     // Show/hide the sidebar (for mobile only)
-    const [showSidebar, setShowSidebar] = useState(false)
+    const [showSidebar, toggleShowSidebar, setShowSidebar] = useToggle(false)
 
     /* For the label create/edit dialog ======================================*/
 
@@ -197,7 +198,7 @@ export function EmailIndex() {
 
     // Handle the hamburger menu being clicked (mobile only)
     function onHamburgerMenuClick() {
-        setShowSidebar((prev) => !prev)
+        toggleShowSidebar()
     }
 
     // Hide the sidebar (mobile only)
