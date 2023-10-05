@@ -1,9 +1,8 @@
-.email-label-create {
+.email-label-create-form {
     display: flex;
     flex-direction: column;
     gap: 24px;
     width: min(400px, 80vw);
-    height: 100px;
 }
 
 .email-label-create-form-field {
@@ -20,7 +19,16 @@
     font-size: 14px;
 }
 
-.email-label-create-actions {
+.email-label-create-form-field-errors {
+    opacity: 0;
+    height: 14px;
+    color: rgb(221, 75, 57);
+}
+
+.email-label-create-form-field-errors.visible {
+    opacity: unset;
+}
+.email-label-create-form-actions {
     flex-grow: 0;
     align-self: flex-end;
     display: flex;
