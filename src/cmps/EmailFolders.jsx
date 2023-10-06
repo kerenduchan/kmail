@@ -15,7 +15,14 @@ export function EmailFolders({
 
     function getCount(folderId) {
         const counts = emailCounts[folderId]
-        return folderId == 'drafts' ? counts.total : counts.unread
+        // show counts only for inbox (unread) and drafts (total), like gmail
+        switch (folderId) {
+            case 'inbox':
+                return counts.unread
+            case 'drafts':
+                return counts.total
+        }
+        return null
     }
 
     const folders = getAllFolders()
