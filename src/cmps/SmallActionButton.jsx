@@ -2,7 +2,7 @@ import { forwardRef } from 'react'
 import { Tooltip } from './Tooltip'
 
 export const SmallActionButton = forwardRef(function (
-    { type, onClick, className },
+    { type, label, onClick, className },
     ref
 ) {
     const types = {
@@ -10,7 +10,7 @@ export const SmallActionButton = forwardRef(function (
         edit: 'imgs/edit.svg',
     }
 
-    function getTitleByType(type) {
+    function getLabelByType(type) {
         switch (type) {
             case 'delete':
                 return 'Delete'
@@ -41,7 +41,7 @@ export const SmallActionButton = forwardRef(function (
     }
 
     return (
-        <Tooltip label={getTitleByType(type)}>
+        <Tooltip label={label ? label : getLabelByType(type)}>
             <button
                 ref={ref}
                 type="button"

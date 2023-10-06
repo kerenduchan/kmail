@@ -32,6 +32,7 @@ export function EmailPreview({
             {/* Star */}
             <SmallActionButton
                 type={email.isStarred ? 'starred' : 'unstarred'}
+                label={email.isStarred ? 'Starred' : 'Not starred'}
                 className="email-preview-star"
                 onClick={() => onToggleField('isStarred')}
                 title={email.isStarred ? 'Starred' : 'Not starred'}
