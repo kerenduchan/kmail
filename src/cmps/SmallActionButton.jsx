@@ -1,5 +1,5 @@
 import { forwardRef } from 'react'
-import { Tooltip } from './Tooltip'
+import { Tooltip } from '@chakra-ui/react'
 
 export const SmallActionButton = forwardRef(function (
     { type, label, onClick, className },
